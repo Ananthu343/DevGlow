@@ -49,7 +49,7 @@ const SignupForm = () => {
     }
 
     return (
-        <div className='bg-white p-8 rounded shadow-md w-96 backdrop-blur-lg bg-white/20'>
+        <div className='bg-white p-8 rounded shadow-lg w-96 backdrop-blur-lg bg-white/20'>
             <h2 className="text-2xl font-bold mb-6 text-gray-800">Register</h2>
             <form onSubmit={handleSubmit}>
                 <p>Username</p>

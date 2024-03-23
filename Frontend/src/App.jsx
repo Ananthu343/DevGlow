@@ -7,6 +7,11 @@ import Loader from "./components/Loader";
 import { useSelector } from "react-redux";
 import VerifyEmail from "./components/userComponents/VerifyEmail";
 import Verify from "./components/userComponents/Verify";
+import PrivateRoute from "./components/userComponents/PrivateRoute";
+import MyProfile from "./pages/MyProfile";
+import Community from "./pages/Community";
+import Messages from "./pages/Messages";
+import Leaderboard from "./pages/Leaderboard";
 
 
 function App() {
@@ -22,6 +27,12 @@ function App() {
           <Route path="/verifying" element={<VerifyEmail/>}/>
           <Route path="/verifyEmail/:token" element={<Verify/>}/>
           <Route path="/login" element={<Login/>}/>
+          <Route path="" element={<PrivateRoute/>}>
+              <Route path="/profile" element={<MyProfile/>} />
+              <Route path="/community" element={<Community/>} />
+              <Route path="/messages" element={<Messages/>} />
+              <Route path="/leaderboard" element={<Leaderboard/>} />
+          </Route>
         </Routes>
      </Router>
     </>

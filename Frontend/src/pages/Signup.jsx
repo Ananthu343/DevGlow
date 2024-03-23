@@ -17,7 +17,7 @@ const Signup = () => {
    <>
     <div style={{ 
         top:0,
-        backgroundImage: `url("https://ideas.ted.com/wp-content/uploads/sites/3/2017/09/featured_art_istock_work_home.jpg")`,
+        backgroundImage: `url("https://c0.wallpaperflare.com/preview/506/555/733/career-leadership-success-businessman.jpg")`,
         height: "100vh", 
         backgroundSize: "cover", 
         backgroundRepeat: "no-repeat", 

@@ -18,7 +18,7 @@ const Login = () => {
     <>
     <div style={{ 
         top:0,
-        backgroundImage: `url("https://img.freepik.com/premium-vector/cover-banner-working-desk-with-gadget-top-view-table-working-free-space-text_33771-1321.jpg")`,
+        backgroundImage: `url("https://c0.wallpaperflare.com/preview/506/555/733/career-leadership-success-businessman.jpg")`,
         height: "100vh", 
         backgroundSize: "cover", 
         backgroundRepeat: "no-repeat", 
