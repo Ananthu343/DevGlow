@@ -1,11 +1,11 @@
-import { generateToken, getTokenData, deleteToken } from "../utils/jwtToken.js";
-import UserRepository from "../repositories/userRepository.js";
+import { generateToken, getTokenData, deleteToken } from "../../utils/jwtToken.js";
+import UserRepository from "../../repositories/userRepository.js";
 import nodemailer from "nodemailer"
 import crypto from "crypto"
 
 const userRepository = new UserRepository()
 
-export const userController = {
+export const authController = {
     verifyEmail: async (req, res) => {
         try {
             const transporter = nodemailer.createTransport({

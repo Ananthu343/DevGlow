@@ -29,8 +29,17 @@ export const loginUser = createAsyncThunk("user/login",async (data)=>{
 })
 
 export const logoutUser = createAsyncThunk("user/logout",async ()=>{
-    const response = await axios.get(`${users_url}/logout`);
+    const response = await axios.get(`${users_url}/logout`,{
+        withCredentials:true
+    });
     return response.status === 200;
+})
+
+export const uploadPost = createAsyncThunk("user/uploadPost",async (data)=>{
+    const response = await axios.post(`${users_url}/upload-post`,data,{
+        withCredentials:true
+    });
+    return response.data;
 })
 
 const userSlice = createSlice({
@@ -75,6 +84,16 @@ const userSlice = createSlice({
             state.loading = false
         })
         .addCase(logoutUser.rejected,(state,action)=>{
+            state.loading = false
+            state.error = action.error.message
+        })
+        .addCase(uploadPost.pending,(state)=>{
+            state.loading = true
+        })
+        .addCase(uploadPost.fulfilled,(state)=>{
+            state.loading = false
+        })
+        .addCase(uploadPost.rejected,(state,action)=>{
             state.loading = false
             state.error = action.error.message
         })

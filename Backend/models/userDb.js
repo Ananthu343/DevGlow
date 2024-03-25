@@ -53,6 +53,12 @@ const UserSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 })
 
+UserSchema.index({ createdAt: 1 }, {
+  expireAfterSeconds: 180, // 3 minutes
+  partialFilterExpression: { token: { $ne: "verified" } }
+ });
+ 
+
 // Encrypt password using bcrypt
 UserSchema.pre("save", async function (next) {
     if (!this.isModified("password")) {
@@ -79,10 +85,6 @@ UserSchema.methods.matchPassword = async function(candidatePassword) {
     }
 };
   
-  UserSchema.index({ createdAt: 1 }, {
-    expireAfterSeconds: 180,
-    partialFilterExpression: { token: { $ne: "verified" } }
-   });
 
   const User = mongoose.model("Users", UserSchema);
   

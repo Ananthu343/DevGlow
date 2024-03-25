@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { logoutUser } from '../../slices/userSlice'
 import { logout } from '../../slices/authSlice'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import CreatePost from './CreatePost'
 
 const Header = () => {
   const [modal, setModal] = useState(false)
@@ -11,6 +12,12 @@ const Header = () => {
   const dispatch = useDispatch()
   const { userInfo } = useSelector(state => state.auth)
 
+  useEffect(()=>{
+    if (!userInfo) {
+      setActiveIcon(null)
+    }
+  },[userInfo,activeIcon])
+  
   const handleLogout = () => {
     dispatch(logoutUser()).then((res) => {
       dispatch(logout());
@@ -27,6 +34,7 @@ const Header = () => {
   }
 
   return (
+    <>
     <div className='flex justify-center fixed top-0 z-50 w-screen'>
       <div className='h-[50px] w-[85%] bg-white rounded-b-2xl top-0 z-50 self-center shadow-md flex p-3 flex justify-between'>
         <img src="logo.png" alt="" />
@@ -87,6 +95,10 @@ const Header = () => {
         
       </div>
     </div>
+    {modal ? 
+      <CreatePost setModal={setModal}/>
+ : null}
+    </>
   )
 }
 
