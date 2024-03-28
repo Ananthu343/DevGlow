@@ -42,6 +42,11 @@ export const uploadPost = createAsyncThunk("user/uploadPost",async (data)=>{
     return response.data;
 })
 
+export const getFeed = createAsyncThunk("user/uploadPost",async ()=>{
+    const response = await axios.get(`${users_url}/get-feed`);
+    return response.data;
+})
+
 const userSlice = createSlice({
     name:"user",
     initialState:{ loading:false , error:"" },

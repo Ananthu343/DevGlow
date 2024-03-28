@@ -2,8 +2,8 @@ import React from 'react'
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../../slices/userSlice';
-import { setCredentials } from '../../slices/authSlice';
+import { loginUser } from '../slices/userSlice';
+import { setCredentials } from '../slices/authSlice';
 
 const LoginForm = () => {
     const [email,setEmail] = useState('');

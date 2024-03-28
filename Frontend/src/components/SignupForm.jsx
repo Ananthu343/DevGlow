@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { verifyEmail} from '../../slices/userSlice'
+import { verifyEmail} from '../slices/userSlice'
 import toast from 'react-hot-toast'
 
 const SignupForm = () => {

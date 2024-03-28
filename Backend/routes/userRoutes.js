@@ -2,7 +2,7 @@ import express from "express"
 import { authController } from "../controllers/userControllers/userAuthController.js";
 import { postController } from "../controllers/userControllers/postController.js";
 import { protect } from "../middlewares/authMiddleware.js";
-import { upload } from "../utils/multerGridfs.js";
+import { upload } from "../configs/multer.js"; 
 
 const router = express.Router()
 

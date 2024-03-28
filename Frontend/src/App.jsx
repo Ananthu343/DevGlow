@@ -1,13 +1,13 @@
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
-import Header from "./components/userComponents/Header";
+import Header from "./components/Header";
 import Login from "./pages/Login";
 import Loader from "./components/Loader";
 import { useSelector } from "react-redux";
-import VerifyEmail from "./components/userComponents/VerifyEmail";
-import Verify from "./components/userComponents/Verify";
-import PrivateRoute from "./components/userComponents/PrivateRoute";
+import VerifyEmail from "./components/VerifyEmail";
+import Verify from "./components/Verify";
+import PrivateRoute from "./components/PrivateRoute";
 import MyProfile from "./pages/MyProfile";
 import Community from "./pages/Community";
 import Messages from "./pages/Messages";

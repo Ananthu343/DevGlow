@@ -29,3 +29,28 @@ body{
    .animate-icon4 {
     transform: translateX(240px); /* Adjust based on icon position */
    }
+
+   /* smLine Styles */
+.smLine {
+    width: 5px;
+    height: 2px;
+    background-color: #720058; /* Change color as needed */
+    transition: transform 0.3s ease-in-out;
+   }
+   
+   /* Animation Classes */
+   .animate-smLine-icon1 {
+    transform: translateX(0);
+   }
+   
+   .animate-smLine-icon2 {
+    transform: translateX(42px); /* Adjust based on icon position */
+   }
+   
+   .animate-smLine-icon3 {
+    transform: translateX(84px); /* Adjust based on icon position */
+   }
+
+   .animate-smLine-icon4 {
+    transform: translateX(126px); /* Adjust based on icon position */
+   }

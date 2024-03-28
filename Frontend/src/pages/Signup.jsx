@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import SignupForm from '../components/userComponents/SignupForm'
-import Footer from '../components/userComponents/Footer'
+import SignupForm from '../components/SignupForm'
+import Footer from '../components/Footer'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 

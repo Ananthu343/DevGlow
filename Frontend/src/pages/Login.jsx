@@ -1,6 +1,6 @@
 import React ,{useEffect}from 'react'
-import LoginForm from '../components/userComponents/LoginForm'
-import Footer from '../components/userComponents/Footer'
+import LoginForm from '../components/LoginForm'
+import Footer from '../components/Footer'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
