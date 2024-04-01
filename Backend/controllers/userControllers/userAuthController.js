@@ -72,10 +72,11 @@ export const authController = {
         try {
             const { email, password } = req.body;
             const user = await userRepository.findByEmail(email);
+            const userData = await userRepository.findById(user._id)
             if (user && (await user.matchPassword(password))) {
                 generateToken(res, user._id);
                 res.status(200).json({
-                    devGlowAccess: true
+                    devGlowAccess: userData
                 });
             } else {
                 throw new Error("Invalid email or password");

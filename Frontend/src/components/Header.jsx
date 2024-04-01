@@ -5,11 +5,14 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import CreatePost from './CreatePost'
 import MenuBar from './MenuBar'
+import SearchBox from './SearchBox'
 
 const Header = () => {
   const [modal, setModal] = useState(false)
+  const [searchBox, setSearchBox] = useState(false)
   const [activeIcon, setActiveIcon] = useState(null);
   const [menu,setOpenMenu] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { userInfo } = useSelector(state => state.auth)
@@ -40,7 +43,7 @@ const Header = () => {
     <div className='fixed top-0 z-50 flex justify-center w-screen '>
       <div className='h-[50px] w-screen md:w-[85%] bg-white rounded-b-2xl top-0 z-50 self-center shadow-md flex p-3 flex justify-between'>
         <img src="logo.png" alt="" />
-        <input type="text" placeholder='Search' className='hidden md:flex border rounded border-[#720058] h-8 w-[250px] text-sm focus:outline-none focus:shadow-md bg-gray-100 pl-3' />
+        <input onClick={()=>setSearchBox(true)} onChange={(e) => setSearchTerm(e.target.value)}  type="text" placeholder='Search' className='hidden md:flex border rounded-full border-[#720058] h-8 w-[250px] text-sm focus:outline-none focus:shadow-md bg-gray-100 pl-3' />
                                                               
         <div className='flex text-xs text-[#979797] w-[150px] lg:w-[300px] space-x-4 '>
 
@@ -128,12 +131,15 @@ const Header = () => {
             : <button className='bg-[#720058] text-white w-[80px] rounded-full text-sm hidden lg:flex justify-center items-center' onClick={() => navigate('/signup')}>Register</button>
         }
         <div className='bg-[#979797] w-[1px] hidden lg:flex'></div>
-        <img className='border border-[#720058] w-7 rounded-full mr-2 hidden lg:flex' src="avatar.webp" alt="profile pic" />
+        <img className='border border-[#720058] w-7 rounded-full mr-2 hidden lg:flex' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU" alt="profile pic" />
         
       </div>
     </div>
     {modal ? 
       <CreatePost setModal={setModal}/>
+ : null}
+ {searchBox ? 
+      <SearchBox setSearchBox={setSearchBox} searchTerm={searchTerm}/>
  : null}
     </>
   )

@@ -1,39 +1,17 @@
-import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
-import Home from "./pages/Home";
-import Signup from "./pages/Signup";
+import {BrowserRouter as Router} from "react-router-dom"
+import UserRoutes from "./routes/UserRoutes";
 import Header from "./components/Header";
-import Login from "./pages/Login";
-import Loader from "./components/Loader";
-import { useSelector } from "react-redux";
-import VerifyEmail from "./components/VerifyEmail";
-import Verify from "./components/Verify";
-import PrivateRoute from "./components/PrivateRoute";
-import MyProfile from "./pages/MyProfile";
-import Community from "./pages/Community";
-import Messages from "./pages/Messages";
-import Leaderboard from "./pages/Leaderboard";
+import LoadingPage from "./components/LoadingPage";
 
 
 function App() {
-  const {loading} = useSelector(state => state.user)
+ 
   return (
     <>
-      {loading && <Loader/>}
+      <LoadingPage/>
       <Router>
       <Header/>
-        <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/signup" element={<Signup/>}/>
-          <Route path="/verifying" element={<VerifyEmail/>}/>
-          <Route path="/verifyEmail/:token" element={<Verify/>}/>
-          <Route path="/login" element={<Login/>}/>
-          <Route path="" element={<PrivateRoute/>}>
-              <Route path="/profile" element={<MyProfile/>} />
-              <Route path="/community" element={<Community/>} />
-              <Route path="/messages" element={<Messages/>} />
-              <Route path="/leaderboard" element={<Leaderboard/>} />
-          </Route>
-        </Routes>
+        <UserRoutes/>
      </Router>
     </>
   );

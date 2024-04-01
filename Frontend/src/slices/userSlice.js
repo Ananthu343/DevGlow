@@ -41,9 +41,19 @@ export const uploadPost = createAsyncThunk("user/uploadPost",async (data)=>{
     });
     return response.data;
 })
+export const editPost = createAsyncThunk("user/editPost",async (data)=>{
+    const response = await axios.patch(`${users_url}/edit-post`,data,{
+        withCredentials:true
+    });
+    return response.data;
+})
 
-export const getFeed = createAsyncThunk("user/uploadPost",async ()=>{
-    const response = await axios.get(`${users_url}/get-feed`);
+export const deletePost = createAsyncThunk("user/deletePost",async (id)=>{
+
+    const response = await axios.delete(`${users_url}/delete-post`,{
+        params:{id},
+        withCredentials:true
+    });
     return response.data;
 })
 
@@ -99,6 +109,26 @@ const userSlice = createSlice({
             state.loading = false
         })
         .addCase(uploadPost.rejected,(state,action)=>{
+            state.loading = false
+            state.error = action.error.message
+        })
+        .addCase(editPost.pending,(state)=>{
+            state.loading = true
+        })
+        .addCase(editPost.fulfilled,(state)=>{
+            state.loading = false
+        })
+        .addCase(editPost.rejected,(state,action)=>{
+            state.loading = false
+            state.error = action.error.message
+        })
+        .addCase(deletePost.pending,(state)=>{
+            state.loading = true
+        })
+        .addCase(deletePost.fulfilled,(state)=>{
+            state.loading = false
+        })
+        .addCase(deletePost.rejected,(state,action)=>{
             state.loading = false
             state.error = action.error.message
         })

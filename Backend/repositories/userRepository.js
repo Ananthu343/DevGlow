@@ -5,8 +5,11 @@ class UserRepository{
        const newUser = new User(user)
        return await newUser.save()
     }
+    async findAllUser(){
+        return await User.find().select("-password")
+    }
     async findById(id) {
-        return await User.findById(id).select("-password");
+        return await User.findById(id).select("-password").select("-token");
     }
     async findByEmail(email) {
         return await User.findOne({email});
