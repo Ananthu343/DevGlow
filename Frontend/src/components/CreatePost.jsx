@@ -42,7 +42,7 @@ const CreatePost = ({ setModal }) => {
                 toast.success("Uploaded")
             }
            })
-        
+        setModal(false)
     }
     return (
         <div className='fixed inset-0 flex items-center justify-center z-50'>

@@ -2,7 +2,7 @@ import PostRepository from "../../repositories/postRepository.js";
 import UserRepository from "../../repositories/userRepository.js";
 import { getTokenData } from "../../utils/jwtToken.js";
 import { app } from "../../configs/firebase.js";
-import {getDownloadURL, getStorage,ref,uploadBytes} from "firebase/storage"
+import {getDownloadURL, getStorage,ref,uploadBytes,deleteObject} from "firebase/storage"
 
 const storage = getStorage(app)
 
@@ -94,6 +94,12 @@ export const postController = {
     deletePost: async(req,res) => {
         try {
             const postId = req.query.id
+            const postData = await postRepository.findById(postId)
+            const mediaUrl = postData.media
+            if (mediaUrl) {
+                const mediaRef = ref(storage, mediaUrl);
+                await deleteObject(mediaRef);
+            }
             await postRepository.deletePost(postId)
             res.status(200).send('Post deleted successfully');
         } catch (error) {

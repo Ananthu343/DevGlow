@@ -28,13 +28,19 @@ export const authController = {
                 email,
                 password: "Applicant",
                 token,
+                roles:["user"]
             }
             await userRepository.save(applicantData)
+            const clientMail = process.env.MY_EMAIL
+            const basePath = process.env.CLIENT_BASE_PATH
             const mailOptions = {
-                from: "devglow001@gmail.com",
+                from: clientMail,
                 to: email,
                 subject: 'Email Verification',
-                text: `Please verify your email by clicking the following link: http://localhost:3000/verifyEmail/${token}`,
+                html: `
+                    <p>Please verify your email by clicking the following button:</p>
+                    <a href="${basePath}/verifyEmail/${token}" style="background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Verify Email</a>
+                `,
             };
             try {
                 await transporter.sendMail(mailOptions);
@@ -55,7 +61,7 @@ export const authController = {
             const applicant = await userRepository.findByEmail(email)
             if(applicant.token !== "verified"){
                 if (applicant && applicant.token == token) {
-                    await userRepository.updateUser(applicant._id, { ...data, token: "verified" })
+                    await userRepository.updateUser(applicant._id, { ...data, token: "verified"})
                     deleteToken(res)
                     res.status(200).json({ message: "token verified" })
                 } else {

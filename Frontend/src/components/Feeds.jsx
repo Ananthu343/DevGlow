@@ -10,7 +10,9 @@ const Feeds = () => {
   const [readMoreStates, setReadMoreStates] = useState({});
   const [modal, setModal] = useState(false)
   const [editPost,setEditPost] = useState(null)
-
+  
+  console.log(feed);
+  
  const toggleReadMore = (index) => {
     setReadMoreStates(prevStates => ({
       ...prevStates,
@@ -27,7 +29,7 @@ const Feeds = () => {
  const reversedPosts = [...posts].reverse();
  
   return (
-    <div className='w-full md:w-[550px] h-auto flex-col md:p-4 '>
+    <div className='w-full md:w-[550px] h-auto flex-col md:pl-4 md:pr-4'>
       {reversedPosts?.map((document, index) => {
         const userData = users.find(user => user._id === document.creatorId);
 
@@ -41,12 +43,12 @@ const Feeds = () => {
                   <img className='border border-[#720058] w-8 rounded-full mr-2 ' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU" alt="profilepic" />
                   <div className='flex flex-col'>
                     <h1 className='text-sm font-semibold'>{userData ? userData.username : 'Unknown'}</h1>
-                    <p className='text-[9px] text-[#979797]'>{userData.about ? userData.about : 'Aboutscccccccccccclccccclcddddddccscscs'}</p>
+                    <p className='text-[9px] text-[#979797]'>{userData?.about ? userData.about : 'Aboutscccccccccccclccccclcddddddccscscs'}</p>
                     <p className='text-[8px] text-[#979797]'>Posted on: {new Date(document.createdAt).toLocaleDateString()}</p>
                   </div>
                 </div>
                 <div>
-                  {userInfo?.devGlowAccess._id === userData._id ? <h2 className='text-xs cursor-pointer' onClick={()=>openEdit(document)}>edit post</h2> : <h1>Follow</h1>}
+                  {userInfo?.devGlowAccess._id === userData?._id ? <h2 className='text-xs cursor-pointer' onClick={()=>openEdit(document)}>edit post</h2> : <h1>Follow</h1>}
                 </div>
               </div>
               <div className='border-t w-full h-auto mt-2 mb-2 pl-3 pr-3 break-words'>

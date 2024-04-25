@@ -43,10 +43,11 @@ const UserSchema = new mongoose.Schema({
     type:Boolean,
     default:false
   },
-  isAdmin:{
-    type:Boolean,
-    default:false
-  },
+  roles: [{
+    type: String,
+    enum: ['user', 'admin', 'editor'],
+    default: () => ['user'] 
+ }],
   token:{
     type:String
   },
@@ -61,31 +62,30 @@ UserSchema.index({ createdAt: 1 }, {
 
 // Encrypt password using bcrypt
 UserSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) {
-      next();
-    }
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-  });
-
-UserSchema.pre('findOneAndUpdate', async function(next) {
-    if (this.getUpdate().password) {
-        const salt = await bcrypt.genSalt(10);
-        this.getUpdate().password = await bcrypt.hash(this.getUpdate().password, salt);
-    }
-    next();
-});
-  
-UserSchema.methods.matchPassword = async function(candidatePassword) {
-    try {
-        const isMatch = await bcrypt.compare(candidatePassword, this.password);
-        return isMatch;
-    } catch (error) {
-        throw new Error('Error comparing passwords: ', error);
-    }
-};
-  
-
-  const User = mongoose.model("Users", UserSchema);
-  
-  export default User;
+  if (!this.isModified("password")) {
+     next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+ });
+ 
+ UserSchema.pre('findOneAndUpdate', async function(next) {
+  if (this.getUpdate().password) {
+     const salt = await bcrypt.genSalt(10);
+     this.getUpdate().password = await bcrypt.hash(this.getUpdate().password, salt);
+  }
+  next();
+ });
+ 
+ UserSchema.methods.matchPassword = async function(candidatePassword) {
+  try {
+     const isMatch = await bcrypt.compare(candidatePassword, this.password);
+     return isMatch;
+  } catch (error) {
+     throw new Error('Error comparing passwords: ', error);
+  }
+ };
+ 
+ const User = mongoose.model("Users", UserSchema);
+ 
+ export default User;
