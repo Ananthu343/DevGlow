@@ -57,6 +57,14 @@ export const deletePost = createAsyncThunk("user/deletePost",async (id)=>{
     return response.data;
 })
 
+export const getUser = createAsyncThunk("user/getUser",async (id)=>{
+    const response = await axios.get(`${users_url}/getUserData`,{
+        params:{id},
+        withCredentials:true
+    });
+    return response.data;
+})
+
 const userSlice = createSlice({
     name:"user",
     initialState:{ loading:false , error:"" },
@@ -129,6 +137,16 @@ const userSlice = createSlice({
             state.loading = false
         })
         .addCase(deletePost.rejected,(state,action)=>{
+            state.loading = false
+            state.error = action.error.message
+        })
+        .addCase(getUser.pending,(state)=>{
+            state.loading = true
+        })
+        .addCase(getUser.fulfilled,(state)=>{
+            state.loading = false
+        })
+        .addCase(getUser.rejected,(state,action)=>{
             state.loading = false
             state.error = action.error.message
         })

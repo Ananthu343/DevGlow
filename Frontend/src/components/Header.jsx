@@ -41,7 +41,7 @@ const Header = () => {
   return (
     <>
     <div className='fixed top-0 z-50 flex justify-center w-screen '>
-      <div className='h-[50px] w-screen md:w-[85%] bg-white rounded-b-2xl top-0 z-50 self-center shadow-md flex p-3 flex justify-between'>
+      <div className='h-[50px] w-screen md:w-[85%] bg-white md:rounded-b-2xl top-0 z-50 self-center shadow-md flex p-3 flex justify-between'>
         <img src="logo.png" alt="" />
         <input onClick={()=>setSearchBox(true)} onChange={(e) => setSearchTerm(e.target.value)}  type="text" placeholder='Search' className='hidden md:flex border rounded-full border-[#720058] h-8 w-[250px] text-sm focus:outline-none focus:shadow-md bg-gray-100 pl-3' />
                                                               

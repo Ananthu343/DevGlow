@@ -12,7 +12,7 @@ const Feeds = () => {
   const [editPost,setEditPost] = useState(null)
   
   console.log(feed);
-  
+
  const toggleReadMore = (index) => {
     setReadMoreStates(prevStates => ({
       ...prevStates,
@@ -42,7 +42,7 @@ const Feeds = () => {
                 <div className='flex w-auto h-10 justify-between items-center '>
                   <img className='border border-[#720058] w-8 rounded-full mr-2 ' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU" alt="profilepic" />
                   <div className='flex flex-col'>
-                    <h1 className='text-sm font-semibold'>{userData ? userData.username : 'Unknown'}</h1>
+                    <h1 className='text-sm font-semibold hover:text-blue-800 hover:underline hover:cursor-pointer'>{userData ? userData.username : 'Unknown'}</h1>
                     <p className='text-[9px] text-[#979797]'>{userData?.about ? userData.about : 'Aboutscccccccccccclccccclcddddddccscscs'}</p>
                     <p className='text-[8px] text-[#979797]'>Posted on: {new Date(document.createdAt).toLocaleDateString()}</p>
                   </div>
