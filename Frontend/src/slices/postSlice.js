@@ -18,6 +18,16 @@ export const getFeed = createAsyncThunk("user/getFeed",async ()=>{
     return data;
 })
 
+export const likePost = createAsyncThunk("user/likePost", async (id) => {
+    const response = await axios.patch(`${users_url}/likePost`, {
+        id: id, 
+    }, {
+        withCredentials: true,
+    });
+    return response.data;
+});
+
+
 const postSlice = createSlice({
     name: "post",
     initialState,

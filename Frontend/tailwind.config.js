@@ -3,7 +3,15 @@ module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: false, // or 'media' or 'class'
   theme: {
-     extend: {},
+     extend: {
+      colors: {
+         'custom-blue': '#1E40AF',
+         'custom-pink': '#FF0080',
+       },
+       backgroundImage: {
+         'custom-bg': "url('https://files.123freevectors.com/wp-content/original/131382-abstract-grey-and-white-polygon-pattern-background-illustration.jpg')",
+       },
+     },
   },
   variants: {
      extend: {},

@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import PostDropdown from './PostDropdown'
 
 import VideoPlayer from './VideoPlayer'
-import EditPost from './EditPost';
+import FollowToggle from './FollowToggle'
 
-const UserPosts = ({id}) => {
+const SavedPosts = ({user}) => {
     const { feed, users } = useSelector(state => state.post);
     const { userInfo } = useSelector(state => state.auth);
     const [readMoreStates, setReadMoreStates] = useState({});
-    const [modal, setModal] = useState(false)
-    const [editPost,setEditPost] = useState(null)
       
    const toggleReadMore = (index) => {
       setReadMoreStates(prevStates => ({
@@ -17,14 +16,10 @@ const UserPosts = ({id}) => {
         [index]: !prevStates[index],
       }));
    };
-  
-   const openEdit = (post) =>{
-      setEditPost(post)
-      setModal(true)
-   }
-  
+   let savedPosts = user?.savedPosts
+   
    let posts = Array.isArray(feed) ? feed : [];
-   posts = posts.filter(ele => ele.creatorId === id)
+   posts = posts.filter(ele => savedPosts.includes(ele._id))
    const reversedPosts = [...posts].reverse();
    
     return (
@@ -46,9 +41,11 @@ const UserPosts = ({id}) => {
                       <p className='text-[8px] text-[#979797]'>Posted on: {new Date(document.createdAt).toLocaleDateString()}</p>
                     </div>
                   </div>
-                  <div>
-                    {userInfo?.devGlowAccess._id === userData?._id ? <h2 className='text-xs cursor-pointer' onClick={()=>openEdit(document)}>edit post</h2> : <h1>Follow</h1>}
-                  </div>
+                  <div className='flex'>
+                  <FollowToggle userData={userData} posts={posts}/>
+                  
+                  {userInfo?.devGlowAccess._id === userData?._id ? <PostDropdown options={["Edit Post"]} document={document} /> : <PostDropdown options={["Save Post", "Report User"]} document={document}/>}
+                 </div>
                 </div>
                 <div className='border-t w-full h-auto mt-2 mb-2 pl-3 pr-3 break-words'>
                 <p className='text-sm'>
@@ -76,11 +73,8 @@ const UserPosts = ({id}) => {
             </div>
           );
         })}
-        {modal ? 
-        <EditPost post={editPost} setModal={setModal}/>
-   : null}
       </div>
     );
 }
 
-export default UserPosts
+export default SavedPosts

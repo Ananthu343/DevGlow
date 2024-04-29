@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ProfileContainer from '../components/ProfileContainer'
 import Footer from '../components/Footer'
-import { useSelector } from 'react-redux'
+import { useSelector,useDispatch } from 'react-redux'
+import { getFeed } from '../slices/postSlice'
  
 
 const MyProfile = () => {
   const {userInfo} = useSelector((state)=>state.auth)
+  const dispatch = useDispatch()
+  
+  useEffect(()=>{
+    dispatch(getFeed())
+  })
     const userId= userInfo.devGlowAccess._id
   return (
     <>

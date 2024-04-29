@@ -29,7 +29,7 @@ const SearchBox = ({ setSearchBox ,searchTerm}) => {
  }
 
  return (
-    <div onClick={() => setSearchBox(false)} className='fixed w-full h-screen bg-black/50 pt-[55px] hidden md:block md:pl-[180px] lg:pl-[270px]'>
+    <div onClick={() => setSearchBox(false)} className='fixed w-full h-screen bg-black/50 pt-[55px] hidden md:block md:pl-[180px] lg:pl-[270px] z-10'>
         <div onClick={stopPropagation} className='w-[250px] h-auto bg-white rounded flex flex-col items-center text-sm text-[#979797]'>
             <h1>Search for results</h1>
             <div className='border-t w-full pl-4'>

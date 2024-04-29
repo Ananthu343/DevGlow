@@ -13,7 +13,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getFeed())
-  }, [dispatch])
+  })
 
   return (
     <div className='w-[85%] pt-[60px] flex justify-center  top-0 mx-auto'>

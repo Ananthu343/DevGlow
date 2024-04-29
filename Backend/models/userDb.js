@@ -38,6 +38,7 @@ const UserSchema = new mongoose.Schema({
   },
   reportCount:{
     type:Number,
+    default:0
   },
   status:{
     type:Boolean,
@@ -51,9 +52,23 @@ const UserSchema = new mongoose.Schema({
   token:{
     type:String
   },
+  dob:{
+    type:String
+  },
+  gender:{
+    type:String
+  },
   savedPosts:[{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Posts'
+  }],
+  following:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users'
+  }],
+  followers:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users'
   }],
   createdAt: { type: Date, default: Date.now }
 })

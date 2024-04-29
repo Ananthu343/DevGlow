@@ -21,6 +21,20 @@ class PostRepository{
     async findById(id) {
         return await Post.findById(id);
     }
+    async pullLikedUsers(postId,myId) {
+        return await Post.findOneAndUpdate(
+            { _id: postId }, 
+            { $pull: { likedUsers : myId } }, 
+            { new: true }
+        );
+    }
+    async pushLikedUsers(postId,myId) {
+        return await Post.findOneAndUpdate(
+            { _id: postId }, 
+            { $addToSet: { likedUsers : myId } }, 
+            { new: true }
+        );
+    }
 }
 
 export default PostRepository

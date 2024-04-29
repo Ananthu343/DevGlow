@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { getUser } from '../slices/userSlice'
 import { getFeed } from '../slices/postSlice'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { setBanner } from '../slices/userSlice'
 import ProgressBar from './Progressbar'
 import NotificationCase from './NotificationCase'
 import UserPosts from './UserPosts'
+import CommunityCase from './CommunityCase'
+import SavedPosts from './SavedPosts'
+import SuggestionsCase from './SuggestionsCase'
+import Followers from './Followers'
+import Following from './Following'
+import EditProfile from './EditProfile'
 
 const ProfileContainer = ({ userId }) => {
     const dispatch = useDispatch()
@@ -16,7 +23,33 @@ const ProfileContainer = ({ userId }) => {
     const [savedPosts, setSavedPosts] = useState(false)
     const [followers, setFollowers] = useState(false)
     const [following, setFollowing] = useState(false)
+    const [modal, setModal] = useState(false)
 
+
+    const openPosts = () => {
+        setMyPosts(true)
+        setSavedPosts(false)
+        setFollowers(false)
+        setFollowing(false)
+    }
+    const openSavedPost = () => {
+        setMyPosts(false)
+        setSavedPosts(true)
+        setFollowers(false)
+        setFollowing(false)
+    }
+    const openFollowers = () => {
+        setMyPosts(false)
+        setSavedPosts(false)
+        setFollowers(true)
+        setFollowing(false)
+    }
+    const openFollowing = () => {
+        setMyPosts(false)
+        setSavedPosts(false)
+        setFollowers(false)
+        setFollowing(true)
+    }
     useEffect(() => {
         dispatch(getUser(userId)).then((action) => {
             if (action.meta.requestStatus === "rejected") {
@@ -28,42 +61,51 @@ const ProfileContainer = ({ userId }) => {
             }
         })
         dispatch(getFeed())
-    }, [userId, dispatch])
-    
-    const openPosts = ()=>{
-        setMyPosts(true)
-        setSavedPosts(false)
-        setFollowers(false)
-        setFollowing(false)
-    }
-    const openSavedPost = ()=>{
-        setMyPosts(false)
-        setSavedPosts(true)
-        setFollowers(false)
-        setFollowing(false)
-    }
-    const openFollowers = ()=>{
-        setMyPosts(false)
-        setSavedPosts(false)
-        setFollowers(true)
-        setFollowing(false)
-    }
-    const openFollowing = ()=>{
-        setMyPosts(false)
-        setSavedPosts(false)
-        setFollowers(false)
-        setFollowing(true)
-    }
+    }, [userId, dispatch, navigate])
+
+    const fileInputRef = useRef(null);
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            dispatch(setBanner(file)).then((action) => {
+                if (action.meta.requestStatus === "rejected") {
+                    const errorMessage = "Something went wrong!";
+                    toast.error(errorMessage);
+                }});
+            fileInputRef.current.value = '';
+        }
+    };
+
+    const triggerFileInputClick = () => {
+        fileInputRef.current.click();
+    };
+
     return (
         <>
             <div className='flex'>
                 <img className='md:rounded-t-2xl w-full md:h-[200px]' src={user.banner_url ? user.banner_url : "https://pulsegp.com/wp-content/themes/leahy/assets/images/default-banner.png"} alt="user_banner" />
                 <div className='w-full md:w-[85%] h-auto absolute flex justify-end pt-3 pr-3'>
-                    <img className='w-5 rounded-full' src="editPen.png" alt="" />
+                    <form onSubmit={setBanner}>
+                        <img
+                            className='w-5 rounded-full cursor-pointer'
+                            src="editPen.png"
+                            alt=""
+                            onClick={triggerFileInputClick}
+                        />
+                        <input
+                            type="file"
+                            id='fileUpload'
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                            onInput={handleFileChange}
+                        />
+                    </form>
                 </div>
             </div>
             <div className='w-full p-3 h-auto flex justify-around'>
-                <img className='border-2 border-[#720058] w-[100px] h-[100px] md:w-[150px] md:h-[150px] rounded-full mt-[-50px] ml-[40%] md:ml-[5%]' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU" alt="profile pic" />
+                {console.log("user", user)}
+                <img className='border-2 border-[#720058] w-[100px] h-[100px] md:w-[150px] md:h-[150px] rounded-full mt-[-50px] ml-[40%] md:ml-[5%]' src={user?.profile_url ? user.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profile pic" />
                 <div className='flex'>
                     <div className='flex-col justify-between w-[40%]'>
                         <h2 className='text-xl font-semibold'>{user?.username ?? "Unknown"}</h2>
@@ -75,8 +117,8 @@ const ProfileContainer = ({ userId }) => {
                         </div>
                     </div>
                     <div className='flex justify-between pt-5 pl-5 w-[180px] ml-[100px] lg:ml-[0px]'>
-                        <p className='text-xs font-bold text-[#004272]'>{user?.followers ?? "0"} Followers</p>
-                        <p className='text-xs font-bold text-[#004272]'>{user?.following ?? "0"} Following</p>
+                        <p className='text-xs font-bold text-[#004272]'>{user?.followers?.length ?? "0"} Followers</p>
+                        <p className='text-xs font-bold text-[#004272]'>{user?.following?.length ?? "0"} Following</p>
                     </div>
                 </div>
                 <div className=' overflow-wrap-break-word flex flex-col items-center mt-5'>
@@ -85,7 +127,7 @@ const ProfileContainer = ({ userId }) => {
                 </div>
                 <div className='flex-col'>
                     <p className='text-xs text-[#979797] mb-1'>Settings</p>
-                    <p className='text-xs font-bold #004272]'>Edit profile</p>
+                    <p onClick={() => setModal(true)} className='text-xs font-bold #004272] cursor-pointer'>Edit profile</p>
                 </div>
             </div>
             <div className='h-auto w-full p-4'>
@@ -96,12 +138,21 @@ const ProfileContainer = ({ userId }) => {
                     <button onClick={openFollowing} className={following ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>Following</button>
                 </div>
                 <div className='h-[1px] w-full border border-b'></div>
-                <div className='w-full flex justify-center pt-2'>
-                       <img src="" alt="" />
-                      {myPosts && <UserPosts id={userId}/>}
-                       <NotificationCase/>
+                <div className='w-full flex justify-center pt-2 bg-custom-bg'>
+                    {savedPosts && <CommunityCase />}
+                    {myPosts && <CommunityCase />}
+                    {savedPosts && <SavedPosts user={user} />}
+                    {followers && <SuggestionsCase />}
+                    {following && <SuggestionsCase />}
+                    {following && <Following user={user} />}
+                    {followers && <Followers user={user} />}
+                    {myPosts && <UserPosts id={userId} />}
+                    <NotificationCase />
                 </div>
             </div>
+            {modal ?
+                <EditProfile setModal={setModal} />
+                : null}
         </>
 
     )

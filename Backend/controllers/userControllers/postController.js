@@ -105,5 +105,47 @@ export const postController = {
         } catch (error) {
             res.status(401).send({ error: 'Error deleting post' });
         }
+    },
+    savePost: async(req,res)=>{
+        try {
+            const postId = req.body.id
+            const user = getTokenData(req)
+            await userRepository.pushIntoSavedArray(user,postId)
+            res.status(200).send('Post saved successfully');
+        } catch (error) {
+            res.status(401).send({ error: 'Error saving post' });
+        }
+    },
+    likePost: async (req, res) => {
+        try {
+            const myId = getTokenData(req); // Assuming getTokenData returns an object with an id property
+            const postId = req.body.id;
+            const postData = await postRepository.findById(postId);
+            
+            let updatedLikeStatus = false;
+            if (postData.likedUsers.includes(myId)) {
+                console.log("unliked");
+                await postRepository.pullLikedUsers(postId, myId);
+                updatedLikeStatus = false; 
+            } else {
+                console.log("liked");
+                // Like logic
+                await postRepository.pushLikedUsers(postId, myId);
+                updatedLikeStatus = true; 
+            }
+    
+            // Fetch the updated post data to include in the response
+            const updatedPostData = await postRepository.findById(postId);
+    
+            res.status(200).send({
+                message: updatedLikeStatus ? 'Post liked successfully' : 'Post unliked successfully',
+                likeStatus: updatedLikeStatus,
+                updatedPost: updatedPostData // Include the updated post data in the response
+            });
+        } catch (error) {
+            res.status(500).send({ error: 'Internal server error', likeStatus: false });
+            console.log(error.message);
+        }
     }
+    
 }

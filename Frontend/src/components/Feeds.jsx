@@ -1,40 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState ,useMemo} from 'react'
 import { useSelector } from 'react-redux'
 
 import VideoPlayer from './VideoPlayer'
 import EditPost from './EditPost';
+import PostDropdown from './PostDropdown';
+import FollowToggle from './FollowToggle';
+import LikeToggle from './LikeToggle';
 
 const Feeds = () => {
   const { feed, users } = useSelector(state => state.post);
   const { userInfo } = useSelector(state => state.auth);
   const [readMoreStates, setReadMoreStates] = useState({});
   const [modal, setModal] = useState(false)
-  const [editPost,setEditPost] = useState(null)
+  const [editPost, setEditPost] = useState(null)
   
-  console.log(feed);
 
- const toggleReadMore = (index) => {
+  const toggleReadMore = (index) => {
     setReadMoreStates(prevStates => ({
       ...prevStates,
       [index]: !prevStates[index],
     }));
- };
+  };
 
- const openEdit = (post) =>{
+  const openEdit = (post) => {
     setEditPost(post)
     setModal(true)
- }
+  }
+  const posts = useMemo(() => Array.isArray(feed) ? feed : [], [feed]);
 
- const posts = Array.isArray(feed) ? feed : [];
- const reversedPosts = [...posts].reverse();
- 
+
+  const reversedPosts = [...posts].reverse();
+
   return (
     <div className='w-full md:w-[550px] h-auto flex-col md:pl-4 md:pr-4'>
       {reversedPosts?.map((document, index) => {
         const userData = users.find(user => user._id === document.creatorId);
 
         const isReadMore = readMoreStates[index] || false;
-        
+
         return (
           <div key={index}>
             <div className='bg-white rounded shadow-lg pt-2 pb-2'>
@@ -47,16 +50,17 @@ const Feeds = () => {
                     <p className='text-[8px] text-[#979797]'>Posted on: {new Date(document.createdAt).toLocaleDateString()}</p>
                   </div>
                 </div>
-                <div>
-                  {userInfo?.devGlowAccess._id === userData?._id ? <h2 className='text-xs cursor-pointer' onClick={()=>openEdit(document)}>edit post</h2> : <h1>Follow</h1>}
+                <div className='flex '>
+                 <FollowToggle posts={posts} userData={userData} />
+                  {userInfo?.devGlowAccess._id === userData?._id ? <PostDropdown options={["Edit Post"]} document={document} openEdit={openEdit} /> : <PostDropdown options={["Save Post", "Report User"]} document={document} />}
                 </div>
               </div>
               <div className='border-t w-full h-auto mt-2 mb-2 pl-3 pr-3 break-words'>
-              <p className='text-sm'>
-                 {isReadMore ? document.description : document.description.slice(0, 50)}
-                 {document.description.length > 50 ? <span onClick={() => toggleReadMore(index)} className="read-or-hide text-black text-xs cursor-pointer">
+                <p className='text-sm'>
+                  {isReadMore ? document.description : document.description.slice(0, 50)}
+                  {document.description.length > 50 ? <span onClick={() => toggleReadMore(index)} className="read-or-hide text-black text-xs cursor-pointer">
                     {isReadMore ? "..show less" : " ..read more"}
-                 </span> : null}
+                  </span> : null}
                 </p>
               </div>
               {
@@ -64,22 +68,22 @@ const Feeds = () => {
                   : null
               }
               <div className='mt-1 w-full flex justify-between pl-2 pr-2 text-[11px] text-[#979797]'>
-                   <p className='flex items-center'><img className='w-4' src="star.webp" alt="" />{document.stars}</p>
-                   <p>0 comments</p>
+                <p className='flex items-center'><img className='w-4' src="star.webp" alt="" />{document.likedUsers?.length}</p>
+                <p>0 comments</p>
               </div>
               <div className='border-t w-full flex justify-around pl-3 pr-3 text-[12px]'>
-                   <p className='flex items-center cursor-pointer'><img className='w-5 mr-1' src="star.webp" alt="" />Like</p>
-                   <p className='flex items-center cursor-pointer'><img className='w-5 mr-1' src="comment.png" alt="" />Comment</p>
-                   <p className='flex items-center cursor-pointer'><img className='w-3 mr-1' src="share.png" alt="" />Share</p>
+                <LikeToggle posts={posts} document={document}/>
+                <p className='flex items-center cursor-pointer'><img className='w-5 mr-1' src="comment.png" alt="" />Comment</p>
+                <p className='flex items-center cursor-pointer'><img className='w-3 mr-1' src="share.png" alt="" />Share</p>
               </div>
             </div>
             <div className='mt-3 mb-3 h-[1px] bg-[#004272] rounded' />
           </div>
         );
       })}
-      {modal ? 
-      <EditPost post={editPost} setModal={setModal}/>
- : null}
+      {modal ?
+        <EditPost post={editPost} setModal={setModal} />
+        : null}
     </div>
   );
 }

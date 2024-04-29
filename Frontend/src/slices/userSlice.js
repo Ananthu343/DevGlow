@@ -65,6 +65,47 @@ export const getUser = createAsyncThunk("user/getUser",async (id)=>{
     return response.data;
 })
 
+export const savePost = createAsyncThunk("user/savePost", async (id) => {
+    const response = await axios.patch(`${users_url}/savePost`, {
+        id: id, 
+    }, {
+        withCredentials: true,
+    });
+    return response.data;
+});
+
+export const reportUser = createAsyncThunk("user/reportUser", async (id) => {
+    const response = await axios.patch(`${users_url}/reportUser`, {
+        id: id, 
+    }, {
+        withCredentials: true,
+    });
+    return response.data;
+});
+
+export const followUser = createAsyncThunk("user/followUser", async (id) => {
+    const response = await axios.patch(`${users_url}/followUser`, {
+        id: id, 
+    }, {
+        withCredentials: true,
+    });
+    return response.data;
+});
+
+export const editProfile = createAsyncThunk("user/editProfile",async (data)=>{
+    const response = await axios.patch(`${users_url}/editProfile`,data,{
+        withCredentials:true
+    });
+    return response.data;
+})
+
+export const setBanner = createAsyncThunk("user/setBanner",async (data)=>{
+    const response = await axios.patch(`${users_url}/setBanner`,data,{
+        withCredentials:true
+    });
+    return response.data;
+})
+
 const userSlice = createSlice({
     name:"user",
     initialState:{ loading:false , error:"" },
@@ -147,6 +188,56 @@ const userSlice = createSlice({
             state.loading = false
         })
         .addCase(getUser.rejected,(state,action)=>{
+            state.loading = false
+            state.error = action.error.message
+        })
+        .addCase(savePost.pending,(state)=>{
+            state.loading = true
+        })
+        .addCase(savePost.fulfilled,(state)=>{
+            state.loading = false
+        })
+        .addCase(savePost.rejected,(state,action)=>{
+            state.loading = false
+            state.error = action.error.message
+        })
+        .addCase(reportUser.pending,(state)=>{
+            state.loading = true
+        })
+        .addCase(reportUser.fulfilled,(state)=>{
+            state.loading = false
+        })
+        .addCase(reportUser.rejected,(state,action)=>{
+            state.loading = false
+            state.error = action.error.message
+        })
+        .addCase(followUser.pending,(state)=>{
+            state.loading = true
+        })
+        .addCase(followUser.fulfilled,(state)=>{
+            state.loading = false
+        })
+        .addCase(followUser.rejected,(state,action)=>{
+            state.loading = false
+            state.error = action.error.message
+        })
+        .addCase(editProfile.pending,(state)=>{
+            state.loading = true
+        })
+        .addCase(editProfile.fulfilled,(state)=>{
+            state.loading = false
+        })
+        .addCase(editProfile.rejected,(state,action)=>{
+            state.loading = false
+            state.error = action.error.message
+        })
+        .addCase(setBanner.pending,(state)=>{
+            state.loading = true
+        })
+        .addCase(setBanner.fulfilled,(state)=>{
+            state.loading = false
+        })
+        .addCase(setBanner.rejected,(state,action)=>{
             state.loading = false
             state.error = action.error.message
         })
