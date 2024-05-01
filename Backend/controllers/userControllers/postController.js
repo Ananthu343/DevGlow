@@ -84,8 +84,8 @@ export const postController = {
                 }
             }
     
-            await postRepository.updatePost(postId,updatedPost);
-            res.status(200).send('Post updated successfully');
+            updatedPost = await postRepository.updatePost(postId,updatedPost);
+            res.status(200).send({message:'Post updated successfully',updatedPost});
         } catch (error) {
             console.log(error.message);
             res.status(401).send({ error: 'Error updating post' });
@@ -136,7 +136,6 @@ export const postController = {
     
             // Fetch the updated post data to include in the response
             const updatedPostData = await postRepository.findById(postId);
-    
             res.status(200).send({
                 message: updatedLikeStatus ? 'Post liked successfully' : 'Post unliked successfully',
                 likeStatus: updatedLikeStatus,

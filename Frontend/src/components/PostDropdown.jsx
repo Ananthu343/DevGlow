@@ -10,7 +10,6 @@ const PostDropdown = ({ options, document, openEdit }) => {
         switch (option) {
             case "Save Post":
                 // Save post logic
-                console.log(document);
                 dispatch(savePost(document._id))
                 break;
             case "Edit Post":
@@ -27,7 +26,7 @@ const PostDropdown = ({ options, document, openEdit }) => {
     };
 
     return (
-        <div className="relative">
+        <div className="relative z-10">
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="focus:outline-none"
@@ -37,7 +36,7 @@ const PostDropdown = ({ options, document, openEdit }) => {
                     width="16"
                     height="16"
                     fill="currentColor"
-                    classname="bi bi-three-dots-vertical"
+                    className="bi bi-three-dots-vertical"
                     viewBox="0 0 16 16"
                 >
                     <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />

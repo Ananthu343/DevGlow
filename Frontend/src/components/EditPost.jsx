@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deletePost, editPost } from '../slices/userSlice';
+import { updateFeed } from '../slices/postSlice';
 import toast from 'react-hot-toast';
 
 const EditPost = ({ setModal, post }) => {
@@ -43,15 +44,14 @@ const EditPost = ({ setModal, post }) => {
         formData.append('description', description)
         formData.append('visibility', visibility)
         formData.append('fileUpload', media)
-        console.log(formData);
+        setModal(false)
         dispatch(editPost(formData)).then((action) => {
             if (action.meta.requestStatus === "rejected") {
                 const errorMessage = "Edit error";
                 toast.error(errorMessage);
             } else {
-                setModal(false)
                 toast.success("Saved")
-                window.location.reload()
+                dispatch(updateFeed(action.payload.updatedPost));
             }
         })
 
@@ -65,8 +65,8 @@ const EditPost = ({ setModal, post }) => {
                 const errorMessage = "Unable to delete";
                 toast.error(errorMessage);
             } else {
-                window.location.reload()
                 toast.success("Deleted")
+
             }
         })
     }

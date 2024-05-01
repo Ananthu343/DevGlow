@@ -83,14 +83,7 @@ export const reportUser = createAsyncThunk("user/reportUser", async (id) => {
     return response.data;
 });
 
-export const followUser = createAsyncThunk("user/followUser", async (id) => {
-    const response = await axios.patch(`${users_url}/followUser`, {
-        id: id, 
-    }, {
-        withCredentials: true,
-    });
-    return response.data;
-});
+
 
 export const editProfile = createAsyncThunk("user/editProfile",async (data)=>{
     const response = await axios.patch(`${users_url}/editProfile`,data,{
@@ -208,16 +201,6 @@ const userSlice = createSlice({
             state.loading = false
         })
         .addCase(reportUser.rejected,(state,action)=>{
-            state.loading = false
-            state.error = action.error.message
-        })
-        .addCase(followUser.pending,(state)=>{
-            state.loading = true
-        })
-        .addCase(followUser.fulfilled,(state)=>{
-            state.loading = false
-        })
-        .addCase(followUser.rejected,(state,action)=>{
             state.loading = false
             state.error = action.error.message
         })

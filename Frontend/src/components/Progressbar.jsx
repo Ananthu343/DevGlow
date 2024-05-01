@@ -1,6 +1,10 @@
 import React from 'react';
 
 const ProgressBar = ({ bgcolor, progress, height }) => {
+    function calculatePercentage(number, maxNumber) {
+        return (number / maxNumber) * 100;
+       }
+     const stars =   calculatePercentage(progress,1500)
  const ParentDivStyle = {
     height: height,
     width: '400px',
@@ -11,10 +15,10 @@ const ProgressBar = ({ bgcolor, progress, height }) => {
 
  const ChildDivStyle = {
     height: '100%',
-    width: `${progress}%`,
+    width: `${stars}%`,
     backgroundColor: bgcolor,
     borderRadius: 40,
-    textAlign: 'right'
+    textAlign: 'right',
  };
 
  const progressTextStyle = {

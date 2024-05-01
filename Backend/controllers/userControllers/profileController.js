@@ -42,15 +42,16 @@ export const profileController = {
                 console.log("unfollowed");
                 await userRepository.pullFromFollowers(newUserId, myId);
                 updatedFollowStatus = false; // User is now unfollowed
-                res.status(200).send({ message: 'User unfollowed successfully', followStatus: updatedFollowStatus });
             } else {
                 console.log("followed");
                 // Follow logic
                 await userRepository.pushIntoFollowing(myId, newUserId);
                 await userRepository.pushIntoFollowers(newUserId, myId);
                 updatedFollowStatus = true; // User is now followed
-                res.status(200).send({ message: 'User followed successfully', followStatus: updatedFollowStatus });
             }
+            const updatedUser = await userRepository.findById(newUserId)
+            res.status(200).send({ message: updatedFollowStatus ? 'User followed successfully' 
+            : 'User unfollowed successfully', followStatus: updatedFollowStatus,updatedUser });
         } catch (error) {
             res.status(500).send({ error: 'Error following user', followStatus: false });
             console.log(error.message);

@@ -1,4 +1,4 @@
-import React, { useState ,useMemo} from 'react'
+import React, { useState, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 
 import VideoPlayer from './VideoPlayer'
@@ -13,7 +13,6 @@ const Feeds = () => {
   const [readMoreStates, setReadMoreStates] = useState({});
   const [modal, setModal] = useState(false)
   const [editPost, setEditPost] = useState(null)
-  
 
   const toggleReadMore = (index) => {
     setReadMoreStates(prevStates => ({
@@ -28,7 +27,6 @@ const Feeds = () => {
   }
   const posts = useMemo(() => Array.isArray(feed) ? feed : [], [feed]);
 
-
   const reversedPosts = [...posts].reverse();
 
   return (
@@ -42,16 +40,18 @@ const Feeds = () => {
           <div key={index}>
             <div className='bg-white rounded shadow-lg pt-2 pb-2'>
               <div className='w-full h-10 p-3 flex justify-between items-center'>
-                <div className='flex w-auto h-10 justify-between items-center '>
-                  <img className='border border-[#720058] w-8 rounded-full mr-2 ' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU" alt="profilepic" />
+                <div className='flex w-auto h-auto justify-between items-center '>
+                  <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
+                    <img className='w-[40px] h-[40px] object-cover' src={userData?.profile_url ? userData?.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
+                  </div>
                   <div className='flex flex-col'>
                     <h1 className='text-sm font-semibold hover:text-blue-800 hover:underline hover:cursor-pointer'>{userData ? userData.username : 'Unknown'}</h1>
-                    <p className='text-[9px] text-[#979797]'>{userData?.about ? userData.about : 'Aboutscccccccccccclccccclcddddddccscscs'}</p>
+                    <p className='text-[9px] text-[#979797]'>{userData?.badge ? userData.badge : 'Beginner'}</p>
                     <p className='text-[8px] text-[#979797]'>Posted on: {new Date(document.createdAt).toLocaleDateString()}</p>
                   </div>
                 </div>
                 <div className='flex '>
-                 <FollowToggle posts={posts} userData={userData} />
+                  <FollowToggle userData={userData} />
                   {userInfo?.devGlowAccess._id === userData?._id ? <PostDropdown options={["Edit Post"]} document={document} openEdit={openEdit} /> : <PostDropdown options={["Save Post", "Report User"]} document={document} />}
                 </div>
               </div>
@@ -72,7 +72,7 @@ const Feeds = () => {
                 <p>0 comments</p>
               </div>
               <div className='border-t w-full flex justify-around pl-3 pr-3 text-[12px]'>
-                <LikeToggle posts={posts} document={document}/>
+                <LikeToggle document={document} />
                 <p className='flex items-center cursor-pointer'><img className='w-5 mr-1' src="comment.png" alt="" />Comment</p>
                 <p className='flex items-center cursor-pointer'><img className='w-3 mr-1' src="share.png" alt="" />Share</p>
               </div>

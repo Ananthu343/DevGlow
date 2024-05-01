@@ -35,7 +35,7 @@ const Followers = ({user}) => {
                 filteredUsers.length ? (
                     <ul>
                         {filteredUsers.map((user) => (
-                            <li key={user.id}>
+                            <li key={user._id}>
                                 <UserCard user={user}/>
                             </li>
                         ))}

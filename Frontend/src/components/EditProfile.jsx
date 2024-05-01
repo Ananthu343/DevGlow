@@ -5,9 +5,8 @@ import toast from 'react-hot-toast';
 import { editProfile } from '../slices/userSlice';
 
 
-const EditProfile = ({setModal}) => {
+const EditProfile = ({setModal,setUser}) => {
     const {userInfo} = useSelector(state => state.auth)
-    console.log(userInfo);
     const [preview, setPreview] = useState(null);
     const [username, setUsername] = useState(userInfo.devGlowAccess.username)
     const [about, setAbout] = useState(userInfo.devGlowAccess?.about)
@@ -15,7 +14,6 @@ const EditProfile = ({setModal}) => {
     const [dob, setDob] = useState(userInfo.devGlowAccess?.dob)
     const [media, setMedia] = useState({})
 
-console.log(userInfo);
     useEffect(() => {
         if (userInfo.devGlowAccess?.profile_url !== '' ) {
            setPreview(<img 
@@ -32,6 +30,7 @@ console.log(userInfo);
     const formData = new FormData()
 
     const uploadFile = (event) => {
+        console.log("hi");
         const file = event.target.files[0];
         if (file) {
             const fileType = file.type.split('/')[0];
@@ -52,17 +51,15 @@ console.log(userInfo);
         formData.append('gender', gender)
         formData.append('dob', dob)
         formData.append('fileUpload', media)
-        console.log(formData);
         dispatch(editProfile(formData)).then((action)=>{
             if (action.meta.requestStatus === "rejected"){
                 const errorMessage = "Error updating profile";
                 toast.error(errorMessage);
             } else {
-                console.log(action.payload);
                 dispatch(setCredentials(action.payload));
+                setUser(action.payload.devGlowAccess)
             }
            })
-        //    window.location.reload()
            setModal(false)
     }
 
