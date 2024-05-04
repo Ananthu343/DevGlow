@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deletePost, editPost } from '../slices/userSlice';
-import { updateFeed } from '../slices/postSlice';
+import { updateFeed,updateFeedAfterDelete } from '../slices/postSlice';
 import toast from 'react-hot-toast';
 
 const EditPost = ({ setModal, post }) => {
@@ -65,8 +65,8 @@ const EditPost = ({ setModal, post }) => {
                 const errorMessage = "Unable to delete";
                 toast.error(errorMessage);
             } else {
+                dispatch(updateFeedAfterDelete({postId:post._id}))
                 toast.success("Deleted")
-
             }
         })
     }

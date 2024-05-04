@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser } from '../slices/userSlice'
-import { getFeed } from '../slices/postSlice'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { setBanner } from '../slices/userSlice'
@@ -16,49 +15,49 @@ import Following from './Following'
 import EditProfile from './EditProfile'
 
 const ProfileContainer = ({ userId }) => {
-    const { feed } = useSelector(state => state.post)
+    const { myPosts } = useSelector(state => state.post)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [user, setUser] = useState({})
-    const [myPosts, setMyPosts] = useState(true)
-    const [savedPosts, setSavedPosts] = useState(false)
+    const [myPostsMenu, setMyPostsMenu] = useState(true)
+    const [savedPostsMenu, setSavedPostsMenu] = useState(false)
     const [followers, setFollowers] = useState(false)
     const [following, setFollowing] = useState(false)
     const [modal, setModal] = useState(false)
     const [totalStars,setTotalStars] = useState(0)
 
     useEffect(()=>{
-        let posts = feed ? feed : [];
+        let posts = myPosts ? myPosts : [];
         posts = posts.filter(ele => ele.creatorId === userId)
         let count = posts.reduce((acc,cur)=>{
                 return  acc += cur?.likedUsers?.length
         },0)
         setTotalStars(count)
-    },[feed])
+    },[myPosts,userId])
     
     const menu = (choice) => {
         switch (choice) {
             case "openPosts":
-                setMyPosts(true)
-                setSavedPosts(false)
+                setMyPostsMenu(true)
+                setSavedPostsMenu(false)
                 setFollowers(false)
                 setFollowing(false)
                 break;
             case "openSavedPost":
-                setMyPosts(false)
-                setSavedPosts(true)
+                setMyPostsMenu(false)
+                setSavedPostsMenu(true)
                 setFollowers(false)
                 setFollowing(false)
                 break;
             case "openFollowers":
-                setMyPosts(false)
-                setSavedPosts(false)
+                setMyPostsMenu(false)
+                setSavedPostsMenu(false)
                 setFollowers(true)
                 setFollowing(false)
                 break;
             case "openFollowing":
-                setMyPosts(false)
-                setSavedPosts(false)
+                setMyPostsMenu(false)
+                setSavedPostsMenu(false)
                 setFollowers(false)
                 setFollowing(true)
                 break;
@@ -82,17 +81,17 @@ const ProfileContainer = ({ userId }) => {
 
     const fileInputRef = useRef(null);
 
-    const handleFileChange = (event) => {
-        const file = fileInputRef.current.value;
-        if (file) {
-            dispatch(setBanner(file)).then((action) => {
-                if (action.meta.requestStatus === "rejected") {
-                    const errorMessage = "Something went wrong!";
-                    toast.error(errorMessage);
-                }});
-            fileInputRef.current.value = '';
-        }
-    };
+    // const handleFileChange = (event) => {
+    //     const file = fileInputRef.current.value;
+    //     if (file) {
+    //         dispatch(setBanner(file)).then((action) => {
+    //             if (action.meta.requestStatus === "rejected") {
+    //                 const errorMessage = "Something went wrong!";
+    //                 toast.error(errorMessage);
+    //             }});
+    //         fileInputRef.current.value = '';
+    //     }
+    // };
 
     const triggerFileInputClick = () => {
         fileInputRef.current.click();
@@ -151,21 +150,21 @@ const ProfileContainer = ({ userId }) => {
             </div>
             <div className='h-auto w-full p-4'>
                 <div className='w-full flex mt-2 mb-2  '>
-                    <button onClick={()=>menu("openPosts")} className={myPosts ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>My posts</button>
-                    <button onClick={()=>menu("openSavedPost")} className={savedPosts ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>Saved posts</button>
+                    <button onClick={()=>menu("openPosts")} className={myPostsMenu ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>My posts</button>
+                    <button onClick={()=>menu("openSavedPost")} className={savedPostsMenu ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>Saved posts</button>
                     <button onClick={()=>menu("openFollowers")} className={followers ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>Followers</button>
                     <button onClick={()=>menu("openFollowing")} className={following ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>Following</button>
                 </div>
                 <div className='h-[1px] w-full border border-b'></div>
                 <div className='w-full flex justify-center pt-2 bg-custom-bg'>
-                    {savedPosts && <CommunityCase />}
-                    {myPosts && <CommunityCase />}
-                    {savedPosts && <SavedPosts user={user} />}
+                    {savedPostsMenu && <CommunityCase />}
+                    {myPostsMenu && <CommunityCase />}
+                    {savedPostsMenu && <SavedPosts />}
                     {followers && <SuggestionsCase />}
                     {following && <SuggestionsCase />}
                     {following && <Following user={user} />}
                     {followers && <Followers user={user} />}
-                    {myPosts && <UserPosts id={userId} />}
+                    {myPostsMenu && <UserPosts id={userId} />}
                     <NotificationCase />
                 </div>
             </div>

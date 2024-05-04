@@ -52,7 +52,7 @@ const VideoPlayer = ({ videoUrl }) => {
                 width: '100%',
                 height: '100%',
                 objectFit: 'contain',
-                backgroundColor:'lightgrey'
+                backgroundColor:'black'
             }} onClick={handleUnmute} controls>
                 <source src={videoUrl} type="video/mp4" />
                 Your browser does not support the video tag.

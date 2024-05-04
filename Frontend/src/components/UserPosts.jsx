@@ -5,7 +5,7 @@ import VideoPlayer from './VideoPlayer'
 import EditPost from './EditPost';
 
 const UserPosts = ({id}) => {
-    const { feed, users } = useSelector(state => state.post);
+    const { myPosts, users } = useSelector(state => state.post);
     const { userInfo } = useSelector(state => state.auth);
     const [readMoreStates, setReadMoreStates] = useState({});
     const [modal, setModal] = useState(false)
@@ -22,16 +22,13 @@ const UserPosts = ({id}) => {
       setEditPost(post)
       setModal(true)
    }
-  
-   let posts = Array.isArray(feed) ? feed : [];
+   let posts = Array.isArray(myPosts) ? myPosts : [];
    posts = posts.filter(ele => ele.creatorId === id)
    const reversedPosts = [...posts].reverse();
-   
     return (
       <div className='w-full md:w-[550px] h-auto flex-col md:pl-4 md:pr-4'>
         {reversedPosts?.map((document, index) => {
           const userData = users.find(user => user._id === document.creatorId);
-  
           const isReadMore = readMoreStates[index] || false;
           
           return (

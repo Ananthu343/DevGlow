@@ -5,8 +5,17 @@ class PostRepository{
         const newPost = new Post(post)
         return await newPost.save()
     }
-    async getFeed(){
-        return await Post.find()
+    async getFeed(pageSize, offset) {
+        return await Post.find().skip(offset).limit(pageSize).sort({createdAt: -1});
+    }
+    async getUserPosts(id){
+        return await Post.find({creatorId:id})
+    }
+    async getSavedPosts(savedPostsIds){
+        return Post.find({ _id: { $in: savedPostsIds } })
+    }
+    async getTotalPostsCount(){
+        return await Post.countDocuments()
     }
     async deletePost(id) {
         return await Post.deleteOne({ _id: id });

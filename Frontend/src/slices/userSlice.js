@@ -1,5 +1,6 @@
 import { createAsyncThunk,createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAbortSignalWithTimeout } from '../utils/axiosController'
 
 const users_url = "http://localhost:5000/api/users"
 
@@ -35,69 +36,188 @@ export const logoutUser = createAsyncThunk("user/logout",async ()=>{
     return response.status === 200;
 })
 
-export const uploadPost = createAsyncThunk("user/uploadPost",async (data)=>{
-    const response = await axios.post(`${users_url}/upload-post`,data,{
-        withCredentials:true
-    });
-    return response.data;
-})
-export const editPost = createAsyncThunk("user/editPost",async (data)=>{
-    const response = await axios.patch(`${users_url}/edit-post`,data,{
-        withCredentials:true
-    });
-    return response.data;
-})
+export const uploadPost = createAsyncThunk("user/uploadPost", async (data, { signal }) => {
+    const timeoutMs = 5000; 
+    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
 
-export const deletePost = createAsyncThunk("user/deletePost",async (id)=>{
+    try {
+        const response = await axios.post(`${users_url}/upload-post`, data, {
+            withCredentials: true,
+            signal: abortSignal, 
+        });
 
-    const response = await axios.delete(`${users_url}/delete-post`,{
-        params:{id},
-        withCredentials:true
-    });
-    return response.data;
-})
-
-export const getUser = createAsyncThunk("user/getUser",async (id)=>{
-    const response = await axios.get(`${users_url}/getUserData`,{
-        params:{id},
-        withCredentials:true
-    });
-    return response.data;
-})
-
-export const savePost = createAsyncThunk("user/savePost", async (id) => {
-    const response = await axios.patch(`${users_url}/savePost`, {
-        id: id, 
-    }, {
-        withCredentials: true,
-    });
-    return response.data;
+        return response.data;
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('Request canceled due to timeout', error.message);
+            throw new Error('Request canceled due to timeout');
+        } else {
+            throw error;
+        }
+    }
 });
 
-export const reportUser = createAsyncThunk("user/reportUser", async (id) => {
-    const response = await axios.patch(`${users_url}/reportUser`, {
-        id: id, 
-    }, {
-        withCredentials: true,
-    });
-    return response.data;
+export const editPost = createAsyncThunk("user/editPost", async (data, { signal }) => {
+    const timeoutMs = 5000; 
+    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+
+    try {
+        const response = await axios.patch(`${users_url}/edit-post`, data, {
+            withCredentials: true,
+            signal: abortSignal, 
+        });
+
+        return response.data;
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('Request canceled due to timeout', error.message);
+            throw new Error('Request canceled due to timeout');
+        } else {
+            throw error;
+        }
+    }
 });
 
 
+export const deletePost = createAsyncThunk("user/deletePost", async (id, { signal }) => {
+    const timeoutMs = 5000; 
+    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
 
-export const editProfile = createAsyncThunk("user/editProfile",async (data)=>{
-    const response = await axios.patch(`${users_url}/editProfile`,data,{
-        withCredentials:true
-    });
-    return response.data;
-})
+    try {
+        const response = await axios.delete(`${users_url}/delete-post`, {
+            params: { id },
+            withCredentials: true,
+            signal: abortSignal, 
+        });
 
-export const setBanner = createAsyncThunk("user/setBanner",async (data)=>{
-    const response = await axios.patch(`${users_url}/setBanner`,data,{
-        withCredentials:true
-    });
-    return response.data;
-})
+        return response.data;
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('Request canceled due to timeout', error.message);
+            throw new Error('Request canceled due to timeout');
+        } else {
+            throw error;
+        }
+    }
+});
+
+
+export const getUser = createAsyncThunk("user/getUser", async (id, { signal }) => {
+    const timeoutMs = 5000; 
+    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+
+    try {
+        const response = await axios.get(`${users_url}/getUserData`, {
+            params: { id },
+            withCredentials: true,
+            signal: abortSignal, 
+        });
+
+        return response.data;
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('Request canceled due to timeout', error.message);
+            throw new Error('Request canceled due to timeout');
+        } else {
+            throw error;
+        }
+    }
+});
+
+
+export const savePost = createAsyncThunk("user/savePost", async (id, { signal }) => {
+    const timeoutMs = 5000; 
+    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+
+    try {
+        const response = await axios.patch(`${users_url}/savePost`, {
+            id: id, 
+        }, {
+            withCredentials: true,
+            signal: abortSignal, 
+        });
+
+        return response.data;
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('Request canceled due to timeout', error.message);
+            throw new Error('Request canceled due to timeout');
+        } else {
+            throw error;
+        }
+    }
+});
+
+
+export const reportUser = createAsyncThunk("user/reportUser", async (id, { signal }) => {
+    const timeoutMs = 5000; 
+    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+
+    try {
+        const response = await axios.patch(`${users_url}/reportUser`, {
+            id: id, 
+        }, {
+            withCredentials: true,
+            signal: abortSignal,
+        });
+
+        return response.data;
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('Request canceled due to timeout', error.message);
+            throw new Error('Request canceled due to timeout');
+        } else {
+            throw error;
+        }
+    }
+});
+
+
+
+
+export const editProfile = createAsyncThunk("user/editProfile", async (data, { signal }) => {
+    const timeoutMs = 5000; 
+    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+
+    try {
+        const response = await axios.patch(`${users_url}/editProfile`, data, {
+            withCredentials: true,
+            signal: abortSignal, 
+        });
+
+        return response.data;
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('Request canceled due to timeout', error.message);
+            throw new Error('Request canceled due to timeout');
+        } else {
+            throw error;
+        }
+    }
+});
+
+
+export const setBanner = createAsyncThunk("user/setBanner", async (data, { signal }) => {
+    const timeoutMs = 5000; 
+    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+
+    try {
+        const response = await axios.patch(`${users_url}/setBanner`, data, {
+            withCredentials: true,
+            signal: abortSignal, 
+        });
+
+        return response.data;
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('Request canceled due to timeout', error.message);
+            throw new Error('Request canceled due to timeout');
+        } else {
+            throw error;
+        }
+    }
+});
+
 
 const userSlice = createSlice({
     name:"user",

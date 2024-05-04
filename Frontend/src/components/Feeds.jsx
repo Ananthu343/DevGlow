@@ -1,18 +1,21 @@
-import React, { useState, useMemo } from 'react'
-import { useSelector } from 'react-redux'
-
+import React, { useState } from 'react'
+import { useSelector,useDispatch } from 'react-redux'
+import { getFeed } from '../slices/postSlice';
 import VideoPlayer from './VideoPlayer'
 import EditPost from './EditPost';
 import PostDropdown from './PostDropdown';
 import FollowToggle from './FollowToggle';
 import LikeToggle from './LikeToggle';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import {ScaleLoader} from 'react-spinners'
 
 const Feeds = () => {
-  const { feed, users } = useSelector(state => state.post);
+  const { feed, users , page, hasMore } = useSelector(state => state.post);
   const { userInfo } = useSelector(state => state.auth);
   const [readMoreStates, setReadMoreStates] = useState({});
   const [modal, setModal] = useState(false)
   const [editPost, setEditPost] = useState(null)
+  const dispatch = useDispatch();
 
   const toggleReadMore = (index) => {
     setReadMoreStates(prevStates => ({
@@ -25,17 +28,28 @@ const Feeds = () => {
     setEditPost(post)
     setModal(true)
   }
-  const posts = useMemo(() => Array.isArray(feed) ? feed : [], [feed]);
-
-  const reversedPosts = [...posts].reverse();
+ 
+  const fetchData = () =>{
+    dispatch(getFeed(page))
+  }
 
   return (
     <div className='w-full md:w-[550px] h-auto flex-col md:pl-4 md:pr-4'>
-      {reversedPosts?.map((document, index) => {
-        const userData = users.find(user => user._id === document.creatorId);
-
+      <InfiniteScroll
+      dataLength={feed.length}
+      next={fetchData}
+      hasMore={hasMore}
+      loader={<ScaleLoader color="#3688d6" />}
+      endMessage={
+        <p style={{ textAlign: 'center', color:'purple'}}>
+          <b>Yay! You have seen it all</b>
+        </p>
+      }
+      >
+        
+      {feed?.map((document, index) => {
+        const userData = users?.find(user => user._id === document.creatorId);
         const isReadMore = readMoreStates[index] || false;
-
         return (
           <div key={index}>
             <div className='bg-white rounded shadow-lg pt-2 pb-2'>
@@ -84,6 +98,7 @@ const Feeds = () => {
       {modal ?
         <EditPost post={editPost} setModal={setModal} />
         : null}
+      </InfiniteScroll>
     </div>
   );
 }

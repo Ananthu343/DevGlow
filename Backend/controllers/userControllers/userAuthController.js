@@ -80,7 +80,7 @@ export const authController = {
             const user = await userRepository.findByEmail(email);
             const userData = await userRepository.findById(user._id)
             if (user && (await user.matchPassword(password))) {
-                generateToken(res, user._id);
+                await generateToken(res, user._id);
                 res.status(200).json({
                     devGlowAccess: userData
                 });

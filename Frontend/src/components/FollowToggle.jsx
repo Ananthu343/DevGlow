@@ -14,20 +14,24 @@ const FollowToggle = ({userData}) => {
         } else {
             setFollowStatus(false)
         }
-      }, [userData]);
+      }, [userData,userInfo?.devGlowAccess._id]);
     
       const handleFollow = (id) => {
-        setFollowStatus(!followStatus)
-        dispatch(followUser(id)).then((action) => {
-          if (action.meta.requestStatus === "fulfilled") {
-            const newFollowStatus = action.payload.followStatus;
-            setFollowStatus(newFollowStatus)
-          } else if (action.meta.requestStatus === "rejected") {
-              const errorMessage = "Something went wrong";
-              toast.error(errorMessage);
-              setFollowStatus(false)
-          }
-        });
+        if (userInfo) {
+            setFollowStatus(!followStatus)
+            dispatch(followUser(id)).then((action) => {
+                if (action.meta.requestStatus === "fulfilled") {
+                  const newFollowStatus = action.payload.followStatus;
+                  setFollowStatus(newFollowStatus)
+                } else if (action.meta.requestStatus === "rejected") {
+                    const errorMessage = "Something went wrong";
+                    toast.error(errorMessage);
+                    setFollowStatus(false)
+                }
+              });
+        }else{
+            toast.error("You need to login")
+        }
       };
 
   return (

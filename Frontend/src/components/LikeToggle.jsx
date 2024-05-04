@@ -14,9 +14,10 @@ const LikeToggle = ({ document }) => {
         }else{
             setLikeStatus(false);
         }
-    }, []); // This effect updates the likeStatus state whenever posts or userInfo changes
+    }, [userInfo?.devGlowAccess._id,document?.likedUsers]); // This effect updates the likeStatus state whenever posts or userInfo changes
 
     const handleLike = (id) => {
+       if(userInfo){
         setLikeStatus(!likeStatus)
         dispatch(likePost(id)).then((action) => {
             if (action.meta.requestStatus === "fulfilled") {
@@ -27,6 +28,9 @@ const LikeToggle = ({ document }) => {
                 toast.error(errorMessage);
             }
         });
+       }else{
+        toast.error("You need to login")
+       }
     };
 
     return (

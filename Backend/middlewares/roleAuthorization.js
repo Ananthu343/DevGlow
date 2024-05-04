@@ -1,9 +1,14 @@
+import jwt from "jsonwebtoken";
+
 // Checking each role
+const key = process.env.JWT_SECRET_KEY
 
 export const checkRole = (...roles) => {
     return async (req, res, next) => {
        try {
-        const userRoles = req.user.roles;
+        const token = req.cookies.jwt;
+        const decoded = jwt.verify(token,`${key}`);
+        const userRoles = decoded.userRoles;
         const permittedRole = roles;
         let flag = false;
         permittedRole.forEach(element => {

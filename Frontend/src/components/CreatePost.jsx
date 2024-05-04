@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { uploadPost } from '../slices/userSlice';
+import { updateFeedAfterUpload } from '../slices/postSlice';
 import toast from 'react-hot-toast';
 
 const CreatePost = ({ setModal }) => {
@@ -39,6 +40,7 @@ const CreatePost = ({ setModal }) => {
                 const errorMessage = "Upload error";
                 toast.error(errorMessage);
             } else {
+                dispatch(updateFeedAfterUpload(action.payload))
                 toast.success("Uploaded")
             }
         })

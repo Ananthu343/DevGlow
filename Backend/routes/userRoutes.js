@@ -17,6 +17,7 @@ router.delete('/delete-post',protect,checkRole("user","admin"),postController.de
 router.get('/get-feed',postController.getFeed)
 router.get('/get-users',postController.getusers)
 router.get('/getUserData',profileController.getUserData)
+router.get('/getMyProfilePosts',protect,checkRole("user"),postController.getMyProfilePosts)
 router.patch('/savePost',protect,checkRole("user"),postController.savePost)
 router.patch('/likePost',protect,checkRole("user"),postController.likePost)
 router.patch('/reportUser',protect,checkRole("user"),profileController.reportUser)

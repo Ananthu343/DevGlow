@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import ProfileContainer from '../components/ProfileContainer'
 import Footer from '../components/Footer'
 import { useSelector,useDispatch } from 'react-redux'
-import { getFeed } from '../slices/postSlice'
+import { getMyProfilePosts,getUsers } from '../slices/postSlice'
  
 
 const MyProfile = () => {
@@ -10,8 +10,10 @@ const MyProfile = () => {
   const dispatch = useDispatch()
   
   useEffect(()=>{
-    dispatch(getFeed())
-  })
+    dispatch(getMyProfilePosts())
+    dispatch(getUsers())
+  },[dispatch])
+  
     const userId= userInfo.devGlowAccess._id
   return (
     <>

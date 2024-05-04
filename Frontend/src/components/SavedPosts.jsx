@@ -5,8 +5,8 @@ import PostDropdown from './PostDropdown'
 import VideoPlayer from './VideoPlayer'
 import FollowToggle from './FollowToggle'
 
-const SavedPosts = ({user}) => {
-    const { feed, users } = useSelector(state => state.post);
+const SavedPosts = () => {
+    const { savedPosts, users } = useSelector(state => state.post);
     const { userInfo } = useSelector(state => state.auth);
     const [readMoreStates, setReadMoreStates] = useState({});
       
@@ -16,11 +16,8 @@ const SavedPosts = ({user}) => {
         [index]: !prevStates[index],
       }));
    };
-   let savedPosts = user?.savedPosts
    
-   let posts = Array.isArray(feed) ? feed : [];
-   posts = posts.filter(ele => savedPosts.includes(ele._id))
-   const reversedPosts = [...posts].reverse();
+   const reversedPosts = [...savedPosts].reverse();
    
     return (
       <div className='w-full md:w-[550px] h-auto flex-col md:pl-4 md:pr-4'>
@@ -42,7 +39,7 @@ const SavedPosts = ({user}) => {
                     </div>
                   </div>
                   <div className='flex'>
-                  <FollowToggle userData={userData} posts={posts}/>
+                  <FollowToggle userData={userData}/>
                   
                   {userInfo?.devGlowAccess._id === userData?._id ? <PostDropdown options={["Edit Post"]} document={document} /> : <PostDropdown options={["Save Post", "Report User"]} document={document}/>}
                  </div>

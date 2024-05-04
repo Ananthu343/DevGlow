@@ -12,8 +12,34 @@ const userRepository = new UserRepository()
 export const postController = {
     getFeed:async (req,res)=>{
         try {
-            const feedData = await postRepository.getFeed()
-            res.status(200).json(feedData)
+            const page = parseInt(req.query.page) || 1;
+            console.log("works",page);
+            const pageSize = 5
+            const offset = (page - 1) * pageSize;
+            const totalPosts = await postRepository.getTotalPostsCount();
+            const totalPages = Math.ceil(totalPosts / pageSize);
+            const hasMore = page < totalPages;
+            const feedData = await postRepository.getFeed(pageSize,offset)
+            res.status(200).json({
+                posts: feedData,
+                hasMore: hasMore
+            })
+        } catch (error) {
+            res.status(500).send({error: 'internal server error'})
+            console.log(error.message);
+        }
+    },
+    getMyProfilePosts: async(req,res)=>{
+        try {
+            const myId = getTokenData(req)
+            const myPosts = await postRepository.getUserPosts(myId);
+            const myData = await userRepository.findById(myId);
+            const savedPostsIds = myData.savedPosts;
+            const savedPosts = await postRepository.getSavedPosts(savedPostsIds);
+            res.status(200).json({
+                myPosts,
+                savedPosts
+            })
         } catch (error) {
             res.status(500).send({error: 'internal server error'})
             console.log(error.message);
@@ -44,15 +70,15 @@ export const postController = {
                 return res.status(401).send({ error: 'Error submitting post' });
             }
             const user = getTokenData(req);
-            const newPost = {
+            let newPost = {
                 creatorId: user,
                 description: req.body.description,
                 visibility: req.body.visibility,
                 media: fileUrl 
             };
     
-            await postRepository.save(newPost);
-            res.status(200).send('Post submitted successfully');
+            newPost = await postRepository.save(newPost);
+            res.status(200).send({newPost});
         } catch (error) {
             console.log(error.message);
             res.status(401).send({ error: 'Error submitting post' });
