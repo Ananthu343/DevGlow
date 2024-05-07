@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { savePost,reportUser } from '../slices/userSlice';
+import { blockUser } from '../slices/postSlice';
+import toast from 'react-hot-toast';
+import { updateCredentials } from '../slices/authSlice';
 
 const PostDropdown = ({ options, document, openEdit }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -19,6 +22,16 @@ const PostDropdown = ({ options, document, openEdit }) => {
             case "Report User":
                 // Report user logic
                 dispatch(reportUser(document.creatorId))
+                break;
+            case "Block User":
+                dispatch(blockUser(document.creatorId)).then((action)=>{
+                    if (action.meta.requestStatus === "rejected"){
+                        const errorMessage = "Unable to block";
+                        toast.error(errorMessage);
+                    } else {
+                        dispatch(updateCredentials({devGlowAccess: action.payload}));
+                    }
+                   })
                 break;
             default:
                 break;

@@ -105,7 +105,7 @@ export const deletePost = createAsyncThunk("user/deletePost", async (id, { signa
 export const getUser = createAsyncThunk("user/getUser", async (id, { signal }) => {
     const timeoutMs = 5000; 
     const abortSignal = createAbortSignalWithTimeout(timeoutMs);
-
+console.log(id);
     try {
         const response = await axios.get(`${users_url}/getUserData`, {
             params: { id },

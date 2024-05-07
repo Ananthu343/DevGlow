@@ -1,5 +1,6 @@
 import PostRepository from "../../repositories/postRepository.js";
 import UserRepository from "../../repositories/userRepository.js";
+import CommentRepository from "../../repositories/commentRepository.js";
 import { getTokenData } from "../../utils/jwtToken.js";
 import { app } from "../../configs/firebase.js";
 import {getDownloadURL, getStorage,ref,uploadBytes,deleteObject} from "firebase/storage"
@@ -8,6 +9,7 @@ const storage = getStorage(app)
 
 const postRepository = new PostRepository()
 const userRepository = new UserRepository()
+const commentRepository = new CommentRepository()
 
 export const postController = {
     getFeed:async (req,res)=>{
@@ -171,6 +173,58 @@ export const postController = {
             res.status(500).send({ error: 'Internal server error', likeStatus: false });
             console.log(error.message);
         }
-    }
-    
+    },
+    comment: async(req,res)=>{
+        const commentId = req.body.data.commentId;
+         try {
+            const myId = getTokenData(req)
+            let newCommentData = {
+                creatorId:myId,
+                postId: req.body.data.postId,
+                content:req.body.data.content
+            }
+            console.log(newCommentData);
+            newCommentData = await commentRepository.save(newCommentData)
+            let parentData;
+            if (commentId) {
+               parentData = await commentRepository.pushReplies(commentId,newCommentData._id)
+            }
+            res.status(200).send({
+                    newCommentData,
+                    parentData
+             });
+         } catch (error) {
+            res.status(500).send({ error: 'Internal server error'});
+            console.log(error.message);
+         }
+    },
+    deleteComment: async(req,res)=>{
+        const commentId = req.query.id;
+         try {
+            await commentRepository.deleteComment(commentId)
+            res.status(200).send("comment deleted successfully");
+         } catch (error) {
+            res.status(500).send({ error: 'Internal server error'});
+            console.log(error.message);
+         }
+    },
+    getPostComments: async (req,res) =>{
+        try {
+            const commentData = await commentRepository.getPostComments()
+            res.status(200).send({commentData});
+        } catch (error) {
+            res.status(500).send({ error: 'Internal server error'});
+            console.log(error.message);
+        }
+    },
+    getPostData: async(req,res)=>{
+        try {
+            const postId = req.query.id
+            const postData = await postRepository.findById(postId)
+            res.status(200).json(postData)
+        } catch (error) {
+            res.status(401).send({ error: 'Error getting post' });
+            console.log(error.message);
+        }
+    },
 }

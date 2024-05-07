@@ -11,6 +11,7 @@ import Community from "../pages/Community";
 import Messages from "../pages/Messages";
 import Leaderboard from "../pages/Leaderboard";
 import Search from "../pages/Search";
+import PostDisplay from '../components/PostDisplay';
 
 const UserRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const UserRoutes = () => {
           <Route path="/verifyEmail/:token" element={<Verify/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/searchPage/:value" element={<Search/>}/>
+          <Route path="/post/:postId" element={<PostDisplay/>}/>
           <Route path="" element={<PrivateRoute/>}>
               <Route path="/profile" element={<MyProfile/>} />
               <Route path="/community" element={<Community/>} />

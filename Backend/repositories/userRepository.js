@@ -28,6 +28,13 @@ class UserRepository{
             { new: true }
         );
     }
+    async pushIntoBlocked(myId, userId) {
+        return await User.findOneAndUpdate(
+            { _id: myId }, 
+            { $addToSet: { blocked: userId } }, 
+            { new: true }
+        );
+    }
 
     async pullFromFollowing(id, userId) {
         return await User.findOneAndUpdate(

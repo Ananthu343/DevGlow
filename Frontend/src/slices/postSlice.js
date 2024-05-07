@@ -10,7 +10,8 @@ const initialState = {
     page: 1, 
     hasMore: true,
     myPosts :[],
-    savedPosts:[]
+    savedPosts:[],
+    commentsById:[],
 };
 
 export const getFeed = createAsyncThunk("user/getFeed", async (page) => {
@@ -35,6 +36,74 @@ export const getFeed = createAsyncThunk("user/getFeed", async (page) => {
           }
     }
 });
+
+export const commentOnPost = createAsyncThunk("user/commentOnPost", async (data, { signal }) => {
+    const timeoutMs = 5000; 
+    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+
+    try {
+        const response = await axios.post(`${users_url}/comment`, {
+            data,
+        }, {
+            withCredentials: true,
+            signal: abortSignal,
+        });
+        return response.data;
+
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('Request canceled due to timeout', error.message);
+            throw new Error('Request canceled due to timeout');
+        } else {
+            throw error;
+        }
+    }
+});
+
+export const deleteComment = createAsyncThunk("user/deleteComment", async (commentId, { signal }) => {
+    const timeoutMs = 5000; 
+    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+
+    try {
+        await axios.delete(`${users_url}/deleteComment`, {
+            params: { id: commentId },
+            withCredentials: true,
+            signal: abortSignal,
+        });
+        return commentId;
+
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('Request canceled due to timeout', error.message);
+            throw new Error('Request canceled due to timeout');
+        } else {
+            throw error;
+        }
+    }
+});
+
+export const getComments = createAsyncThunk("user/getComments", async (_, { signal }) => {
+    const timeoutMs = 5000; 
+    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+    try {
+        const response = await axios.get(`${users_url}/getPostcomment`, {
+            withCredentials: true,
+            signal: abortSignal,
+        });
+        return response.data;
+
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('Request canceled due to timeout', error.message);
+            throw new Error('Request canceled due to timeout');
+        } else {
+            throw error;
+        }
+    }
+});
+
+
+
 
 export const getMyProfilePosts = createAsyncThunk("user/getMyProfilePosts", async (_, { signal }) => {
     const timeoutMs = 5000; 
@@ -70,7 +139,6 @@ export const getUsers = createAsyncThunk("user/getUsers", async (_, { signal }) 
         const data = {
             users: users.data,
         };
-        console.log(data, "incoming users");
         return data;
     } catch (error) {
         if (axios.isCancel(error)) {
@@ -127,6 +195,49 @@ export const followUser = createAsyncThunk("user/followUser", async (id, { signa
     }
 });
 
+export const blockUser = createAsyncThunk("user/blockUser", async (id, { signal }) => {
+    const timeoutMs = 5000;
+    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+    try {
+        const response = await axios.patch(`${users_url}/blockUser`, {
+            id: id, 
+        }, {
+            withCredentials: true,
+            signal: abortSignal, 
+        });
+        return response.data.updatedData;
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('Request canceled due to timeout', error.message);
+            throw new Error('Request canceled due to timeout');
+        } else {
+            throw error;
+        }
+    }
+});
+
+export const getPost = createAsyncThunk("user/getPost", async (id, { signal }) => {
+    const timeoutMs = 5000; 
+    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+
+    try {
+        const response = await axios.get(`${users_url}/getPostData`, {
+            params: { id },
+            withCredentials: true,
+            signal: abortSignal, 
+        });
+
+        return response.data;
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('Request canceled due to timeout', error.message);
+            throw new Error('Request canceled due to timeout');
+        } else {
+            throw error;
+        }
+    }
+});
+
 
 const postSlice = createSlice({
     name: "post",
@@ -153,6 +264,12 @@ const postSlice = createSlice({
          state.feed.unshift(action.payload.newPost)
          state.myPosts.push(action.payload.newPost)
         },
+        pushIntoDisplayedComments:(state,action)=>{
+            state.displayedComments.push(action.payload.commentId)
+        },
+        clearDisplayedComments:(state,action)=>{
+            state.displayedComments = []
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -181,8 +298,51 @@ const postSlice = createSlice({
                     state.users[userIndex].followers = action.payload.updatedUser.followers;
                 }
             })
+            .addCase(commentOnPost.fulfilled,(state,action)=>{
+                const newCommentData = action.payload.newCommentData
+                const parentData = action.payload.parentData
+                state.commentsById[newCommentData._id] = newCommentData;
+                if(parentData){
+                    state.commentsById[parentData._id] = {
+                        ...state.commentsById[parentData._id],
+                        ...parentData
+                    };
+                }
+            })
+            .addCase(getComments.fulfilled,(state,action)=>{
+                const newCommentsById = action.payload.commentData.reduce((acc, comment) => {
+                    acc[comment._id] = comment;
+                    return acc;
+                }, {});
+                state.commentsById = { ...state.commentsById, ...newCommentsById };
+            })
+            .addCase(deleteComment.fulfilled,(state,action)=>{
+                const deletedCommentId = action.payload; 
+                delete state.commentsById[deletedCommentId];
+            
+                Object.values(state.commentsById).forEach(comment => {
+                    if (comment.replies && comment.replies.includes(deletedCommentId)) {
+                        comment.replies = comment.replies.filter(replyId => replyId !== deletedCommentId);
+                    }
+                });
+                
+            })
+            .addCase(blockUser.fulfilled,(state,action)=>{
+                const userIndex = state.users.findIndex(user => user._id === action.payload.id);
+                if (userIndex !== -1) {
+                    state.users[userIndex].blocked = action.payload.blocked;
+                }
+            })
         }
 });
 
 export default postSlice.reducer;
-export const {updateFeed,updateFeedAfterDelete,updateFeedAfterUpload} = postSlice.actions;
+export const {
+    updateFeed,
+    updateFeedAfterDelete,
+    updateFeedAfterUpload,
+    clearCommentsById,
+    pushIntoDisplayedComments,
+    clearDisplayedComments
+
+} = postSlice.actions;

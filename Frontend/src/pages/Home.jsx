@@ -3,17 +3,18 @@ import CommunityCase from '../components/CommunityCase'
 import NotificationCase from '../components/NotificationCase'
 import LeaderboardCase from '../components/LeaderboardCase'
 import Feeds from '../components/Feeds'
-import { useDispatch,useSelector } from 'react-redux'
-import { getFeed, getUsers } from '../slices/postSlice'
+import { useDispatch } from 'react-redux'
+import { getFeed, getUsers,getComments } from '../slices/postSlice'
 
 
 const Home = () => {
-  const {page} = useSelector(state => state.post)
+  // const {page} = useSelector(state => state.post)
   const dispatch = useDispatch()
   
   useEffect(() => {
     // if (page === 1) {
       dispatch(getFeed())
+      dispatch(getComments())
     // }
     dispatch(getUsers())
   }, [dispatch])

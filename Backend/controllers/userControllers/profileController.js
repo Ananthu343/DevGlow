@@ -115,5 +115,16 @@ export const profileController = {
             console.log(error.message);
             res.status(401).send({ error: 'Error updating banner' });
         }
+    },
+    blockUser: async (req,res)=>{
+        try {
+            const myId = getTokenData(req); 
+            const userId = req.body.id;
+            const updatedData = await userRepository.pushIntoBlocked(myId,userId);
+            res.status(200).send({updatedData})
+        } catch (error) {
+            res.status(500).send({ error: 'Internal server error'});
+            console.log(error.message);
+        }
     }
 }
