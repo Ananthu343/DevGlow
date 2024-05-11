@@ -196,7 +196,7 @@ export const followUser = createAsyncThunk("user/followUser", async (id, { signa
 });
 
 export const blockUser = createAsyncThunk("user/blockUser", async (id, { signal }) => {
-    const timeoutMs = 5000;
+    const timeoutMs = 1000;
     const abortSignal = createAbortSignalWithTimeout(timeoutMs);
     try {
         const response = await axios.patch(`${users_url}/blockUser`, {
@@ -267,8 +267,9 @@ const postSlice = createSlice({
         pushIntoDisplayedComments:(state,action)=>{
             state.displayedComments.push(action.payload.commentId)
         },
-        clearDisplayedComments:(state,action)=>{
-            state.displayedComments = []
+        clearFeed:(state,action)=>{
+            state.feed = []
+            state.page = 1
         }
     },
     extraReducers: (builder) => {
@@ -287,9 +288,13 @@ const postSlice = createSlice({
                 state.users = action.payload.users;
             })
             .addCase(likePost.fulfilled, (state, action) => {
-                const postIndex = state.feed.findIndex(post => post._id === action.payload.id);
-                if (postIndex !== -1) {
-                    state.feed[postIndex].likedUsers = action.payload.updatedPost.likedUsers;
+                const postFeedIndex = state.feed.findIndex(post => post._id === action.payload.id);
+                const postMyPostsIndex = state.myPosts.findIndex(post => post._id === action.payload.id);
+                if (postFeedIndex !== -1) {
+                    state.feed[postFeedIndex].likedUsers = action.payload.updatedPost.likedUsers;
+                }
+                if (postMyPostsIndex !== -1) {
+                    state.myPosts[postMyPostsIndex].likedUsers = action.payload.updatedPost.likedUsers;
                 }
             })
             .addCase(followUser.fulfilled,(state,action)=>{
@@ -343,6 +348,6 @@ export const {
     updateFeedAfterUpload,
     clearCommentsById,
     pushIntoDisplayedComments,
-    clearDisplayedComments
+    clearFeed
 
 } = postSlice.actions;

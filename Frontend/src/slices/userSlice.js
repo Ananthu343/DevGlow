@@ -200,7 +200,6 @@ export const editProfile = createAsyncThunk("user/editProfile", async (data, { s
 export const setBanner = createAsyncThunk("user/setBanner", async (data, { signal }) => {
     const timeoutMs = 5000; 
     const abortSignal = createAbortSignalWithTimeout(timeoutMs);
-
     try {
         const response = await axios.patch(`${users_url}/setBanner`, data, {
             withCredentials: true,

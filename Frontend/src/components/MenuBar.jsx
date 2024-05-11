@@ -16,37 +16,13 @@ const MenuBar = ({ handleLogout }) => {
             </div>:null}
             {
                 userInfo ?
-                    <button onClick={() => navigate('/')} className='w-full text-sm lg:hidden mb-2 hover:bg-gray-200'>Home</button>
+                    <button className=' text-sm lg:hidden w-full  hover:bg-gray-200 mb-2' onClick={() => navigate('/profile')}>My profile</button>
                     : null
             }
-            {userInfo ? <div className='w-full bg-black h-[1px] mb-1'></div> : null}
+            <div className='w-full bg-black h-[1px] mb-1'></div>
             {
                 userInfo ?
-                    <button onClick={() => navigate('/community')} className='w-full text-sm lg:hidden mb-2 hover:bg-gray-200'>Communities</button>
-                    : null
-            }
-            {userInfo ? <div className='w-full bg-black h-[1px] mb-1'></div> : null}
-            {
-                userInfo ?
-                    <button onClick={() => navigate('/messages')} className='w-full text-sm lg:hidden mb-2 hover:bg-gray-200'>Messages</button>
-                    : null
-            }
-            {userInfo ? <div className='w-full bg-black h-[1px] mb-1'></div> : null}
-            {
-                userInfo ?
-                    <button onClick={() => navigate('/leaderboard')} className='w-full text-sm lg:hidden mb-2 hover:bg-gray-200'>Leaderboard</button>
-                    : null
-            }
-            {userInfo ? <div className='w-full bg-black h-[1px] mb-1'></div> : null}
-            {
-                userInfo ?
-                    <button onClick={() => navigate('/profile')} className='w-full text-sm lg:hidden mb-2 hover:bg-gray-200'>My profile</button>
-                    : null
-            }
-            {userInfo ? <div className='w-full bg-black h-[1px] mb-1'></div> : null}
-            {
-                userInfo ?
-                    <button className=' text-sm lg:hidden w-full  hover:bg-gray-200 mb-2' onClick={handleLogout}>Logout</button>
+                    <button className=' text-sm lg:hidden w-full  hover:bg-gray-200 mb-2 text-red-500' onClick={handleLogout}>Logout</button>
                     : <button className='text-sm lg:hidden mb-2 w-full  hover:bg-gray-200' onClick={() => navigate('/login')}>Login</button>
             }
             <div className='w-full bg-black h-[1px] mb-1'></div>

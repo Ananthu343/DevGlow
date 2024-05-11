@@ -201,6 +201,11 @@ export const postController = {
     deleteComment: async(req,res)=>{
         const commentId = req.query.id;
          try {
+            // const commentData = await commentRepository.findById(commentId)
+            
+            // commentData?.replies.forEach(async ele => {
+            //     await commentRepository.deleteComment(ele)
+            // })
             await commentRepository.deleteComment(commentId)
             res.status(200).send("comment deleted successfully");
          } catch (error) {

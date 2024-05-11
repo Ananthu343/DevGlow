@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState,useCallback } from 'react';
 import Comments from './Comments';
 import EmojiPicker from 'emoji-picker-react';
 import { commentOnPost} from '../slices/postSlice';
@@ -10,6 +10,27 @@ const CommentsContainer = ({postId}) => {
     const [openEmoji, setOpenEmoji] = useState(false);
     const [selectedEmoji, setSelectedEmoji] = useState(""); // Temporary state for emoji
     const dispatch = useDispatch()
+    
+    const [replies,setReplies] = useState([])
+
+    const handleCommentPost = useCallback(() => {
+      const data = {
+        postId,
+        content
+      }
+      dispatch(commentOnPost(data))
+    }); 
+
+    useEffect(()=>{
+      let replies = []
+      Object.values(commentsById).forEach(ele=>{
+             if (ele.postId === postId) {
+              replies.push(...ele.replies) 
+             }
+      })
+      setReplies(replies)
+      return ()=> setReplies([])
+    },[handleCommentPost,commentsById,postId])
 
     const handleEmojiSelect = (emoji) => {
         setSelectedEmoji(emoji.emoji); // Set the selected emoji
@@ -17,13 +38,6 @@ const CommentsContainer = ({postId}) => {
         setOpenEmoji(false); // Close the emoji picker
     };
 
-    const handleCommentPost = () =>{
-      const data = {
-        postId,
-        content
-      }
-      dispatch(commentOnPost(data))
-    }
     return (
         <div className='bg-white rounded-b border-t p-3'>
             <div className='w-full flex jusify-between p-2'>
@@ -40,10 +54,9 @@ const CommentsContainer = ({postId}) => {
                     )}
                 </div>
             </div>
-            <div className=' w-full h-[200px] overflow-y-scroll bg-white rounded-t border-t border-2 border-gray-300 p-3'>
-            {Object.values(commentsById).map(comment => (
-
-                comment.postId === postId && <Comments key={comment._id} comment={comment} commentsById={commentsById} size={70} /> 
+            <div className=' w-full h-[200px] overflow-y-scroll rounded-t border-t border-2 border-gray-300 p-3'>
+            {Object.values(commentsById).map(comment => (      
+              !replies.includes(comment._id) && comment.postId === postId && <Comments key={comment._id} comment={comment} commentsById={commentsById} size={60} /> 
             ))}
             </div>
         </div>

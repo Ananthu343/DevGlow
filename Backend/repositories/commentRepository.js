@@ -12,13 +12,6 @@ class CommentRepository{
             { new: true }
         );
     }
-    async updateComment(id, update) {
-        return await Comment.findOneAndUpdate(
-           { _id: id }, 
-           update, 
-           { new: true } 
-        );
-    }
     async deleteComment(id) {
          await Comment.deleteOne({ _id: id });
          await Comment.updateMany({},{ $pull: { replies: id } })
@@ -26,6 +19,9 @@ class CommentRepository{
     }
     async getPostComments(){
         return await Comment.find()
+    }
+    async findById(id) {
+        return await Comment.findById(id);
     }
 }
 

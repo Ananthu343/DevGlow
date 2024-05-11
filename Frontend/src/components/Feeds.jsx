@@ -50,7 +50,7 @@ const Feeds = () => {
         dataLength={feed.length}
         next={fetchData}
         hasMore={hasMore}
-        loader={<ScaleLoader color="#3688d6" />}
+        loader={<ScaleLoader className='' color="#3688d6" />}
         endMessage={
           <p style={{ textAlign: 'center', color: 'purple' }}>
             <b>Yay! You have seen it all</b>
@@ -118,7 +118,6 @@ const Feeds = () => {
           } else{
             return null
           }
-          
         })}
         {modal ?
           <EditPost post={editPost} setModal={setModal} />

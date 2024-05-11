@@ -84,7 +84,9 @@ const ProfileContainer = ({ userId }) => {
     // const handleFileChange = (event) => {
     //     const file = fileInputRef.current.value;
     //     if (file) {
-    //         dispatch(setBanner(file)).then((action) => {
+    //         const formData = new FormData();
+    //         formData.append('fileUpload', file);
+    //         dispatch(setBanner(formData)).then((action) => {
     //             if (action.meta.requestStatus === "rejected") {
     //                 const errorMessage = "Something went wrong!";
     //                 toast.error(errorMessage);
@@ -124,7 +126,6 @@ const ProfileContainer = ({ userId }) => {
                 <img src={user?.profile_url ? user.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profile pic" />
                 </div>
                 <div className='flex'>
-
                     <div className='flex-col justify-between w-[40%]'>
                         <h2 className='text-xl font-semibold'>{user?.username ?? "Unknown"}</h2>
                         <p className='text-xs text-[#979797] mb-2'>{user?.gender ?? "He/She"}</p>

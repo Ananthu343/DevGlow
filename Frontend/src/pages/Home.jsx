@@ -4,7 +4,7 @@ import NotificationCase from '../components/NotificationCase'
 import LeaderboardCase from '../components/LeaderboardCase'
 import Feeds from '../components/Feeds'
 import { useDispatch } from 'react-redux'
-import { getFeed, getUsers,getComments } from '../slices/postSlice'
+import { getFeed, getUsers,getComments, clearFeed } from '../slices/postSlice'
 
 
 const Home = () => {
@@ -17,6 +17,8 @@ const Home = () => {
       dispatch(getComments())
     // }
     dispatch(getUsers())
+
+    return ()=> dispatch(clearFeed())
   }, [dispatch])
 
   return (

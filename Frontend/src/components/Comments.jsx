@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSelector,useDispatch } from 'react-redux';
 import EmojiPicker from 'emoji-picker-react';
 import { commentOnPost,deleteComment} from '../slices/postSlice';
+import { timeAgo } from '../utils/timeAgo';
 
 const Comments = ({ comment, commentsById, size }) => {
   const { users } = useSelector(state => state.post)
@@ -30,12 +31,15 @@ const handleCommentPost = () =>{
 
   return (
     <div>
-      <div className={`w-[${size}%] h-auto border p-3 mb-2 bg-gray-200 text-sm flex flex-col rounded-lg`}>
-        <div className='w-auto h-auto flex items-center'>
+      <div className={`w-[${size}%] h-auto border p-3 mb-2 text-sm flex flex-col rounded-lg overflow-auto shadow-lg`}>
+        <div className='w-auto h-auto flex items-center justify-between'>
+          <div className='flex items-center'>
           <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
             <img className='w-[20px] h-[20px] object-cover' src={userData?.profile_url ? userData?.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
           </div>
           <p className='text-xs font-semibold hover:text-blue-500 cursor-pointer'>{userData?.username}</p>
+          </div>
+          <p className='text-[11px] text-[#979797]'>{timeAgo(comment.createdAt)}</p>
         </div>
         <p>{comment?.content}</p>
         <div className='w-full flex justify-end '>
