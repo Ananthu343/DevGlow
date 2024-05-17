@@ -50,7 +50,7 @@ const Feeds = () => {
         dataLength={feed.length}
         next={fetchData}
         hasMore={hasMore}
-        loader={<ScaleLoader className='' color="#3688d6" />}
+        loader={<div className='w-full flex justify-center'><ScaleLoader  color="#3688d6" /></div>}
         endMessage={
           <p style={{ textAlign: 'center', color: 'purple' }}>
             <b>Yay! You have seen it all</b>

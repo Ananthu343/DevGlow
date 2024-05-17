@@ -8,7 +8,6 @@ const CommentsContainer = ({postId}) => {
     const {commentsById} = useSelector(state => state.post)
     const [content, setContent] = useState("");
     const [openEmoji, setOpenEmoji] = useState(false);
-    const [selectedEmoji, setSelectedEmoji] = useState(""); // Temporary state for emoji
     const dispatch = useDispatch()
     
     const [replies,setReplies] = useState([])
@@ -19,7 +18,7 @@ const CommentsContainer = ({postId}) => {
         content
       }
       dispatch(commentOnPost(data))
-    }); 
+    },[content,dispatch,postId]); 
 
     useEffect(()=>{
       let replies = []
@@ -33,10 +32,10 @@ const CommentsContainer = ({postId}) => {
     },[handleCommentPost,commentsById,postId])
 
     const handleEmojiSelect = (emoji) => {
-        setSelectedEmoji(emoji.emoji); // Set the selected emoji
-        setContent(prevContent => prevContent + selectedEmoji); // Append the emoji to the content
-        setOpenEmoji(false); // Close the emoji picker
+        setContent(prevContent => prevContent + emoji.emoji); 
+        setOpenEmoji(false); 
     };
+    
 
     return (
         <div className='bg-white rounded-b border-t p-3'>

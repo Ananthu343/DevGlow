@@ -12,7 +12,6 @@ const UserCard = ({ user }) => {
     }
       
       <h2 className="text-sm font-semibold">{user.username}</h2>
-      {/* <p className="">{user.about}</p> */}
     </div>
  );
 };

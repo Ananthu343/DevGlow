@@ -56,8 +56,9 @@ const BottomNavTabs = () => {
       <div className="flex justify-around items-center">
         {icons.map((icon, index) => (
           <button
+          key={index}
             type="button"
-            className={`p-2 rounded-md ${index === active? 'border shadow-lg border-[#720058]' : ''}`}
+            className={`p-2 rounded-md ${index === active? 'border-b shadow-lg border-[#720058]' : ''}`}
             onClick={()=> handleNavigate(icon.name,index)}
           >
             <img className='w-6' src={icon.src} alt={icon.alt} />

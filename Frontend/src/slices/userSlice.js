@@ -1,8 +1,8 @@
 import { createAsyncThunk,createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { createAbortSignalWithTimeout } from '../utils/axiosController'
+import { createAbortSignalWithTimeout,handleError } from '../utils/axiosController'
 
-const users_url = "http://localhost:5000/api/users"
+const users_url = "http://localhost:3001/api/users"
 
 
 export const verifyEmail = createAsyncThunk("user/verify",async (data)=>{
@@ -37,8 +37,7 @@ export const logoutUser = createAsyncThunk("user/logout",async ()=>{
 })
 
 export const uploadPost = createAsyncThunk("user/uploadPost", async (data, { signal }) => {
-    const timeoutMs = 5000; 
-    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+    const abortSignal = createAbortSignalWithTimeout(5000);
 
     try {
         const response = await axios.post(`${users_url}/upload-post`, data, {
@@ -48,18 +47,12 @@ export const uploadPost = createAsyncThunk("user/uploadPost", async (data, { sig
 
         return response.data;
     } catch (error) {
-        if (axios.isCancel(error)) {
-            console.log('Request canceled due to timeout', error.message);
-            throw new Error('Request canceled due to timeout');
-        } else {
-            throw error;
-        }
+        handleError(error,'uploadPost')
     }
 });
 
 export const editPost = createAsyncThunk("user/editPost", async (data, { signal }) => {
-    const timeoutMs = 5000; 
-    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+    const abortSignal = createAbortSignalWithTimeout(5000);
 
     try {
         const response = await axios.patch(`${users_url}/edit-post`, data, {
@@ -69,19 +62,13 @@ export const editPost = createAsyncThunk("user/editPost", async (data, { signal 
 
         return response.data;
     } catch (error) {
-        if (axios.isCancel(error)) {
-            console.log('Request canceled due to timeout', error.message);
-            throw new Error('Request canceled due to timeout');
-        } else {
-            throw error;
-        }
+        handleError(error,'editPost')
     }
 });
 
 
 export const deletePost = createAsyncThunk("user/deletePost", async (id, { signal }) => {
-    const timeoutMs = 5000; 
-    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+    const abortSignal = createAbortSignalWithTimeout(5000);
 
     try {
         const response = await axios.delete(`${users_url}/delete-post`, {
@@ -92,20 +79,13 @@ export const deletePost = createAsyncThunk("user/deletePost", async (id, { signa
 
         return response.data;
     } catch (error) {
-        if (axios.isCancel(error)) {
-            console.log('Request canceled due to timeout', error.message);
-            throw new Error('Request canceled due to timeout');
-        } else {
-            throw error;
-        }
+        handleError(error,'deletePost')
     }
 });
 
 
 export const getUser = createAsyncThunk("user/getUser", async (id, { signal }) => {
-    const timeoutMs = 5000; 
-    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
-console.log(id);
+    const abortSignal = createAbortSignalWithTimeout(5000);
     try {
         const response = await axios.get(`${users_url}/getUserData`, {
             params: { id },
@@ -115,19 +95,13 @@ console.log(id);
 
         return response.data;
     } catch (error) {
-        if (axios.isCancel(error)) {
-            console.log('Request canceled due to timeout', error.message);
-            throw new Error('Request canceled due to timeout');
-        } else {
-            throw error;
-        }
+        handleError(error,'getUser')
     }
 });
 
 
 export const savePost = createAsyncThunk("user/savePost", async (id, { signal }) => {
-    const timeoutMs = 5000; 
-    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+    const abortSignal = createAbortSignalWithTimeout(5000);
 
     try {
         const response = await axios.patch(`${users_url}/savePost`, {
@@ -139,19 +113,13 @@ export const savePost = createAsyncThunk("user/savePost", async (id, { signal })
 
         return response.data;
     } catch (error) {
-        if (axios.isCancel(error)) {
-            console.log('Request canceled due to timeout', error.message);
-            throw new Error('Request canceled due to timeout');
-        } else {
-            throw error;
-        }
+        handleError(error,'savePost')
     }
 });
 
 
 export const reportUser = createAsyncThunk("user/reportUser", async (id, { signal }) => {
-    const timeoutMs = 5000; 
-    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+    const abortSignal = createAbortSignalWithTimeout(5000);
 
     try {
         const response = await axios.patch(`${users_url}/reportUser`, {
@@ -163,12 +131,7 @@ export const reportUser = createAsyncThunk("user/reportUser", async (id, { signa
 
         return response.data;
     } catch (error) {
-        if (axios.isCancel(error)) {
-            console.log('Request canceled due to timeout', error.message);
-            throw new Error('Request canceled due to timeout');
-        } else {
-            throw error;
-        }
+        handleError(error,'reportUser')
     }
 });
 
@@ -176,8 +139,7 @@ export const reportUser = createAsyncThunk("user/reportUser", async (id, { signa
 
 
 export const editProfile = createAsyncThunk("user/editProfile", async (data, { signal }) => {
-    const timeoutMs = 5000; 
-    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+    const abortSignal = createAbortSignalWithTimeout(5000);
 
     try {
         const response = await axios.patch(`${users_url}/editProfile`, data, {
@@ -187,19 +149,13 @@ export const editProfile = createAsyncThunk("user/editProfile", async (data, { s
 
         return response.data;
     } catch (error) {
-        if (axios.isCancel(error)) {
-            console.log('Request canceled due to timeout', error.message);
-            throw new Error('Request canceled due to timeout');
-        } else {
-            throw error;
-        }
+        handleError(error,'editProfile')
     }
 });
 
 
 export const setBanner = createAsyncThunk("user/setBanner", async (data, { signal }) => {
-    const timeoutMs = 5000; 
-    const abortSignal = createAbortSignalWithTimeout(timeoutMs);
+    const abortSignal = createAbortSignalWithTimeout(5000);
     try {
         const response = await axios.patch(`${users_url}/setBanner`, data, {
             withCredentials: true,
@@ -208,12 +164,7 @@ export const setBanner = createAsyncThunk("user/setBanner", async (data, { signa
 
         return response.data;
     } catch (error) {
-        if (axios.isCancel(error)) {
-            console.log('Request canceled due to timeout', error.message);
-            throw new Error('Request canceled due to timeout');
-        } else {
-            throw error;
-        }
+       handleError(error,'setBanner')
     }
 });
 

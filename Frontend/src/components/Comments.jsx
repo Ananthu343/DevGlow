@@ -10,14 +10,13 @@ const Comments = ({ comment, commentsById, size }) => {
   const [replyBox,openReplyBox] = useState(false);
   const [content, setContent] = useState("");
   const [openEmoji, setOpenEmoji] = useState(false);
-  const [selectedEmoji, setSelectedEmoji] = useState(""); // Temporary state for emoji
   const dispatch = useDispatch()
    
   const handleEmojiSelect = (emoji) => {
-    setSelectedEmoji(emoji.emoji); // Set the selected emoji
-    setContent(prevContent => prevContent + selectedEmoji); // Append the emoji to the content
-    setOpenEmoji(false); // Close the emoji picker
+    setContent(prevContent => prevContent + emoji.emoji); 
+    setOpenEmoji(false); 
 };
+
 
 const handleCommentPost = () =>{
   const data = {
@@ -54,12 +53,12 @@ const handleCommentPost = () =>{
                     <button onClick={handleCommentPost} className='bg-[#720058] text-white text-sm font-semibold rounded pl-2 pr-2'>Post</button>
             </div>
             <div className='absolute mt-7'>
-                    {openEmoji && (
-                        <div className='absolute mt-3'>
-                            <EmojiPicker onEmojiClick={handleEmojiSelect} />
-                        </div>
-                    )}
-        </div>
+              {openEmoji && (
+                <div className='absolute mt-3'>
+                  <EmojiPicker onEmojiClick={handleEmojiSelect} />
+                </div>
+              )}
+            </div>
         </div>
         }
         

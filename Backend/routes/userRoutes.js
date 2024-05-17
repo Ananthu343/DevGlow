@@ -2,6 +2,7 @@ import express from "express"
 import { authController } from "../controllers/userControllers/userAuthController.js";
 import { postController } from "../controllers/userControllers/postController.js";
 import { profileController } from "../controllers/userControllers/profileController.js";
+import { messageController } from "../controllers/userControllers/messageController.js";
 import { protect } from "../middlewares/authMiddleware.js";
 import { checkRole } from "../middlewares/roleAuthorization.js";
 import { upload } from "../configs/multer.js"; 
@@ -23,6 +24,7 @@ router.patch('/savePost',protect,checkRole("user"),postController.savePost)
 router.patch('/likePost',protect,checkRole("user"),postController.likePost)
 router.post('/comment',protect,checkRole("user"),postController.comment)
 router.get('/getPostcomment',protect,checkRole("user"),postController.getPostComments)
+router.get('/getMessageHistory',protect,checkRole("user"),messageController.getMessageHistory)
 router.delete('/deleteComment',protect,checkRole("user","admin"),postController.deleteComment)
 router.patch('/reportUser',protect,checkRole("user"),profileController.reportUser)
 router.patch('/followUser',protect,checkRole("user"),profileController.followUser)
