@@ -106,7 +106,7 @@ const Chat = ({ receiver }) => {
       </div>
       <form className='mt-2 w-full flex items-center' onSubmit={sendMessage}>
         <input
-          className='w-[40%] p-2 text-sm focus:outline-[#004272] border-2'
+          className='w-[70%] lg:w-[40%] p-2 text-sm focus:outline-[#004272] border-2'
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}

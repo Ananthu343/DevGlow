@@ -16,18 +16,19 @@ const ChatBox = () => {
     }, [dispatch])
 
     useEffect(() => {
-        const data = users?.filter(ele => userInfo.devGlowAccess.followers.includes(ele._id));
+        const myData = users?.find(ele => ele._id ===  userInfo.devGlowAccess._id)
+        const data = users?.filter(ele => myData.followers.includes(ele._id));
         setFollowers(data);
-    }, [users, userInfo.devGlowAccess.followers]);
+    }, [users, userInfo.devGlowAccess]);
 
     const openChat = (user) => {
         setSelectedUserId(user._id)
         openChatBox(<Chat receiver={user} />)
     }
-
+    console.log(followers);
     return (
         <div className='lg:flex justify-between w-full'>
-            <div className='hidden h-[600px] border-r lg:flex w-[30%] bg-white p-3 flex-col rounded-l text-sm font-semibold text-[#720058]'>
+            <div className='hidden h-[600px] border-r lg:flex w-[30%] bg-white p-3 flex-col rounded-l text-sm font-semibold text-[#720058] overflow-y-scroll'>
                 <p>Messages</p>
                 <div className='h-[0.5px] border border-b w-full mb-2'></div>
                 {followers?.length > 0 ?
@@ -58,33 +59,35 @@ const ChatBox = () => {
                     )}
                 <div className='h-[0.5px] border border-b w-full mt-5'></div>
             </div>
-            <div className='lg:hidden w-full p-3 bg-white overflow-y-auto overflow-x-auto flex flex-row border-b-3'>
-    {followers?.length > 0?
-        <ul>
-            {followers.map((user) => (
-                <li key={user._id} className={`cursor-pointer flex flex-col w-full hover:bg-gray-100 items-center mb-2 ${selectedUserId === user._id? 'border-b shadow-lg' : ''}`}>
-                    <div onClick={() => openChat(user)} className='cursor-pointer flex p-2 w-full border-b items-center '>
-                        {user.profile_url? (
-                            <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
-                                <img className='w-[30px] h-[30px] object-cover' src={user?.profile_url} alt="profilepic" />
-                            </div>
-                        ) : (
-                            <img className='border border-[#720058] w-7 rounded-full mr-2 hidden lg:flex'
-                                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfQqAoMaedQBNfybdIdduiix4&usqp=CAU"
-                                 alt="profile pic" />
-                        )}
+            <div className='lg:hidden  w-full p-3 bg-white overflow-x-auto flex flex-col border-b-3 text-sm font-semibold text-[#720058]'>
+                <p>Messages</p>
+                {followers?.length > 0 ?
+                    <ul className="flex overflow-x-scroll w-full p-2">
+                        {followers.map((user) => (
+                            <li key={user._id} className={`cursor-pointer flex w-[100px] hover:bg-gray-100 items-center mb-2 border-r ${selectedUserId === user._id ? 'border-b shadow-lg' : ''}`} style={{ height: '40px' }}> {/* Adjusted height */}
+                                <div onClick={() => openChat(user)} className='cursor-pointer flex flex-col w-full border-b items-center '>
+                                    {user.profile_url ? (
+                                        <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
+                                            <img className='w-[30px] h-[30px] object-cover' src={user?.profile_url} alt="profilepic" />
+                                        </div>
+                                    ) : (
+                                        <img className='border border-[#720058] w-7 rounded-full mr-2 hidden lg:flex'
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfQqAoMaedQBNfybdIdduiix4&usqp=CAU"
+                                            alt="profile pic" />
+                                    )}
 
-                        <h2 className="text-sm font-semibold">{user.username}</h2>
-                    </div>
-                </li>
-            ))}
-        </ul>
-        : (
-            <div className='w-full flex justify-center h-full items-center'>
-                <h1 className='font-semibold'>empty!</h1>
+                                    <h2 className="text-xs font-semibold">{user.username}</h2>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                    : (
+                        <div className='w-full flex justify-center h-full items-center'>
+                            <h1 className='font-semibold'>empty!</h1>
+                        </div>
+                    )}
             </div>
-        )}
-</div>
+
             <div className='w-full bg-white h-[400px] lg:h-[600px] flex justify-center items-center p-2'>
                 {chatBox ? chatBox : <div className='h-full w-full flex flex-col items-center border-4 justify-center'>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[100px]">

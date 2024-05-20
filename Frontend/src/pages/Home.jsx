@@ -25,7 +25,7 @@ const Home = () => {
     <div className='w-[85%] pt-[60px] flex justify-center  top-0 mx-auto'>
       <CommunityCase />
       <Feeds />
-      <div className=' hidden lg:flex flex-col h-[510px] justify-between sticky top-[60px]'>
+      <div className=' hidden lg:flex flex-col h-[520px] justify-between sticky top-[60px]'>
         <NotificationCase />
         <LeaderboardCase />
       </div>

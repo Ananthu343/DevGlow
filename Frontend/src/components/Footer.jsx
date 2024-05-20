@@ -6,16 +6,16 @@ const Footer = () => {
       <div className="flex-grow">
         <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
           <li>
-            <a href="#" className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500">About Us</a>
+            <a href="www" className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500">About Us</a>
           </li>
           <li>
-            <a href="#" className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500">License</a>
+            <a href="www" className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500">License</a>
           </li>
           <li>
-            <a href="#" className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500">Contribute</a>
+            <a href="www" className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500">Contribute</a>
           </li>
           <li>
-            <a href="#" className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500">Contact Us</a>
+            <a href="www" className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500">Contact Us</a>
           </li>
         </ul>
       </div>

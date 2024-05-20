@@ -20,7 +20,7 @@ const SearchResultContainer = ({ value }) => {
     }
 
     return (
-        <div className='w-full md:w-[550px] h-[500px] flex-col md:p-4'>
+        <div className='w-full md:w-[550px] h-[500px] flex-col md:pl-2 md:pr-2'>
             <div className='w-full bg-white h-full p-4 rounded'>
                 <h1 className='font-semibold text-[#720058]'>Search page</h1>
                 <div className='w-full flex border-b mt-2 mb-2'>
