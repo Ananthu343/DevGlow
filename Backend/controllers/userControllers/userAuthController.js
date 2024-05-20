@@ -59,9 +59,9 @@ export const authController = {
             const { token } = req.body
             const { email } = data
             const applicant = await userRepository.findByEmail(email)
-            if(applicant.token !== "verified"){
+            if(applicant.isVerified !== true){
                 if (applicant && applicant.token == token) {
-                    await userRepository.updateUser(applicant._id, { ...data, token: "verified"})
+                    await userRepository.updateUser(applicant._id, { ...data, isVerified: true})
                     deleteToken(res)
                     res.status(200).json({ message: "token verified" })
                 } else {

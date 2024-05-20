@@ -29,9 +29,6 @@ const UserSchema = new mongoose.Schema({
   contactInfo:{
     type:String,
   },
-  gender:{
-    type:String,
-  },
   profile_visibility:{
     type:String,
     default:"public"
@@ -47,11 +44,12 @@ const UserSchema = new mongoose.Schema({
   roles: [{
     type: String,
     enum: ['user', 'admin', 'editor'],
-    default: () => ['user'] 
+    default:'user'
  }],
   token:{
     type:String
   },
+  isVerified: { type: Boolean, default: false },
   dob:{
     type:String
   },
@@ -79,7 +77,7 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.index({ createdAt: 1 }, {
   expireAfterSeconds: 180, // 3 minutes
-  partialFilterExpression: { token: { $ne: "verified" } }
+  partialFilterExpression: { isVerified: false }
  });
  
 
@@ -105,7 +103,7 @@ UserSchema.pre("save", async function (next) {
      const isMatch = await bcrypt.compare(candidatePassword, this.password);
      return isMatch;
   } catch (error) {
-     throw new Error('Error comparing passwords: ', error);
+     throw new Error('Error comparing passwords: ', error.message);
   }
  };
  

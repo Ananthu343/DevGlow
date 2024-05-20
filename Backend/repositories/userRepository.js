@@ -1,9 +1,14 @@
 import User from "../models/userdb.js";
 
 class UserRepository{
-    async save(user){
-       const newUser = new User(user)
-       return await newUser.save()
+    async save(user) {
+        try {
+            const newUser = new User(user);
+            return await newUser.save();
+        } catch (error) {
+            console.error("Failed to save user:", error.message);
+            throw error; 
+        }
     }
     async findAllUser(){
         return await User.find().select("-password")

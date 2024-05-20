@@ -1,16 +1,22 @@
 import jwt from 'jsonwebtoken'
 import UserRepository from "../repositories/userRepository.js";
 import dotenv from 'dotenv'
+import { isValidObjectId } from 'mongoose';
 dotenv.config()
 
 const userRepository = new UserRepository()
 const key = process.env.JWT_SECRET_KEY
 
-export const generateToken = async (res, userId) => {
-    const user = await userRepository.findById(userId);
-    const userRoles =  user.roles;
-    const token = jwt.sign({ userId,userRoles }, `${key}`, { expiresIn: "30d" })
-
+export const generateToken = async (res, data) => {
+    let token;
+    if (isValidObjectId(data)) {
+        const userId = data
+        const user = await userRepository.findById(userId);
+        const userRoles =  user.roles;
+        token = jwt.sign({ userId,userRoles }, `${key}`, { expiresIn: "30d" })
+    } else {
+        token = jwt.sign({ data }, `${key}`, { expiresIn: "30d" })
+    }
     res.cookie("jwt", token, {
         httpOnly: true,
         secure: true,
@@ -34,5 +40,10 @@ export const getTokenData = (req) => {
     const token = req.cookies.jwt; 
     const decoded = jwt.verify(token, `${key}`); 
     const userId = decoded.userId; 
-    return userId
+    const data = decoded.data; 
+    if (userId) {
+        return userId
+    } else {
+        return data
+    }
 }

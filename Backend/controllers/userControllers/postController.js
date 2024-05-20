@@ -146,6 +146,7 @@ export const postController = {
     },
     likePost: async (req, res) => {
         try {
+            console.log("worked");
             const myId = getTokenData(req); // Assuming getTokenData returns an object with an id property
             const postId = req.body.id;
             const postData = await postRepository.findById(postId);
