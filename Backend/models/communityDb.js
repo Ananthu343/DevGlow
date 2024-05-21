@@ -5,6 +5,10 @@ const CommunitySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users'
   },
+  name:{
+    type:String,
+    required:true
+  },
   members:[{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users'

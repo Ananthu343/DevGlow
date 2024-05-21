@@ -25,7 +25,7 @@ const ChatBox = () => {
         setSelectedUserId(user._id)
         openChatBox(<Chat receiver={user} />)
     }
-    console.log(followers);
+
     return (
         <div className='lg:flex justify-between w-full'>
             <div className='hidden h-[600px] border-r lg:flex w-[30%] bg-white p-3 flex-col rounded-l text-sm font-semibold text-[#720058] overflow-y-scroll'>
@@ -36,13 +36,13 @@ const ChatBox = () => {
                         {followers.map((user) => (
                             <li key={user._id} className={`cursor-pointer flex flex-col w-full hover:bg-gray-100 items-center mb-2 ${selectedUserId === user._id ? 'border-b shadow-lg' : ''}`}>
                                 <div onClick={() => openChat(user)} className='cursor-pointer flex p-2 w-full border-b items-center '>
-                                    {user.profile_url ? (
+                                    {user?.profile_url ? (
                                         <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
                                             <img className='w-[40px] h-[40px] object-cover' src={user?.profile_url} alt="profilepic" />
                                         </div>
                                     ) : (
-                                        <img className='border border-[#720058] w-7 rounded-full mr-2 hidden lg:flex'
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfQqAoMaedQBNfybdIdduiix4&usqp=CAU"
+                                        <img className='border border-[#720058] w-[40px] h-[40px] rounded-full mr-2 hidden lg:flex'
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"
                                             alt="profile pic" />
                                     )}
 

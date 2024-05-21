@@ -5,6 +5,10 @@ const RoomSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users'
   }],
+  communityId:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Community'
+  },
   createdAt: { type: Date, default: Date.now } 
 });
 

@@ -44,6 +44,9 @@ class PostRepository{
             { new: true }
         );
     }
+    async getAllPosts(){
+        return await Post.find()
+    }
 }
 
 export default PostRepository

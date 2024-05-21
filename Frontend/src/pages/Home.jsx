@@ -5,27 +5,25 @@ import LeaderboardCase from '../components/LeaderboardCase'
 import Feeds from '../components/Feeds'
 import { useDispatch } from 'react-redux'
 import { getFeed, getUsers,getComments, clearFeed } from '../slices/postSlice'
+import { getCommunities } from '../slices/communitySlice'
 
 
 const Home = () => {
-  // const {page} = useSelector(state => state.post)
   const dispatch = useDispatch()
   
   useEffect(() => {
-    // if (page === 1) {
       dispatch(getFeed())
       dispatch(getComments())
-    // }
-    dispatch(getUsers())
-
+      dispatch(getUsers())
+      dispatch(getCommunities())
     return ()=> dispatch(clearFeed())
   }, [dispatch])
-
+  
   return (
     <div className='w-[85%] pt-[60px] flex justify-center  top-0 mx-auto'>
       <CommunityCase />
       <Feeds />
-      <div className=' hidden lg:flex flex-col h-[520px] justify-between sticky top-[60px]'>
+      <div className=' hidden lg:flex flex-col h-[520px] justify-between sticky top-[60px] z-[-1]'>
         <NotificationCase />
         <LeaderboardCase />
       </div>

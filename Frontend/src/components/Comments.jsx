@@ -17,7 +17,6 @@ const Comments = ({ comment, commentsById, size }) => {
     setOpenEmoji(false); 
 };
 
-
 const handleCommentPost = () =>{
   const data = {
     postId : comment.postId,

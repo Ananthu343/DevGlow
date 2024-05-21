@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import {useDispatch } from 'react-redux';
 import { createCommunity } from '../slices/communitySlice';
 import toast from 'react-hot-toast';
 
 const CreateCommunity = ({ setModal }) => {
-    const { userInfo } = useSelector(state => state.auth)
     const [preview, setPreview] = useState(<img className='object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500'
-        src="https://harmonylearning.com.au/wp-content/uploads/2018/04/harmony_001teaching_kids_about_community.jpg"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL0sjQoYo1rZf1oYqSaRE9Q8Itv7fbij4aXRgoeAQFhw&s"
         alt='profile_pic' />);
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [privacy, setPrivacy] = useState("public")
-    const [userLimit, setUserLimit] = useState(0)
+    const [userLimit, setUserLimit] = useState(1)
     const [media, setMedia] = useState({})
 
     const dispatch = useDispatch()
@@ -40,7 +39,7 @@ const CreateCommunity = ({ setModal }) => {
         formData.append('fileUpload', media)
         dispatch(createCommunity(formData)).then((action) => {
             if (action.meta.requestStatus === "rejected") {
-                const errorMessage = "Error updating profile";
+                const errorMessage = "Error creating community";
                 toast.error(errorMessage);
             } else {
                 toast.success("Created !")
@@ -51,7 +50,7 @@ const CreateCommunity = ({ setModal }) => {
 
     return (
         <div className='fixed inset-0 flex items-center justify-center z-50'>
-            <div className='absolute w-screen h-full bg-black/60 flex justify-center items-center z-[100] top-0'>
+            <div className='absolute w-screen h-full bg-black/60 flex justify-center items-center z-[100] top-0 '>
                 <div className='bg-white rounded-[10px] w-[400px] h-auto p-3 flex flex-col justify-center text-[#720058] text-sm'>
                     <form onSubmit={handleSubmit}>
                         <div className="flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0">
