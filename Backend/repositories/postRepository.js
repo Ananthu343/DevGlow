@@ -44,8 +44,12 @@ class PostRepository{
             { new: true }
         );
     }
-    async getAllPosts(){
-        return await Post.find()
+    async getRankingOfUsers(){
+        return await Post.aggregate([
+            { $unwind: "$likedUsers" }, 
+            { $group: { _id: "$creatorId", likedUsers: { $push: "$likedUsers" }, size: { $sum: 1 } } }, 
+            { $sort: { size: -1 } } ,
+          ])
     }
 }
 

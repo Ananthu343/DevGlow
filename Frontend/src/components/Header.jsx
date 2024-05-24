@@ -50,7 +50,7 @@ const Header = () => {
             <div onClick={() => {
               navigate("/")
               setActiveIcon('icon1')
-            }} className='cursor-pointer hidden lg:flex flex-col items-center justify-center w-[80px]'>
+            }} className='cursor-pointer hidden lg:flex flex-col items-center justify-center w-[80px] hover:text-[#720058]'>
               <img className='w-6 ' src="Home.png" alt="home icon" />
               <h5 className='hidden lg:flex'>Home</h5>
               <div className={`hidden lg:flex line absolute mt-12 ${activeIcon === 'icon1' ? 'animate-icon1' : activeIcon === 'icon2' ? 'animate-icon2' : activeIcon === 'icon3' ? 'animate-icon3' : activeIcon === 'icon4' ? 'animate-icon4' : ''}`}></div>
@@ -59,7 +59,7 @@ const Header = () => {
             <div onClick={() => {
               navigate("/community")
               setActiveIcon('icon2')
-            }} className='cursor-pointer hidden lg:flex flex-col items-center justify-center w-[80px] mt-1'>
+            }} className='cursor-pointer hidden lg:flex flex-col items-center justify-center w-[80px] mt-1  hover:text-[#720058]'>
               <img className='w-5 ' src="community.png" alt="community icon" />
               <h5 className='hidden lg:flex'>Communities</h5>
             </div>
@@ -67,7 +67,7 @@ const Header = () => {
             <div onClick={() => {
               navigate("/messages")
               setActiveIcon('icon3')
-            }} className='cursor-pointer hidden lg:flex flex-col items-center justify-center w-[80px]'>
+            }} className='cursor-pointer hidden lg:flex flex-col items-center justify-center w-[80px]  hover:text-[#720058]'>
               <img className='w-6 ' src="message.jpg" alt="messsage icon" />
               <h5 className='hidden lg:flex'>Messages</h5>
             </div>
@@ -75,13 +75,13 @@ const Header = () => {
             <div onClick={() => {
               navigate("/leaderboard")
               setActiveIcon('icon4')
-            }} className='cursor-pointer hidden lg:flex flex-col items-center justify-center w-[80px] mb-1'>
+            }} className='cursor-pointer hidden lg:flex flex-col items-center justify-center w-[80px] mb-1  hover:text-[#720058]'>
               <img className='w-7' src="Leaderboard.png" alt="leaderboard icon" />
               <h5 className='hidden lg:flex'>Leaderboard</h5>
             </div>
 
           </div>
-          <div onClick={handleModal} className='cursor-pointer flex flex-col items-center justify-center w-[80px] text-xs text-[#979797]'>
+          <div onClick={handleModal} className='cursor-pointer flex flex-col items-center justify-center w-[80px] text-xs text-[#979797]  hover:text-[#720058]'>
             <img className='w-6' src="create.webp" alt="leaderboard icon" />
             <h5 className='hidden lg:flex'>Create</h5>
           </div>
@@ -121,8 +121,8 @@ const Header = () => {
           {menu && <MenuBar handleLogout={handleLogout} />}
           {
             userInfo ?
-              <button className='hidden text-sm lg:flex ' onClick={handleLogout}>Logout</button>
-              : <button className='hidden text-sm lg:flex' onClick={() => navigate('/login')}>Login</button>
+              <button className='hidden text-sm lg:flex  hover:text-red-500' onClick={handleLogout}>Logout</button>
+              : <button className='hidden text-sm lg:flex  hover:text-[#720058]' onClick={() => navigate('/login')}>Login</button>
           }
           {
             userInfo ?

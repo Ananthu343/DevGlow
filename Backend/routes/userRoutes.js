@@ -26,6 +26,7 @@ router.delete('/delete-community',protect,checkRole("user","admin"),communityCon
 router.get('/getCommunityHistory',protect,checkRole("user"),communityController.getCommunityHistory)
 router.get('/getUserData',profileController.getUserData)
 router.get('/getPostData',postController.getPostData)
+router.get('/getRankings',postController.getLeaderboardData)
 router.get('/getMyProfilePosts',protect,checkRole("user"),postController.getMyProfilePosts)
 router.patch('/savePost',protect,checkRole("user"),postController.savePost)
 router.patch('/likePost',protect,checkRole("user"),postController.likePost)

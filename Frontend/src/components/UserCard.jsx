@@ -14,7 +14,7 @@ const UserCard = ({ user }) => {
                                                 alt="profile pic" />
                                         )}
 
-                                        <h2 className="text-sm font-semibold hover:underline">{user.username}</h2>
+                                        <h2 className="text-sm font-semibold hover:underline">{user?.username}</h2>
                                     </div>
     </div>
  );

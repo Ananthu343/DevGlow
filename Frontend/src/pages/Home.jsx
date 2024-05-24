@@ -18,12 +18,12 @@ const Home = () => {
       dispatch(getCommunities())
     return ()=> dispatch(clearFeed())
   }, [dispatch])
-  
+
   return (
     <div className='w-[85%] pt-[60px] flex justify-center  top-0 mx-auto'>
       <CommunityCase />
       <Feeds />
-      <div className=' hidden lg:flex flex-col h-[520px] justify-between sticky top-[60px] z-[-1]'>
+      <div className=' hidden lg:flex flex-col h-[520px] justify-between sticky top-[60px]'>
         <NotificationCase />
         <LeaderboardCase />
       </div>

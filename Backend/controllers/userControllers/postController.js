@@ -233,14 +233,13 @@ export const postController = {
             console.log(error.message);
         }
     },
-    // getLeaderboardData:async(req,res)=>{
-    //     try {
-    //         const allPostData = await postRepository.getAllPosts()
-    //         const allUserData = await userRepository.findAllUser()
-    //         // const leaderboardData = 
-    //     } catch (error) {
-    //         res.status(500).send({ error: 'internal server error' });
-    //         console.log(error.message);
-    //     }
-    // }
+    getLeaderboardData:async(req,res)=>{
+        try {
+            const leaderboardData = await postRepository.getRankingOfUsers()
+            res.status(200).json({leaderboardData})
+        } catch (error) {
+            res.status(500).send({ error: 'internal server error' });
+            console.log(error.message);
+        }
+    }
 }

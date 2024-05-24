@@ -107,8 +107,8 @@ const Feeds = () => {
                 </div>
                 <div className='border-t w-full flex justify-around pl-3 pr-3 text-[12px]'>
                   <LikeToggle document={document} />
-                  <p onClick={() => toggleComments(document._id)} className='flex items-center cursor-pointer'><img className='w-5 mr-1' src="comment.png" alt="" />Comment</p>
-                  <p onClick={() => setOpenShare(true)} className='flex items-center cursor-pointer'><img className='w-3 mr-1' src="share.png" alt="" />Share</p>
+                  <p onClick={() => toggleComments(document._id)} className='flex items-center cursor-pointer p-2 hover:bg-gray-100 hover:text-blue-600'><img className='w-5 mr-1' src="comment.png" alt="" />Comment</p>
+                  <p onClick={() => setOpenShare(true)} className='flex items-center cursor-pointer p-2 hover:bg-gray-100 hover:text-blue-600'><img className='w-3 mr-1' src="share.png" alt="" />Share</p>
                 </div>
               </div>
               {openComments[document._id] ? <CommentsContainer postId={document._id} /> : null}
