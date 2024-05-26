@@ -18,6 +18,7 @@ const CommentsContainer = ({postId}) => {
         content
       }
       dispatch(commentOnPost(data))
+      setContent("")
     },[content,dispatch,postId]); 
 
     useEffect(()=>{

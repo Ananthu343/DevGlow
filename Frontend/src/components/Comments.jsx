@@ -32,6 +32,7 @@ const Comments = ({ comment, commentsById,border }) => {
       commentId: comment._id
     }
     dispatch(commentOnPost(data))
+    setContent("")
     openReplyBox(false)
   }
   return (

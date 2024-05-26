@@ -10,7 +10,7 @@ const CommunityBox = () => {
 
     const openChat = (community) => {
         setSelectedCommunityId(community._id)
-        openChatBox(<CommunityChat community={community} />)
+        openChatBox(<CommunityChat communityId={community._id} />)
     }
 
     return (

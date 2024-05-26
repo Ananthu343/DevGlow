@@ -63,7 +63,7 @@ export const postController = {
             
             if (req.file) {
                 const file = req.file;
-                const filePath = `uploads/${file.originalname}`;
+                const filePath = `uploads/${file.originalname + Date.now()}`;
                 const storageRef = ref(storage, filePath);
                 await uploadBytes(storageRef, file.buffer);
                 fileUrl = await getDownloadURL(storageRef);

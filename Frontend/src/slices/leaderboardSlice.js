@@ -30,7 +30,7 @@ const leaderboardSlice = createSlice({
         builder
         .addCase(getRankings.fulfilled,(state,action)=>{
             state.rankings = [...action.payload]
-        })
+        })  
     }
 })
 

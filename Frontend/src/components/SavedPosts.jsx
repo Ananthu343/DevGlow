@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import PostDropdown from './PostDropdown'
+import PostDropdown from './DropdownMenu'
 
 import VideoPlayer from './VideoPlayer'
 import FollowToggle from './FollowToggle'

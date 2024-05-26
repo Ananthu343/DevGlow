@@ -105,6 +105,20 @@ export const getCommunityHistory = createAsyncThunk("user/getCommunityHistory", 
     }
 });
 
+export const addUser = createAsyncThunk("user/addUser", async (data, { signal }) => {
+    const abortSignal = createAbortSignalWithTimeout(5000);
+    try {
+        const response = await axios.patch(`${users_url}/community/addUser`, data, {
+            withCredentials: true,
+            signal: abortSignal,
+        });
+
+        return response.data.updatedData
+    } catch (error) {
+       handleError(error,'addUser')
+    }
+});
+
 const communitySlice = createSlice({
     name: "community",
     initialState,
@@ -151,6 +165,13 @@ const communitySlice = createSlice({
         .addCase(deleteCommunity.fulfilled,(state,action)=>{
             const newCommunities = state.communities.filter(obj => obj._id !== action.payload);
             state.communities = newCommunities
+        })
+        .addCase(addUser.fulfilled,(state,action)=>{
+            const updatedCommunity = action.payload; 
+            const communityIndex = state.communities.findIndex(ele => ele._id === updatedCommunity._id);             
+            if (communityIndex >= 0) { 
+                state.communities[communityIndex] = updatedCommunity;
+            }
         })
     }
 })

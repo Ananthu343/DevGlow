@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getFeed } from '../slices/postSlice';
 import VideoPlayer from './VideoPlayer'
 import EditPost from './EditPost';
-import PostDropdown from './PostDropdown';
+import DropdownMenu from './DropdownMenu';
 import FollowToggle from './FollowToggle';
 import LikeToggle from './LikeToggle';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -86,7 +86,7 @@ const Feeds = () => {
                   </div>
                   <div className='flex '>
                     <FollowToggle userData={userData} />
-                    {userInfo?.devGlowAccess._id === userData?._id ? <PostDropdown options={["Edit Post"]} document={document} openEdit={openEdit} /> : <PostDropdown options={["Save Post", "Report User", "Block User"]} document={document} />}
+                    {userInfo?.devGlowAccess._id === userData?._id ? <DropdownMenu options={["Edit Post"]} document={document} openEdit={openEdit} /> : <DropdownMenu options={["Save Post", "Report User", "Block User"]} document={document} />}
                   </div>
                 </div>
                 <div className='border-t w-full h-auto mt-2 mb-2 pl-3 pr-3 break-words'>

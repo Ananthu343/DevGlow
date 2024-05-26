@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import FollowToggle from './FollowToggle';
-import PostDropdown from './PostDropdown';
+import PostDropdown from './DropdownMenu';
 import LikeToggle from './LikeToggle';
 import CommentsContainer from './CommentsContainer';
 import Share from './Share';

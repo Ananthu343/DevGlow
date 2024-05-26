@@ -5,7 +5,7 @@ import { blockUser } from '../slices/postSlice';
 import toast from 'react-hot-toast';
 import { updateCredentials } from '../slices/authSlice';
 
-const PostDropdown = ({ options, document, openEdit }) => {
+const DropdownMenu = ({ options, document, openEdit,setAbout,openAddUsers }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch()
 
@@ -33,13 +33,19 @@ const PostDropdown = ({ options, document, openEdit }) => {
                     }
                    })
                 break;
+            case "About":
+                setAbout(true)
+                break;    
+            case "Add users":
+                openAddUsers(true)
+                break;    
             default:
                 break;
         }
     };
 
     return (
-        <div className="relative z-10">
+        <div className="relative z-5">
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="focus:outline-none"
@@ -49,7 +55,7 @@ const PostDropdown = ({ options, document, openEdit }) => {
                     width="16"
                     height="16"
                     fill="currentColor"
-                    className="bi bi-three-dots-vertical"
+                    className="bi bi-three-dots-vertical hover:bg-gray-100 rounded-full"
                     viewBox="0 0 16 16"
                 >
                     <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
@@ -76,4 +82,4 @@ const PostDropdown = ({ options, document, openEdit }) => {
     );
 }
 
-export default PostDropdown
+export default DropdownMenu
