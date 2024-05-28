@@ -17,6 +17,12 @@ class MessageRepository{
     async deleteMessagesCommunity(id){
         return await Message.deleteMany({communityId:id})
     }
+    async getUnread(id){
+        return await Message.find({receiver:id,readStatus:false})  
+    }
+    async markRead(sender,receiver){
+        return await Message.updateMany({receiver:receiver,sender:sender},{$set:{readStatus:true}})
+    }
 }
 
 export default MessageRepository

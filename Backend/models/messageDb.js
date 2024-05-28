@@ -14,6 +14,10 @@ const MessageSchema = new mongoose.Schema({
     ref: 'Community'
   },
   content: String,
+  readStatus: {
+    type:Boolean,
+    default:false
+  },
   createdAt: { type: Date, default: Date.now } 
 });
 

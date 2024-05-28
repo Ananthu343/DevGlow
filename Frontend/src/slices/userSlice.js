@@ -37,7 +37,7 @@ export const logoutUser = createAsyncThunk("user/logout",async ()=>{
 })
 
 export const uploadPost = createAsyncThunk("user/uploadPost", async (data, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
 
     try {
         const response = await axios.post(`${users_url}/upload-post`, data, {
@@ -52,7 +52,7 @@ export const uploadPost = createAsyncThunk("user/uploadPost", async (data, { sig
 });
 
 export const editPost = createAsyncThunk("user/editPost", async (data, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
 
     try {
         const response = await axios.patch(`${users_url}/edit-post`, data, {
@@ -68,7 +68,7 @@ export const editPost = createAsyncThunk("user/editPost", async (data, { signal 
 
 
 export const deletePost = createAsyncThunk("user/deletePost", async (id, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
 
     try {
         const response = await axios.delete(`${users_url}/delete-post`, {
@@ -85,7 +85,7 @@ export const deletePost = createAsyncThunk("user/deletePost", async (id, { signa
 
 
 export const getUser = createAsyncThunk("user/getUser", async (id, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.get(`${users_url}/getUserData`, {
             params: { id },
@@ -101,7 +101,7 @@ export const getUser = createAsyncThunk("user/getUser", async (id, { signal }) =
 
 
 export const savePost = createAsyncThunk("user/savePost", async (id, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
 
     try {
         const response = await axios.patch(`${users_url}/savePost`, {
@@ -119,7 +119,7 @@ export const savePost = createAsyncThunk("user/savePost", async (id, { signal })
 
 
 export const reportUser = createAsyncThunk("user/reportUser", async (id, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
 
     try {
         const response = await axios.patch(`${users_url}/reportUser`, {
@@ -139,7 +139,7 @@ export const reportUser = createAsyncThunk("user/reportUser", async (id, { signa
 
 
 export const editProfile = createAsyncThunk("user/editProfile", async (data, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
 
     try {
         const response = await axios.patch(`${users_url}/editProfile`, data, {

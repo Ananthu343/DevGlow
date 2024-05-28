@@ -10,7 +10,7 @@ const initialState = {
 
 export const getRankings = createAsyncThunk("user/getRankings", async (_, { signal }) => {
 
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.get(`${users_url}/getRankings`, {
             signal: abortSignal, 
@@ -25,13 +25,11 @@ const leaderboardSlice = createSlice({
     name: "leaderboard",
     initialState,
     reducers : {
+        setRanking:(state,action)=>{
+            state.rankings = action.payload;
+        }
     },
-    extraReducers: (builder)=>{
-        builder
-        .addCase(getRankings.fulfilled,(state,action)=>{
-            state.rankings = [...action.payload]
-        })  
-    }
 })
 
 export default leaderboardSlice.reducer;
+export const {setRanking} = leaderboardSlice.actions

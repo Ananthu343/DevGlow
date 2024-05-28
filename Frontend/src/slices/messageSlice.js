@@ -10,7 +10,7 @@ const initialState = {
 
 export const getMessageHistory = createAsyncThunk("user/getMessageHistory", async (id, { signal }) => {
 
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.get(`${users_url}/getMessageHistory`, {
             params: { id },
@@ -19,7 +19,7 @@ export const getMessageHistory = createAsyncThunk("user/getMessageHistory", asyn
         });
         return response.data;
     } catch (error) {
-        handleError(error,'getPost')
+        handleError(error,'getMessageHistory')
     }
 });
 

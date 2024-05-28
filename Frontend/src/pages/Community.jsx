@@ -1,12 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import CommunityCase from '../components/CommunityCase'
 import Footer from '../components/Footer'
 import CommunityBox from '../components/CommunityBox'
 import CreateCommunity from '../components/CreateCommunity'
+import { getUsers } from '../slices/postSlice'
+import { getCommunities } from '../slices/communitySlice'
 
 
 const Community = () => {
   const [modal, setModal] = useState(false)
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+      dispatch(getUsers())
+      dispatch(getCommunities())
+  }, [dispatch])
+
   return (
     <>
       <div className='w-full top-0 flex justify-center pt-[55px] mb-2'>
@@ -19,8 +29,8 @@ const Community = () => {
                 <p>Start a community</p>
                 <div className='h-[0.5px] border border-b w-full'></div>
                 <button onClick={() => setModal(true)} className='text-sm font-semibold flex mt-4 hover:bg-gray-100 text-[#004272]'>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                   </svg>
                   Create one
                 </button>
@@ -33,8 +43,8 @@ const Community = () => {
       </div>
       <div className="fixed bottom-20 right-0 m-4 lg:hidden">
         <button onClick={() => setModal(true)} className=''>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-9 h-9 rounded-full hover:bg-gray-100 text-[#004272] bg-white">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-9 h-9 rounded-full hover:bg-gray-100 text-[#004272] bg-white">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
           </svg>
         </button>
       </div>

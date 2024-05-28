@@ -10,7 +10,7 @@ const initialState = {
 };
 
 export const createCommunity = createAsyncThunk("user/createCommunity", async (data, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.post(`${users_url}/create-community`, data, {
             withCredentials: true,
@@ -23,7 +23,7 @@ export const createCommunity = createAsyncThunk("user/createCommunity", async (d
 });
 
 export const getCommunities = createAsyncThunk("user/getCommunities", async () => {
-    const signal = createAbortSignalWithTimeout(5000);
+    const signal = createAbortSignalWithTimeout(10000);
     try {
       const communities = await axios.get(`${users_url}/get-communities`, { signal });
       return communities.data;
@@ -33,7 +33,7 @@ export const getCommunities = createAsyncThunk("user/getCommunities", async () =
   });
 
   export const joinCommunity = createAsyncThunk("user/joinCommunity", async (id, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.patch(`${users_url}/joinCommunity`, {
             id: id,
@@ -48,7 +48,7 @@ export const getCommunities = createAsyncThunk("user/getCommunities", async () =
 });
 
   export const leaveCommunity = createAsyncThunk("user/leaveCommunity", async (id, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.patch(`${users_url}/leaveCommunity`, {
             id: id,
@@ -63,7 +63,7 @@ export const getCommunities = createAsyncThunk("user/getCommunities", async () =
 });
 
   export const editCommunity = createAsyncThunk("user/editCommunity", async (data, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.patch(`${users_url}/editCommunity`, data, {
             withCredentials: true,
@@ -76,7 +76,7 @@ export const getCommunities = createAsyncThunk("user/getCommunities", async () =
 });
 
 export const deleteCommunity = createAsyncThunk("user/deleteCommunity", async (id, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         await axios.delete(`${users_url}/delete-community`, {
             params: { id },
@@ -92,7 +92,7 @@ export const deleteCommunity = createAsyncThunk("user/deleteCommunity", async (i
 
 export const getCommunityHistory = createAsyncThunk("user/getCommunityHistory", async (id, { signal }) => {
 
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.get(`${users_url}/getCommunityHistory`, {
             params: { id },
@@ -101,12 +101,12 @@ export const getCommunityHistory = createAsyncThunk("user/getCommunityHistory", 
         });
         return response.data;
     } catch (error) {
-        handleError(error,'getPost')
+        handleError(error,'getCommunityHistory')
     }
 });
 
 export const addUser = createAsyncThunk("user/addUser", async (data, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.patch(`${users_url}/community/addUser`, data, {
             withCredentials: true,

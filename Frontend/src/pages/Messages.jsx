@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { getUsers } from '../slices/postSlice'
 import Footer from '../components/Footer'
 import LeaderboardCase from '../components/LeaderboardCase'
 import SuggestionsCase from '../components/SuggestionsCase'
 import ChatBox from '../components/ChatBox'
 
 const Messages = () => {
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    dispatch(getUsers())
+  })
+
   return (
     <>
     <div className='w-full top-0 flex justify-center pt-[55px] mb-2'>

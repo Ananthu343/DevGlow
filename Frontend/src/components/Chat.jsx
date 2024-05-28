@@ -1,43 +1,44 @@
 import React, { useState, useEffect, useRef } from 'react';
-import io from 'socket.io-client';
 import EmojiPicker from 'emoji-picker-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearMessages, getMessageHistory, updateMessages } from '../slices/messageSlice';
 import { timeAgo } from '../utils/timeAgo';
+import { useSocket } from '../configs/socket';
 
 const Chat = ({ receiver }) => {
+  const socket = useSocket();
+  const { messages } = useSelector(state => state.message)
   const [message, setMessage] = useState('');
   const [openEmoji, setOpenEmoji] = useState(false);
-  const [socket, setSocket] = useState(null);
   const messagesEndRef = useRef(null);
   const dispatch = useDispatch()
   const { userInfo } = useSelector(state => state.auth)
-  const { messages } = useSelector(state => state.message)
   const { users } = useSelector(state => state.post)
 
   useEffect(() => {
-    const socket = io("http://localhost:3001");
-    socket.on('connect', () => {
-      console.log('Connected to server');
-    });
-    const connectionData = [userInfo?.devGlowAccess._id, receiver._id]
-    socket.emit('join-person-room', (connectionData))
-    dispatch(getMessageHistory(receiver._id))
-    setSocket(socket)
+    if (socket) {
+      const connectionData = [userInfo?.devGlowAccess._id, receiver._id]
+      socket.emit('join-person-room', (connectionData))
+      dispatch(getMessageHistory(receiver._id))
     return () => {
       dispatch(clearMessages())
-      socket.disconnect();
-      console.log("disconnected");
-    };
-  }, [receiver, dispatch, userInfo?.devGlowAccess._id]);
+    }
+    }
+  }, [receiver, dispatch, userInfo?.devGlowAccess._id,socket]);
 
   useEffect(() => {
     if (socket) {
-      socket.on('receive', (data) => {
-        dispatch(updateMessages(data))
-      })
+      const handleReceive = (data) => {
+        dispatch(updateMessages(data));
+        console.log(data);
+      }
+      socket.on('receive', handleReceive);
+      return () => {
+        socket.off('receive', handleReceive); 
+        dispatch(clearMessages());
+      };
     }
-  }, [socket, dispatch])
+  },[socket,dispatch])
 
 
   useEffect(() => {
@@ -66,6 +67,7 @@ const Chat = ({ receiver }) => {
     }
     setMessage('');
   };
+
   return (
     <div className='w-full h-full flex flex-col p-3'>
       <div className='w-full flex pl-3 mb-2'>

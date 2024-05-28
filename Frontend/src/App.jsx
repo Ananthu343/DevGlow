@@ -4,7 +4,6 @@ import Header from "./components/Header";
 import LoadingPage from "./components/LoadingPage";
 import BottomNavTabs from "./components/BottomNavTabs";
 
-
 function App() {
 
   return (

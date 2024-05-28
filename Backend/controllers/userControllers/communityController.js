@@ -143,6 +143,7 @@ export const communityController = {
             const communityId = req.query.id
             const data = await messageRepository.getCommunityHistory(communityId)
             res.status(200).json({communityHistory : data})
+            console.log(data);
         } catch (error) {
             console.log(error.message);
             res.status(500).send({ error: "internal server error" })

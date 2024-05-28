@@ -1,28 +1,58 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { getUsers } from '../slices/postSlice';
+import React, { useState, useEffect, useCallback } from 'react'
+import { useSelector } from 'react-redux'
 import Chat from './Chat';
+import { useSocket } from '../configs/socket';
 
 const ChatBox = () => {
+    const socket = useSocket();
     const [followers, setFollowers] = useState([]);
+    const [unreadData, setUnreadData] = useState([])
     const [chatBox, openChatBox] = useState(false)
     const [selectedUserId, setSelectedUserId] = useState(null);
     const { users } = useSelector(state => state.post);
     const { userInfo } = useSelector(state => state.auth);
-    const dispatch = useDispatch()
+
+    const debouncedFetchUnreadMessages = useCallback(() => {
+        socket.emit('get-unread-messages', userInfo?.devGlowAccess?._id);
+    }, [socket, userInfo?.devGlowAccess?._id]);
 
     useEffect(() => {
-        dispatch(getUsers())
-    }, [dispatch])
+       if (socket) {
+        const timer = setInterval(debouncedFetchUnreadMessages, 500);
+ 
+        socket.on('unreadMessages', (data) => {
+            const senderCounts = new Map();
+            data.forEach((ele) => {
+                if (senderCounts.has(ele.sender)) {
+                    senderCounts.set(ele.sender, senderCounts.get(ele.sender) + 1);
+                } else {
+                    senderCounts.set(ele.sender, 1);
+                }
+            });
+            const organizedData = Array.from(senderCounts.entries()).map(([sender, count]) => ({
+                sender,
+                count
+            })); 
+            setUnreadData(organizedData)
+        });
+        return () => clearInterval(timer);
+       }
+
+    }, [debouncedFetchUnreadMessages, socket])
 
     useEffect(() => {
-        const myData = users?.find(ele => ele._id ===  userInfo.devGlowAccess._id)
+        const myData = users?.find(ele => ele._id === userInfo.devGlowAccess._id)
         const data = users?.filter(ele => myData.followers.includes(ele._id));
         setFollowers(data);
     }, [users, userInfo.devGlowAccess]);
 
     const openChat = (user) => {
         setSelectedUserId(user._id)
+        const data = {
+            sender: user._id,
+            receiver: userInfo.devGlowAccess._id
+        }
+        socket.emit("mark-read",(data))
         openChatBox(<Chat receiver={user} />)
     }
 
@@ -33,8 +63,10 @@ const ChatBox = () => {
                 <div className='h-[0.5px] border border-b w-full mb-2'></div>
                 {followers?.length > 0 ?
                     <ul>
-                        {followers.map((user) => (
-                            <li key={user._id} className={`cursor-pointer flex flex-col w-full hover:bg-gray-100 items-center mb-2 ${selectedUserId === user._id ? 'border-b shadow-lg' : ''}`}>
+                        {followers.map((user) => {
+                            const unreadCount = unreadData.find(ele => ele.sender === user._id)
+                            return(
+                                <li key={user._id} className={` cursor-pointer flex w-full hover:bg-gray-100 items-center mb-2 ${selectedUserId === user._id ? 'border-b shadow-lg' : ''}`}>
                                 <div onClick={() => openChat(user)} className='cursor-pointer flex p-2 w-full border-b items-center '>
                                     {user?.profile_url ? (
                                         <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
@@ -48,8 +80,12 @@ const ChatBox = () => {
 
                                     <h2 className="text-sm font-semibold">{user.username}</h2>
                                 </div>
+                                    <div className='w-5 bg-[#004272] flex justify-center items-center rounded-full text-white mr-2'>
+                                    <p >{unreadCount?.count}</p>
+                                    </div>
                             </li>
-                        ))}
+                            )
+})}
                     </ul>
 
                     : (
@@ -68,15 +104,15 @@ const ChatBox = () => {
                                 <div onClick={() => openChat(user)} className='cursor-pointer flex flex-col w-full border-b items-center '>
                                     {user.profile_url ? (
                                         <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
-                                            <img className='w-[30px] h-[30px] object-cover' src={user?.profile_url} alt="profilepic" />
+                                            <img className='w-[20px] h-[20px] object-cover' src={user?.profile_url} alt="profilepic" />
                                         </div>
                                     ) : (
-                                        <img className='border border-[#720058] w-7 rounded-full mr-2 hidden lg:flex'
+                                        <img className='border border-[#720058] w-[20px] h-[20px] rounded-full mr-2 hidden lg:flex'
                                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfQqAoMaedQBNfybdIdduiix4&usqp=CAU"
                                             alt="profile pic" />
                                     )}
 
-                                    <h2 className="text-xs font-semibold">{user.username}</h2>
+                                    <h2 className="text-[10px] font-semibold">{user.username}</h2>
                                 </div>
                             </li>
                         ))}

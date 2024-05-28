@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { getCommunityHistory, clearCommunityMessages, updateCommunityMessages } from '../slices/communitySlice';
 import { timeAgo } from '../utils/timeAgo';
-import io from 'socket.io-client';
 import EmojiPicker from 'emoji-picker-react';
 import DropdownMenu from './DropdownMenu';
 import CommunityOverview from './CommunityOverview';
 import AddUsers from './AddUsers';
+import { useSocket } from '../configs/socket';
 
 const CommunityChat = ({ communityId }) => {
+    const socket = useSocket();
     const { userInfo } = useSelector(state => state.auth)
     const { communityMessages,communities } = useSelector(state => state.community)
     const { users } = useSelector(state => state.post)
@@ -18,7 +19,6 @@ const CommunityChat = ({ communityId }) => {
     const [openEmoji, setOpenEmoji] = useState(false);
     const [modal, setModal] = useState(false);
     const [addUsers, openAddUsers] = useState(false);
-    const [socket, setSocket] = useState(null);
     const dispatch = useDispatch()
 
     useEffect(()=>{
@@ -27,26 +27,26 @@ const CommunityChat = ({ communityId }) => {
       },[communities,communityId])
 
     useEffect(() => {
-        const socket = io("http://localhost:3001");
-        socket.on('connect', () => {
-            console.log('Connected to server');
-        });
-        const communityId = community._id
+       if (socket) {
         socket.emit('join-community-room', (communityId))
         dispatch(getCommunityHistory(communityId))
-        setSocket(socket)
         return () => {
             dispatch(clearCommunityMessages())
-            socket.disconnect();
-            console.log("disconnected");
         };
-    }, [dispatch, community]);
+       }
+    }, [dispatch, communityId,socket]);
 
     useEffect(() => {
         if (socket) {
-            socket.on('receive-community-message', (data) => {
-                dispatch(updateCommunityMessages(data))
-            })
+            const handleReceive = (data) => {
+              dispatch(updateCommunityMessages(data));
+              console.log(data);
+            }
+            socket.on('receive-community-message', handleReceive);
+            return () => {
+              socket.off('receive-community-message', handleReceive); 
+              dispatch(clearCommunityMessages());
+            };
         }
     }, [socket, dispatch])
 

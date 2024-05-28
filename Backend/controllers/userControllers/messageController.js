@@ -5,6 +5,7 @@ const messageRepository = new MessageRepository()
 
 export const messageController = {
     getMessageHistory : async(req,res)=>{
+        console.log("worked",req.query.id);
         try {
             const myId = getTokenData(req)
             const data = await messageRepository.getHistory(myId,req.query.id)

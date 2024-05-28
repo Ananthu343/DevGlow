@@ -14,7 +14,7 @@ const Leaderboard = () => {
 
       <LeaderboardContainer/>
       </Suspense>
-      <div className=' hidden lg:flex flex-col h-[520px] justify-between sticky top-[60px] z-[-1]'>
+      <div className=' hidden lg:flex flex-col h-[520px] justify-between sticky top-[60px]'>
         <NotificationCase />
         <SuggestionsCase />
       </div>

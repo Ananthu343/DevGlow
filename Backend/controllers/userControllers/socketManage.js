@@ -12,6 +12,7 @@ export const socketManage = (io) => {
   
     socket.on('join-person-room', async (connections) => {
       const room = await roomRepository.findByConnections(connections);
+      console.log("joined person room",room);
       if (room) {
         roomId = room._id;
       } else {
@@ -29,8 +30,9 @@ export const socketManage = (io) => {
     });
 
     socket.on('join-community-room', async (id) => {
+      console.log(id);
       const room = await roomRepository.findByCommunityId(id);
-      console.log(room,"hehe");
+      console.log("joined community room",room);
       roomId = room._id;
       roomId = roomId.toString()
       socket.join(roomId);
@@ -40,6 +42,15 @@ export const socketManage = (io) => {
       await messageRepository.save(data);
       socket.to(roomId).emit('receive-community-message', data);
     });
+
+    socket.on('get-unread-messages', async (id)=>{
+      const data = await messageRepository.getUnread(id);
+      socket.emit('unreadMessages',data)
+    })
+
+    socket.on('mark-read', async (data)=>{
+       await messageRepository.markRead(data.sender,data.receiver);
+    })
 
   });
   
