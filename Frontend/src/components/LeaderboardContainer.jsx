@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getRankings,setRanking } from '../slices/leaderboardSlice'
 import UserCard from './UserCard'
 
 const LeaderboardContainer = () => {
@@ -11,24 +10,15 @@ const LeaderboardContainer = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getRankings()).then((action)=>{
-            const data = action.payload.filter(element => {
-                const user = users?.find(ele => ele._id === element._id);
-                if (user?.username) {
-                    return element
-                }
-            });
-            dispatch(setRanking(data))
-        })
         rankings.forEach((element,index) => {
             if (element._id === userInfo.devGlowAccess._id) {
                 setMyRank({rank:index,stars:element.size})
             }
         });
-    }, [dispatch])
+    }, [rankings,dispatch,userInfo.devGlowAccess._id,users])
 
     return (
-        <div className='h-[auto] w-full lg:w-[75%] bg-white mr-2 rounded-lg p-3 bg-customLeaderBoard-bg mb-2 flex flex-col items-center justify-center p-4'>
+        <div className='h-[auto] w-full lg:w-[75%] bg-white mr-2 rounded-lg p-3 bg-customLeaderBoard-bg mb-2 flex flex-col items-center justify-center p-4 shadow-lg'>
             <h1 className='text-white font-semibold  mb-2'>Rankings (International)</h1>
             <div className='w-full bg-white  border-2 border-[#720058] rounded mb-2'>
             <div className="overflow-y-scroll  max-h-[600px]">
@@ -42,24 +32,22 @@ const LeaderboardContainer = () => {
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date Joined</th>
                             </tr>
                         </thead>
-                        <tbody className="bg-white/40 divide-y divide-gray-200">
-                           <tr className={`${myRank.rank + 1 === 1? "bg-[#FFD700]" : myRank.rank + 1 === 2? "bg-[#C0C0C0]" : myRank.rank + 1 === 3? "bg-[#CD7F32]" : ""} border-2 border-white`}
->
-                                        
-                                        <td className="px-6 py-4 whitespace-nowrap" >{myRank?.rank + 1}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
+                        <tbody className="bg-white/40 divide-y divide-gray-200 ">
+                           <tr className={`${myRank.rank + 1 === 1? "bg-customLeaderBoardgold-bg text-white" : myRank.rank + 1 === 2? "bg-customLeaderBoardsilver-bg text-white" : myRank.rank + 1 === 3? "bg-customLeaderBoardbronze-bg text-white" : ""} relative`}
+>                                        <td className="px-6 py-4 whitespace-nowrap" >{myRank?.rank + 1}. (You)</td>
+                                        <td className=" whitespace-nowrap">
                                             {myRank && <UserCard user={userInfo?.devGlowAccess} />}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">{myRank.stars}</td>
                                         <td className="px-6 py-4 whitespace-nowrap">{userInfo?.devGlowAccess?.badge?? "Beginner"}</td>
                                         <td className="px-6 py-4 whitespace-nowrap">{new Date(userInfo?.devGlowAccess?.createdAt).toLocaleDateString()?? "Not exist"}</td>
-                            </tr>
+                            </tr> 
                             {rankings?.map((ranking, index) => {
                                 const user = users?.find(ele => ele._id === ranking._id);
                                 return user?.username && (
-                                    <tr key={index} className={index + 1 === 1 ? "bg-[#FFD700] mb-2" : index + 1 === 2 ? "bg-[#C0C0C0]" : index + 1 === 3 ? "bg-[#CD7F32]" : ""}>
+                                    <tr key={index} className={index + 1 === 1 ? "bg-customLeaderBoardgold-bg mb-2 text-white" : index + 1 === 2 ? "bg-customLeaderBoardsilver-bg text-white" : index + 1 === 3 ? "bg-customLeaderBoardbronze-bg text-white" : ""}>
                                         <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
+                                        <td className="whitespace-nowrap">
                                             {user && <UserCard user={user} />}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">{ranking.size}</td>

@@ -32,6 +32,7 @@ const CommunityChat = ({ communityId }) => {
         dispatch(getCommunityHistory(communityId))
         return () => {
             dispatch(clearCommunityMessages())
+            socket.emit('leave-room')
         };
        }
     }, [dispatch, communityId,socket]);

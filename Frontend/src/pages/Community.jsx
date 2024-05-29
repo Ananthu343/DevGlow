@@ -1,22 +1,13 @@
-import React, { useState,useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState } from 'react'
 import CommunityCase from '../components/CommunityCase'
 import Footer from '../components/Footer'
 import CommunityBox from '../components/CommunityBox'
 import CreateCommunity from '../components/CreateCommunity'
-import { getUsers } from '../slices/postSlice'
-import { getCommunities } from '../slices/communitySlice'
 
 
 const Community = () => {
   const [modal, setModal] = useState(false)
-  const dispatch = useDispatch()
   
-  useEffect(() => {
-      dispatch(getUsers())
-      dispatch(getCommunities())
-  }, [dispatch])
-
   return (
     <>
       <div className='w-full top-0 flex justify-center pt-[55px] mb-2'>

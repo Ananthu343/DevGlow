@@ -10,6 +10,7 @@ const Chat = ({ receiver }) => {
   const { messages } = useSelector(state => state.message)
   const [message, setMessage] = useState('');
   const [openEmoji, setOpenEmoji] = useState(false);
+  const [typing, setTyping] = useState(false);
   const messagesEndRef = useRef(null);
   const dispatch = useDispatch()
   const { userInfo } = useSelector(state => state.auth)
@@ -22,17 +23,20 @@ const Chat = ({ receiver }) => {
       dispatch(getMessageHistory(receiver._id))
     return () => {
       dispatch(clearMessages())
+      socket.emit('leave-room')
     }
     }
-  }, [receiver, dispatch, userInfo?.devGlowAccess._id,socket]);
+  }, [receiver._id, dispatch, userInfo?.devGlowAccess._id,socket]);
 
   useEffect(() => {
     if (socket) {
       const handleReceive = (data) => {
         dispatch(updateMessages(data));
-        console.log(data);
       }
       socket.on('receive', handleReceive);
+      socket.on('typingStatus', (data)=>{
+        setTyping(data.status)
+      });
       return () => {
         socket.off('receive', handleReceive); 
         dispatch(clearMessages());
@@ -68,6 +72,13 @@ const Chat = ({ receiver }) => {
     setMessage('');
   };
 
+  const handleInput = (e) =>{
+     setMessage(e.target.value)
+     if (socket) {
+      socket.emit('typing',(receiver._id));
+    }
+  }
+
   return (
     <div className='w-full h-full flex flex-col p-3'>
       <div className='w-full flex pl-3 mb-2'>
@@ -78,6 +89,9 @@ const Chat = ({ receiver }) => {
           <h1 className='text-sm font-semibold hover:text-blue-800 hover:underline hover:cursor-pointer'>{receiver ? receiver.username : 'Unknown'}</h1>
           <p className='text-[9px] text-[#979797]'>{receiver?.badge ? receiver.badge : 'Beginner'}</p>
         </div>
+        {typing && (
+  <span className="ml-2 p-1 text-xs font-semibold text-blue-500 bg-blue-100 rounded-full flex items-center">Typing...</span>
+)}
       </div>
       <div className=' w-full p-3 h-[90%] overflow-auto border-2 bg-customChat-bg'>
         <ul className='space-y-4'>
@@ -111,7 +125,7 @@ const Chat = ({ receiver }) => {
           className='w-[70%] lg:w-[40%] p-2 text-sm focus:outline-[#004272] border-2'
           type="text"
           value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          onChange={handleInput}
           placeholder="Type a message..."
         />
         <svg onClick={() => setOpenEmoji(!openEmoji)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 cursor-pointer ml-3">

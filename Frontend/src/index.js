@@ -9,14 +9,14 @@ import { SocketProvider } from './configs/socket';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <SocketProvider>
       <Provider store={store}>
         <Toaster containerClassName='align-left' />
         <App />
       </Provider>
     </SocketProvider>
-  </React.StrictMode> 
+  // </React.StrictMode> 
 );
 
 

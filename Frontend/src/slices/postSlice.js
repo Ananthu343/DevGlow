@@ -15,7 +15,8 @@ const initialState = {
 };
 
 export const getFeed = createAsyncThunk("user/getFeed", async (page) => {
-    const signal = createAbortSignalWithTimeout(5000);
+    const signal = createAbortSignalWithTimeout(10000);
+    console.log(page);
     try {
       const posts = await axios.get(`${users_url}/get-feed?page=${page}`, { signal });
       const data = {
@@ -30,7 +31,7 @@ export const getFeed = createAsyncThunk("user/getFeed", async (page) => {
   
 
   export const commentOnPost = createAsyncThunk("user/commentOnPost", async (data, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
       const response = await axios.post(`${users_url}/comment`, { data }, { withCredentials: true, signal:abortSignal });
       return response.data;
@@ -40,7 +41,7 @@ export const getFeed = createAsyncThunk("user/getFeed", async (page) => {
   });
 
   export const deleteComment = createAsyncThunk("user/deleteComment", async (commentId, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
       await axios.delete(`${users_url}/deleteComment`, {
         params: { id: commentId },
@@ -54,7 +55,7 @@ export const getFeed = createAsyncThunk("user/getFeed", async (page) => {
   });
   
   export const getComments = createAsyncThunk("user/getComments", async (_, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
       const response = await axios.get(`${users_url}/getPostcomment`, {
         withCredentials: true,
@@ -70,7 +71,7 @@ export const getFeed = createAsyncThunk("user/getFeed", async (page) => {
 
 
   export const getMyProfilePosts = createAsyncThunk("user/getMyProfilePosts", async (_, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.get(`${users_url}/getMyProfilePosts`, {
             withCredentials: true,
@@ -86,7 +87,7 @@ export const getFeed = createAsyncThunk("user/getFeed", async (page) => {
 });
 
 export const getUsers = createAsyncThunk("user/getUsers", async (_, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.get(`${users_url}/get-users`, {
             signal: abortSignal,
@@ -102,8 +103,8 @@ export const getUsers = createAsyncThunk("user/getUsers", async (_, { signal }) 
 
 
 export const likePost = createAsyncThunk("user/likePost", async (id, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
-
+    const abortSignal = createAbortSignalWithTimeout(50000);
+console.log("worked",id);
     try {
         const response = await axios.patch(`${users_url}/likePost`, {
             id: id,
@@ -119,7 +120,7 @@ export const likePost = createAsyncThunk("user/likePost", async (id, { signal })
 });
 
 export const followUser = createAsyncThunk("user/followUser", async (id, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.patch(`${users_url}/followUser`, {
             id: id, 
@@ -134,7 +135,7 @@ export const followUser = createAsyncThunk("user/followUser", async (id, { signa
 });
 
 export const blockUser = createAsyncThunk("user/blockUser", async (id, { signal }) => {
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.patch(`${users_url}/blockUser`, {
             id: id, 
@@ -150,7 +151,7 @@ export const blockUser = createAsyncThunk("user/blockUser", async (id, { signal 
 
 export const getPost = createAsyncThunk("user/getPost", async (id, { signal }) => {
 
-    const abortSignal = createAbortSignalWithTimeout(5000);
+    const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.get(`${users_url}/getPostData`, {
             params: { id },

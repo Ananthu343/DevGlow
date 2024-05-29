@@ -29,6 +29,12 @@ const leaderboardSlice = createSlice({
             state.rankings = action.payload;
         }
     },
+    extraReducers: (builder)=>{
+        builder
+        .addCase(getRankings.fulfilled,(state,action)=>{
+            
+        })
+    }
 })
 
 export default leaderboardSlice.reducer;

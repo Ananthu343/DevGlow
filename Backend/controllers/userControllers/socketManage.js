@@ -5,15 +5,15 @@ const messageRepository = new MessageRepository()
 const roomRepository = new RoomRepository()
 
 export const socketManage = (io) => {
-  let roomId; 
 
   io.on('connection', (socket) => {
     console.log('New client connected');
-  
+    let roomId; 
+
     socket.on('join-person-room', async (connections) => {
       const room = await roomRepository.findByConnections(connections);
-      console.log("joined person room",room);
       if (room) {
+        console.log("joined old person room",room);
         roomId = room._id;
       } else {
         const newRoom = await roomRepository.save(connections);
@@ -21,12 +21,32 @@ export const socketManage = (io) => {
         console.log("newRoommm");
       }
       roomId = roomId.toString()
+      console.log(roomId,connections[1]);
       socket.join(roomId);
     });
   
     socket.on('send', async (data) => {
       await messageRepository.save(data);
       socket.to(roomId).emit('receive', data);
+      console.log(roomId,data.receiver);
+    });
+
+    socket.on('typing', async () => { 
+      console.log(roomId);
+      if (roomId) {
+        socket.to(roomId).emit('typingStatus', {status : true});
+      setTimeout(() => {
+        socket.to(roomId).emit('typingStatus', {status : false});
+      }, 1000);
+      }
+    });
+
+    socket.on('leave-room', async () => {
+      if (roomId) {
+        socket.leave(roomId);
+        console.log(`User left room: ${roomId}`);
+        roomId = null;
+      }
     });
 
     socket.on('join-community-room', async (id) => {
