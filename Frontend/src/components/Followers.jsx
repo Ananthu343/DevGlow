@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import UserCard from './UserCard';
+import PropTypes from 'prop-types'
 
 const Followers = ({user}) => {
     const [searchValue, setSearchValue] = useState('');
@@ -53,5 +54,9 @@ const Followers = ({user}) => {
         </div>
     );
 }
+
+Followers.propTypes = {
+    user: PropTypes.object.isRequired, 
+  };
 
 export default Followers

@@ -4,6 +4,7 @@ import { savePost,reportUser } from '../slices/userSlice';
 import { blockUser } from '../slices/postSlice';
 import toast from 'react-hot-toast';
 import { updateCredentials } from '../slices/authSlice';
+import PropTypes from 'prop-types'
 
 const DropdownMenu = ({ options, document, openEdit,setAbout,openAddUsers }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -81,5 +82,12 @@ const DropdownMenu = ({ options, document, openEdit,setAbout,openAddUsers }) => 
         </div>
     );
 }
+DropdownMenu.propTypes = {
+    options: PropTypes.array.isRequired,
+    document: PropTypes.object.isRequired, 
+    openEdit: PropTypes.func,
+    setAbout: PropTypes.func, 
+    openAddUsers: PropTypes.func, 
+  };
 
 export default DropdownMenu

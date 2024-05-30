@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import { followUser } from '../slices/postSlice';
 import toast from 'react-hot-toast';
 import { useDispatch,useSelector} from 'react-redux';
+import PropTypes from 'prop-types'
 
 const FollowToggle = ({userData}) => {
     const { userInfo } = useSelector(state => state.auth);
@@ -47,5 +48,9 @@ const FollowToggle = ({userData}) => {
     </>
   )
 }
+
+FollowToggle.propTypes = {
+  userData: PropTypes.object.isRequired
+};
 
 export default FollowToggle

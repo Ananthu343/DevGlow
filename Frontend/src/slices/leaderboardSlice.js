@@ -8,7 +8,7 @@ const initialState = {
     rankings: [],
 };
 
-export const getRankings = createAsyncThunk("user/getRankings", async (_, { signal }) => {
+export const getRankings = createAsyncThunk("user/getRankings", async () => {
 
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
@@ -28,12 +28,6 @@ const leaderboardSlice = createSlice({
         setRanking:(state,action)=>{
             state.rankings = action.payload;
         }
-    },
-    extraReducers: (builder)=>{
-        builder
-        .addCase(getRankings.fulfilled,(state,action)=>{
-            
-        })
     }
 })
 

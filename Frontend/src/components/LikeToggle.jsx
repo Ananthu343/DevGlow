@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { likePost } from '../slices/postSlice';
 import toast from 'react-hot-toast';
+import PropTypes from 'prop-types'
 
 const LikeToggle = ({ document }) => {
     const [likeStatus, setLikeStatus] = useState(null);
@@ -48,5 +49,9 @@ const LikeToggle = ({ document }) => {
         </p>
     );
 }
+
+LikeToggle.propTypes = {
+    document: PropTypes.object.isRequired
+  };
 
 export default LikeToggle;

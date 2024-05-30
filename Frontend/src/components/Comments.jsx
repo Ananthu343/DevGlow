@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import EmojiPicker from 'emoji-picker-react';
 import { commentOnPost, deleteComment } from '../slices/postSlice';
 import { timeAgo } from '../utils/timeAgo';
+import PropTypes from 'prop-types'
 
 const Comments = ({ comment, commentsById,border }) => {
   const { users, feed } = useSelector(state => state.post)
@@ -85,5 +86,11 @@ const Comments = ({ comment, commentsById,border }) => {
     </div>
   )
 }
+
+Comments.propTypes = {
+  comment: PropTypes.object.isRequired,
+  commentsById: PropTypes.object.isRequired,
+  border: PropTypes.string,
+};
 
 export default Comments

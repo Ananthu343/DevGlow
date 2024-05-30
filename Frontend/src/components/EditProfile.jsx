@@ -3,7 +3,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { setCredentials } from '../slices/authSlice';
 import toast from 'react-hot-toast';
 import { editProfile } from '../slices/userSlice';
-
+import PropTypes from 'prop-types'
 
 const EditProfile = ({setModal,setUser}) => {
     const {userInfo} = useSelector(state => state.auth)
@@ -174,5 +174,10 @@ const EditProfile = ({setModal,setUser}) => {
         
     )
 }
+
+EditProfile.propTypes = {
+  setModal: PropTypes.func.isRequired, 
+  setUser: PropTypes.func.isRequired
+};
 
 export default EditProfile

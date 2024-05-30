@@ -24,7 +24,7 @@ const Header = () => {
   }, [userInfo, activeIcon])
 
   const handleLogout = () => {
-    dispatch(logoutUser()).then((res) => {
+    dispatch(logoutUser()).then(() => {
       dispatch(logout());
       navigate('/login')
     })

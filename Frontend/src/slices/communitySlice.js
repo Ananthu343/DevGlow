@@ -9,7 +9,7 @@ const initialState = {
     communityMessages:[],
 };
 
-export const createCommunity = createAsyncThunk("user/createCommunity", async (data, { signal }) => {
+export const createCommunity = createAsyncThunk("user/createCommunity", async (data) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.post(`${users_url}/create-community`, data, {
@@ -32,7 +32,7 @@ export const getCommunities = createAsyncThunk("user/getCommunities", async () =
     }
   });
 
-  export const joinCommunity = createAsyncThunk("user/joinCommunity", async (id, { signal }) => {
+  export const joinCommunity = createAsyncThunk("user/joinCommunity", async (id) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.patch(`${users_url}/joinCommunity`, {
@@ -47,7 +47,7 @@ export const getCommunities = createAsyncThunk("user/getCommunities", async () =
     }
 });
 
-  export const leaveCommunity = createAsyncThunk("user/leaveCommunity", async (id, { signal }) => {
+  export const leaveCommunity = createAsyncThunk("user/leaveCommunity", async (id) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.patch(`${users_url}/leaveCommunity`, {
@@ -62,7 +62,7 @@ export const getCommunities = createAsyncThunk("user/getCommunities", async () =
     }
 });
 
-  export const editCommunity = createAsyncThunk("user/editCommunity", async (data, { signal }) => {
+  export const editCommunity = createAsyncThunk("user/editCommunity", async (data) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.patch(`${users_url}/editCommunity`, data, {
@@ -75,7 +75,7 @@ export const getCommunities = createAsyncThunk("user/getCommunities", async () =
     }
 });
 
-export const deleteCommunity = createAsyncThunk("user/deleteCommunity", async (id, { signal }) => {
+export const deleteCommunity = createAsyncThunk("user/deleteCommunity", async (id) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         await axios.delete(`${users_url}/delete-community`, {
@@ -90,7 +90,7 @@ export const deleteCommunity = createAsyncThunk("user/deleteCommunity", async (i
     }
 });
 
-export const getCommunityHistory = createAsyncThunk("user/getCommunityHistory", async (id, { signal }) => {
+export const getCommunityHistory = createAsyncThunk("user/getCommunityHistory", async (id) => {
 
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
@@ -105,7 +105,7 @@ export const getCommunityHistory = createAsyncThunk("user/getCommunityHistory", 
     }
 });
 
-export const addUser = createAsyncThunk("user/addUser", async (data, { signal }) => {
+export const addUser = createAsyncThunk("user/addUser", async (data) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.patch(`${users_url}/community/addUser`, data, {
@@ -123,7 +123,7 @@ const communitySlice = createSlice({
     name: "community",
     initialState,
     reducers : {
-        clearCommunityMessages: (state, action) => {
+        clearCommunityMessages: (state) => {
             state.communityMessages = []
         },
         updateCommunityMessages: (state,action) => {

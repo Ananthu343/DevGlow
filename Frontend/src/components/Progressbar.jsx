@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 const ProgressBar = ({ bgcolor, progress, height }) => {
     function calculatePercentage(number, maxNumber) {
@@ -35,5 +36,11 @@ const ProgressBar = ({ bgcolor, progress, height }) => {
     </div>
  );
 };
+
+ProgressBar.propTypes = {
+   bgcolor: PropTypes.string.isRequired,
+   progress: PropTypes.number.isRequired, 
+   height: PropTypes.number.isRequired, 
+ };
 
 export default ProgressBar;

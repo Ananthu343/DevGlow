@@ -3,6 +3,7 @@ import Comments from './Comments';
 import EmojiPicker from 'emoji-picker-react';
 import { commentOnPost} from '../slices/postSlice';
 import { useDispatch,useSelector } from 'react-redux';
+import PropTypes from 'prop-types'
 
 const CommentsContainer = ({postId}) => {
     const {commentsById} = useSelector(state => state.post)
@@ -56,11 +57,15 @@ const CommentsContainer = ({postId}) => {
             </div>
             <div className=' w-full h-[200px] overflow-y-scroll rounded-t border-t border-2 border-gray-300 p-3'>
             {Object.values(commentsById).map(comment => (      
-              !replies.includes(comment._id) && comment.postId === postId && <Comments key={comment._id} comment={comment} commentsById={commentsById} size={60} /> 
+              !replies.includes(comment._id) && comment.postId === postId && <Comments key={comment._id} comment={comment} commentsById={commentsById} /> 
             ))}
             </div>
         </div>
     );
 }
+
+CommentsContainer.propTypes = {
+    postId: PropTypes.string.isRequired,
+  };
 
 export default CommentsContainer;

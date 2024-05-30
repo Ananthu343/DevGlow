@@ -3,6 +3,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import UserCard from './UserCard';
 import { addUser } from '../slices/communitySlice';
 import toast from 'react-hot-toast';
+import PropTypes from 'prop-types'
 
 const AddUsers = ({ communityId, openAddUsers }) => {
     const [searchValue, setSearchValue] = useState('')
@@ -81,5 +82,10 @@ const AddUsers = ({ communityId, openAddUsers }) => {
         </div>
     )
 }
+
+AddUsers.propTypes = {
+    communityId: PropTypes.string.isRequired,
+    openAddUsers: PropTypes.func.isRequired,
+  };
 
 export default AddUsers

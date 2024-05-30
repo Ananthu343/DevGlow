@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { clearMessages, getMessageHistory, updateMessages } from '../slices/messageSlice';
 import { timeAgo } from '../utils/timeAgo';
 import { useSocket } from '../configs/socket';
+import PropTypes from 'prop-types'
 
 const Chat = ({ receiver }) => {
   const socket = useSocket();
@@ -143,6 +144,10 @@ const Chat = ({ receiver }) => {
       </form>
     </div>
   );
+};
+
+Chat.propTypes = {
+  receiver: PropTypes.object.isRequired
 };
 
 export default Chat;

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {useDispatch } from 'react-redux';
 import { createCommunity } from '../slices/communitySlice';
 import toast from 'react-hot-toast';
+import PropTypes from 'prop-types'
 
 const CreateCommunity = ({ setModal }) => {
     const [preview, setPreview] = useState(<img className='object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500'
@@ -153,6 +154,10 @@ const CreateCommunity = ({ setModal }) => {
             </div>
         </div>
     )
+}
+
+CreateCommunity.propTypes = {
+    setModal: PropTypes.func.isRequired
 }
 
 export default CreateCommunity

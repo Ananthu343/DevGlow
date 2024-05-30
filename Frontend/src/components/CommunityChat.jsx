@@ -7,6 +7,7 @@ import DropdownMenu from './DropdownMenu';
 import CommunityOverview from './CommunityOverview';
 import AddUsers from './AddUsers';
 import { useSocket } from '../configs/socket';
+import PropTypes from 'prop-types'
 
 const CommunityChat = ({ communityId }) => {
     const socket = useSocket();
@@ -149,5 +150,9 @@ const CommunityChat = ({ communityId }) => {
         </div>
     );
 }
+
+CommunityChat.propTypes = {
+    communityId: PropTypes.string.isRequired,
+  };
 
 export default CommunityChat

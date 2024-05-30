@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 const UserCard = ({ user }) => {
  return (
@@ -19,5 +20,9 @@ const UserCard = ({ user }) => {
     </div>
  );
 };
+
+UserCard.propTypes = {
+    user: PropTypes.object.isRequired, 
+  };
 
 export default UserCard;

@@ -36,7 +36,7 @@ export const logoutUser = createAsyncThunk("user/logout",async ()=>{
     return response.status === 200;
 })
 
-export const uploadPost = createAsyncThunk("user/uploadPost", async (data, { signal }) => {
+export const uploadPost = createAsyncThunk("user/uploadPost", async (data) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
 
     try {
@@ -51,7 +51,7 @@ export const uploadPost = createAsyncThunk("user/uploadPost", async (data, { sig
     }
 });
 
-export const editPost = createAsyncThunk("user/editPost", async (data, { signal }) => {
+export const editPost = createAsyncThunk("user/editPost", async (data) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
 
     try {
@@ -67,7 +67,7 @@ export const editPost = createAsyncThunk("user/editPost", async (data, { signal 
 });
 
 
-export const deletePost = createAsyncThunk("user/deletePost", async (id, { signal }) => {
+export const deletePost = createAsyncThunk("user/deletePost", async (id) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
 
     try {
@@ -84,7 +84,7 @@ export const deletePost = createAsyncThunk("user/deletePost", async (id, { signa
 });
 
 
-export const getUser = createAsyncThunk("user/getUser", async (id, { signal }) => {
+export const getUser = createAsyncThunk("user/getUser", async (id) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.get(`${users_url}/getUserData`, {
@@ -100,7 +100,7 @@ export const getUser = createAsyncThunk("user/getUser", async (id, { signal }) =
 });
 
 
-export const savePost = createAsyncThunk("user/savePost", async (id, { signal }) => {
+export const savePost = createAsyncThunk("user/savePost", async (id) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
 
     try {
@@ -118,7 +118,7 @@ export const savePost = createAsyncThunk("user/savePost", async (id, { signal })
 });
 
 
-export const reportUser = createAsyncThunk("user/reportUser", async (id, { signal }) => {
+export const reportUser = createAsyncThunk("user/reportUser", async (id) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
 
     try {
@@ -138,7 +138,7 @@ export const reportUser = createAsyncThunk("user/reportUser", async (id, { signa
 
 
 
-export const editProfile = createAsyncThunk("user/editProfile", async (data, { signal }) => {
+export const editProfile = createAsyncThunk("user/editProfile", async (data) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
 
     try {
@@ -154,7 +154,7 @@ export const editProfile = createAsyncThunk("user/editProfile", async (data, { s
 });
 
 
-export const setBanner = createAsyncThunk("user/setBanner", async (data, { signal }) => {
+export const setBanner = createAsyncThunk("user/setBanner", async (data) => {
     const abortSignal = createAbortSignalWithTimeout(5000);
     try {
         const response = await axios.patch(`${users_url}/setBanner`, data, {

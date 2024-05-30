@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { uploadPost } from '../slices/userSlice';
 import { updateFeedAfterUpload } from '../slices/postSlice';
 import toast from 'react-hot-toast';
+import PropTypes from 'prop-types'
 
 const CreatePost = ({ setModal }) => {
     const [preview, setPreview] = useState(null);
@@ -90,6 +91,10 @@ const CreatePost = ({ setModal }) => {
             </div>
         </div>
     )
+}
+
+CreatePost.propTypes = {
+    setModal: PropTypes.func.isRequired
 }
 
 export default CreatePost

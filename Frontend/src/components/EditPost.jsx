@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { deletePost, editPost } from '../slices/userSlice';
 import { updateFeed,updateFeedAfterDelete } from '../slices/postSlice';
 import toast from 'react-hot-toast';
+import PropTypes from 'prop-types'
 
 const EditPost = ({ setModal, post }) => {
     const [preview, setPreview] = useState(null);
@@ -122,5 +123,10 @@ const EditPost = ({ setModal, post }) => {
         </div>
     )
 }
+
+EditPost.propTypes = {
+    post: PropTypes.object.isRequired, 
+    setModal: PropTypes.func.isRequired
+  };
 
 export default EditPost

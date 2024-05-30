@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CommunityOverview from './CommunityOverview';
+import PropTypes from 'prop-types'
 
 const SearchResultContainer = ({ value }) => {
     const { users } = useSelector(state => state.post);
@@ -97,6 +98,10 @@ const SearchResultContainer = ({ value }) => {
         </div>
     );
 };
+
+SearchResultContainer.propTypes = {
+    value: PropTypes.string.isRequired
+  };
 
 export default SearchResultContainer;
 

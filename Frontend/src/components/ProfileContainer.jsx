@@ -13,6 +13,7 @@ import SuggestionsCase from './SuggestionsCase'
 import Followers from './Followers'
 import Following from './Following'
 import EditProfile from './EditProfile'
+import PropTypes from 'prop-types'
 
 const ProfileContainer = ({ userId }) => {
     const { myPosts } = useSelector(state => state.post)
@@ -176,5 +177,9 @@ const ProfileContainer = ({ userId }) => {
 
     )
 }
+
+ProfileContainer.propTypes = {
+    userId: PropTypes.string.isRequired,
+};
 
 export default ProfileContainer

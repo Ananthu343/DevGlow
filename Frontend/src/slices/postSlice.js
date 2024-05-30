@@ -30,7 +30,7 @@ export const getFeed = createAsyncThunk("user/getFeed", async (page) => {
   });
   
 
-  export const commentOnPost = createAsyncThunk("user/commentOnPost", async (data, { signal }) => {
+  export const commentOnPost = createAsyncThunk("user/commentOnPost", async (data) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
       const response = await axios.post(`${users_url}/comment`, { data }, { withCredentials: true, signal:abortSignal });
@@ -40,7 +40,7 @@ export const getFeed = createAsyncThunk("user/getFeed", async (page) => {
     }
   });
 
-  export const deleteComment = createAsyncThunk("user/deleteComment", async (commentId, { signal }) => {
+  export const deleteComment = createAsyncThunk("user/deleteComment", async (commentId) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
       await axios.delete(`${users_url}/deleteComment`, {
@@ -54,7 +54,7 @@ export const getFeed = createAsyncThunk("user/getFeed", async (page) => {
     }
   });
   
-  export const getComments = createAsyncThunk("user/getComments", async (_, { signal }) => {
+  export const getComments = createAsyncThunk("user/getComments", async () => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
       const response = await axios.get(`${users_url}/getPostcomment`, {
@@ -70,7 +70,7 @@ export const getFeed = createAsyncThunk("user/getFeed", async (page) => {
 
 
 
-  export const getMyProfilePosts = createAsyncThunk("user/getMyProfilePosts", async (_, { signal }) => {
+  export const getMyProfilePosts = createAsyncThunk("user/getMyProfilePosts", async () => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.get(`${users_url}/getMyProfilePosts`, {
@@ -86,7 +86,7 @@ export const getFeed = createAsyncThunk("user/getFeed", async (page) => {
     }
 });
 
-export const getUsers = createAsyncThunk("user/getUsers", async (_, { signal }) => {
+export const getUsers = createAsyncThunk("user/getUsers", async () => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.get(`${users_url}/get-users`, {
@@ -102,7 +102,7 @@ export const getUsers = createAsyncThunk("user/getUsers", async (_, { signal }) 
 
 
 
-export const likePost = createAsyncThunk("user/likePost", async (id, { signal }) => {
+export const likePost = createAsyncThunk("user/likePost", async (id) => {
     const abortSignal = createAbortSignalWithTimeout(50000);
 console.log("worked",id);
     try {
@@ -119,7 +119,7 @@ console.log("worked",id);
     }
 });
 
-export const followUser = createAsyncThunk("user/followUser", async (id, { signal }) => {
+export const followUser = createAsyncThunk("user/followUser", async (id) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.patch(`${users_url}/followUser`, {
@@ -134,7 +134,7 @@ export const followUser = createAsyncThunk("user/followUser", async (id, { signa
     }
 });
 
-export const blockUser = createAsyncThunk("user/blockUser", async (id, { signal }) => {
+export const blockUser = createAsyncThunk("user/blockUser", async (id) => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.patch(`${users_url}/blockUser`, {
@@ -149,7 +149,7 @@ export const blockUser = createAsyncThunk("user/blockUser", async (id, { signal 
     }
 });
 
-export const getPost = createAsyncThunk("user/getPost", async (id, { signal }) => {
+export const getPost = createAsyncThunk("user/getPost", async (id) => {
 
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
@@ -194,7 +194,7 @@ const postSlice = createSlice({
         pushIntoDisplayedComments:(state,action)=>{
             state.displayedComments.push(action.payload.commentId)
         },
-        clearFeed:(state,action)=>{
+        clearFeed:(state)=>{
             state.feed = []
             state.page = 1
         }

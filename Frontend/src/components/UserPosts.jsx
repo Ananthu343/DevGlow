@@ -5,7 +5,7 @@ import PostDropdown from './DropdownMenu';
 import LikeToggle from './LikeToggle';
 import CommentsContainer from './CommentsContainer';
 import Share from './Share';
-
+import PropTypes from 'prop-types'
 import VideoPlayer from './VideoPlayer'
 import EditPost from './EditPost';
 
@@ -112,5 +112,9 @@ const UserPosts = ({id}) => {
       </div>
     );
 }
+
+UserPosts.propTypes = {
+  id: PropTypes.string.isRequired,
+};
 
 export default UserPosts

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types'
 
 const MenuBar = ({ handleLogout }) => {
     const { userInfo } = useSelector(state => state.auth)
@@ -34,5 +35,9 @@ const MenuBar = ({ handleLogout }) => {
         </div>
     )
 }
+
+MenuBar.propTypes = {
+    handleLogout: PropTypes.func.isRequired
+  };
 
 export default MenuBar

@@ -8,7 +8,7 @@ const initialState = {
     messages: [],
 };
 
-export const getMessageHistory = createAsyncThunk("user/getMessageHistory", async (id, { signal }) => {
+export const getMessageHistory = createAsyncThunk("user/getMessageHistory", async (id) => {
 
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
@@ -27,7 +27,7 @@ const messageSlice = createSlice({
     name: "message",
     initialState,
     reducers : {
-        clearMessages: (state, action) => {
+        clearMessages: (state) => {
             state.messages = []
         },
         updateMessages: (state,action) => {

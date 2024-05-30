@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CommunityOverview from './CommunityOverview';
 import toast from 'react-hot-toast';
+import PropTypes from 'prop-types'
 
 const SearchBox = ({ setSearchBox, searchTerm }) => {
     const { users } = useSelector(state => state.post);
@@ -97,5 +98,10 @@ const SearchBox = ({ setSearchBox, searchTerm }) => {
     );
 
 };
+
+SearchBox.propTypes = {
+    searchTerm: PropTypes.string.isRequired,
+    setSearchBox: PropTypes.func.isRequired
+  };
 
 export default SearchBox;

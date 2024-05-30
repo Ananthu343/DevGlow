@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import PropTypes from 'prop-types'
 
 const VideoPlayer = ({ videoUrl }) => {
     const videoRef = useRef(null);
@@ -59,6 +60,10 @@ const VideoPlayer = ({ videoUrl }) => {
             </video>
         </div>
     );
+};
+
+VideoPlayer.propTypes = {
+    videoUrl: PropTypes.string.isRequired 
 };
 
 export default VideoPlayer;

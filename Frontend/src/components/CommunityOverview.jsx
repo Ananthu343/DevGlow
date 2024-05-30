@@ -3,6 +3,7 @@ import React from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { joinCommunity,editCommunity,deleteCommunity, leaveCommunity } from '../slices/communitySlice'
+import PropTypes from 'prop-types'
 
 const CommunityOverview = ({ community, setModal }) => {
     const dispatch = useDispatch()
@@ -177,6 +178,11 @@ const CommunityOverview = ({ community, setModal }) => {
             </div>
         </div>
     )
+}
+
+CommunityOverview.propTypes = {
+    community: PropTypes.object.isRequired, 
+    setModal: PropTypes.func.isRequired
 }
 
 export default CommunityOverview

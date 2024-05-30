@@ -12,6 +12,8 @@ import {
  EmailShareButton,
 } from 'react-share';
 
+import PropTypes from 'prop-types'
+
 const Share = ({ setOpenShare }) => {
     return (
        <div className='fixed inset-0 flex items-center justify-center z-50'>
@@ -64,6 +66,10 @@ const Share = ({ setOpenShare }) => {
        </div>
     );
    };
+
+   Share.propTypes = {
+    setOpenShare: PropTypes.func.isRequired, 
+  };
    
    export default Share;
    

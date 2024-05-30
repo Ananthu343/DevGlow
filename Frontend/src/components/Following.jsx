@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import UserCard from './UserCard';
+import PropTypes from 'prop-types'
 
 const Following = ({ user }) => {
     const [searchValue, setSearchValue] = useState('');
@@ -53,5 +54,9 @@ const Following = ({ user }) => {
         </div>
     );
 };
+
+Following.propTypes = {
+    user: PropTypes.object.isRequired
+  };
 
 export default Following;
