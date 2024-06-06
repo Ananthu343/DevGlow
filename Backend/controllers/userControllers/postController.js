@@ -4,12 +4,16 @@ import CommentRepository from "../../repositories/commentRepository.js";
 import { getTokenData } from "../../utils/jwtToken.js";
 import { app } from "../../configs/firebase.js";
 import {getDownloadURL, getStorage,ref,uploadBytes,deleteObject} from "firebase/storage"
+import NotificationRepository from "../../repositories/notificationRepository.js";
+
 
 const storage = getStorage(app)
 
 const postRepository = new PostRepository()
 const userRepository = new UserRepository()
 const commentRepository = new CommentRepository()
+const notificationRepository = new NotificationRepository()
+
 
 export const postController = {
     getFeed:async (req,res)=>{
@@ -160,6 +164,13 @@ export const postController = {
                 console.log("liked");
                 // Like logic
                 await postRepository.pushLikedUsers(postId, myId);
+                // NOtification logic
+                const notificationData ={
+                    sender:myId,
+                    receiver:postData.creatorId,
+                    type:"like"
+                }
+                await notificationRepository.save(notificationData)
                 updatedLikeStatus = true; 
             }
     
@@ -185,6 +196,14 @@ export const postController = {
                 content:req.body.data.content
             }
             console.log(newCommentData);
+            // Notification logic 
+            const postData = await postRepository.findById(newCommentData.postId)
+            const notificationData ={
+                sender:myId,
+                receiver:postData.creatorId,
+                type:"comment"
+            }
+            await notificationRepository.save(notificationData)
             newCommentData = await commentRepository.save(newCommentData)
             let parentData;
             if (commentId) {

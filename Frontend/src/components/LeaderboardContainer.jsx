@@ -3,18 +3,33 @@ import { useSelector } from 'react-redux'
 import UserCard from './UserCard'
 
 const LeaderboardContainer = () => {
-    const { users } = useSelector(state => state.post)
-    const { rankings } = useSelector(state => state.leaderboard)
-    const { userInfo } = useSelector(state => state.auth)
-    const [myRank, setMyRank] = useState({})
+    const { users } = useSelector(state => state.post);
+    const { rankings } = useSelector(state => state.leaderboard);
+    const { userInfo } = useSelector(state => state.auth);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredRankings, setFilteredRankings] = useState(rankings);
+    const [myRank, setMyRank] = useState({});
 
     useEffect(() => {
         rankings?.forEach((element, index) => {
             if (element._id === userInfo.devGlowAccess._id) {
-                setMyRank({ rank: index, stars: element.size })
+                setMyRank({ rank: index, stars: element.size });
             }
-        })
-    }, [rankings, userInfo.devGlowAccess._id, users])
+        });
+    }, [rankings, userInfo.devGlowAccess._id]);
+    
+    useEffect(() => {
+        if (searchQuery.trim() === '') {
+            setFilteredRankings(rankings);
+        } else {
+            const filtered = rankings.filter((ranking) => {
+                const userData = users.find(ele => ele._id === ranking._id)
+                return userData.username.toLowerCase().includes(searchQuery.toLowerCase())
+            }
+            );
+            setFilteredRankings(filtered);
+        }
+    }, [searchQuery, rankings, users]);
 
     return (
         <div className='h-[auto] w-full lg:w-[75%] bg-white mr-2 rounded-lg p-3 bg-customLeaderBoard-bg mb-2 flex flex-col items-center justify-center p-4 shadow-lg'>
@@ -43,8 +58,8 @@ const LeaderboardContainer = () => {
                                     <td className="px-6 py-4 whitespace-nowrap">{new Date(userInfo?.devGlowAccess?.createdAt).toLocaleDateString() ?? "Not exist"}</td>
                                 </tr>
                             )}
-                            {rankings?.map((ranking, index) => {
-                                const user = users?.find(ele => ele._id === ranking._id)
+                            {filteredRankings.map((ranking, index) => {
+                                const user = users?.find(ele => ele._id === ranking._id);
                                 return user?.username && (
                                     <tr key={index} className={index + 1 === 1 ? "bg-customLeaderBoardgold-bg mb-2 text-white" : index + 1 === 2 ? "bg-customLeaderBoardsilver-bg text-white" : index + 1 === 3 ? "bg-customLeaderBoardbronze-bg text-white" : ""}>
                                         <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>
@@ -62,7 +77,13 @@ const LeaderboardContainer = () => {
                 </div>
             </div>
             <div className='flex w-full flex-start'>
-                <input type="text" />
+                <input
+                    type="text"
+                    placeholder="Search by name..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-blue-500"
+                />
             </div>
         </div>
     )

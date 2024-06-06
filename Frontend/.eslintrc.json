@@ -1,8 +1,23 @@
 {
-    "extends": ["eslint:recommended", "plugin:react/recommended","airbnb"],
-    "parserOptions": {
-        "ecmaVersion": "latest"
-      },
-      "parser": "babel-eslint",
-    "plugins": ["react"]
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module" // Optional, but recommended for modern JavaScript modules
+  },
+  "parser": "@babel/eslint-parser",
+  "plugins": ["react","import"],
+  "rules": {
+    // Consider customizing these rules based on your project's style and needs
+    "react/jsx-props-no-spreading": "off",  // Allow prop spreading for flexibility
+    "react/prop-types": "off",             // Let TypeScript handle prop validation
+    "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".js"] }], // Enforce .jsx for React components
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}], // Allow importing dev dependencies during development
+    "no-unused-vars": ["warn", {}],  // Warn for unused variables (except `require` in common usage)
+    "no-console": ["warn", { "allow": ["warn", "error"] }],  // Allow `console.warn` and `console.error` for debugging
+    "semi": "off",                          // Enforce semicolons at the end of statements (optional, stylistic preference)
+    "quotes": "off",                        // Enforce double quotes for string literals (optional, stylistic preference)
+    "curly": "off",
+    "indent": "off"
+    // You can add or remove rules as needed for your project's specific requirements
+  }
 }

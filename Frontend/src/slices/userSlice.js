@@ -168,7 +168,6 @@ export const setBanner = createAsyncThunk("user/setBanner", async (data) => {
     }
 });
 
-
 const userSlice = createSlice({
     name:"user",
     initialState:{ loading:false , error:"" },

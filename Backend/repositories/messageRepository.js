@@ -23,6 +23,12 @@ class MessageRepository{
     async markRead(sender,receiver){
         return await Message.updateMany({receiver:receiver,sender:sender},{$set:{readStatus:true}})
     }
+    async getMessageGraphData() {
+        return await Message.find({ communityId: { $exists: false } }, { createdAt: 1 });
+    }
+    async getCommunityGraphData(){
+        return await Message.find({ communityId: { $exists: true } }, { createdAt: 1 });
+    }
 }
 
 export default MessageRepository

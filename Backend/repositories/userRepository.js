@@ -83,6 +83,10 @@ class UserRepository{
     async deleteUser(id) {
         return await User.deleteOne({ _id: id });
     }
+
+    async getUserGraphData(){
+        return await User.find({},{createdAt:1})
+    }
 }
 
 export default UserRepository

@@ -1,4 +1,5 @@
 import UserRepository from "../../repositories/userRepository.js";
+import NotificationRepository from "../../repositories/notificationRepository.js";
 import { getTokenData } from "../../utils/jwtToken.js";
 import { app } from "../../configs/firebase.js";
 import {getDownloadURL, getStorage,ref,uploadBytes,deleteObject} from "firebase/storage"
@@ -6,6 +7,7 @@ import {getDownloadURL, getStorage,ref,uploadBytes,deleteObject} from "firebase/
 const storage = getStorage(app)
 
 const userRepository = new UserRepository()
+const notificationRepository = new NotificationRepository()
 
 export const profileController = {
     getUserData: async(req,res)=>{
@@ -33,7 +35,6 @@ export const profileController = {
             const myId = getTokenData(req); 
             const newUserId = req.body.id;
             const myData = await userRepository.findById(myId);
-    
             let updatedFollowStatus = false;
 
             if (myData.following?.includes(newUserId)) {
@@ -48,6 +49,13 @@ export const profileController = {
                 await userRepository.pushIntoFollowing(myId, newUserId);
                 await userRepository.pushIntoFollowers(newUserId, myId);
                 updatedFollowStatus = true; // User is now followed
+                // Notification logic
+                const notificationData ={
+                    sender:myId,
+                    receiver:newUserId,
+                    type:"follow"
+                }
+                await notificationRepository.save(notificationData)
             }
             const updatedUser = await userRepository.findById(newUserId)
             res.status(200).send({ message: updatedFollowStatus ? 'User followed successfully' 

@@ -84,7 +84,7 @@ const DropdownMenu = ({ options, document, openEdit,setAbout,openAddUsers }) => 
 }
 DropdownMenu.propTypes = {
     options: PropTypes.array.isRequired,
-    document: PropTypes.object.isRequired, 
+    document: PropTypes.object, 
     openEdit: PropTypes.func,
     setAbout: PropTypes.func, 
     openAddUsers: PropTypes.func, 

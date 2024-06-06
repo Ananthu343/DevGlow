@@ -51,6 +51,9 @@ class PostRepository{
             { $sort: { size: -1 } } ,
           ])
     }
+    async getPostGraphData(){
+        return await Post.find({},{createdAt:1}).sort({createdAt:1})
+    }
 }
 
 export default PostRepository

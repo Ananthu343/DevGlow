@@ -5,6 +5,7 @@ import postReducer from "../slices/postSlice";
 import messageReducer from "../slices/messageSlice";
 import communityReducer from "../slices/communitySlice";
 import leaderboardReducer from "../slices/leaderboardSlice";
+import adminReducer from "../slices/adminSlice";
 
 const store = configureStore({
     reducer:{
@@ -14,6 +15,7 @@ const store = configureStore({
         message:messageReducer,
         community:communityReducer,
         leaderboard:leaderboardReducer,
+        admin:adminReducer,
     }
 })
 

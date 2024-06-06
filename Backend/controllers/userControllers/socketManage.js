@@ -1,8 +1,10 @@
 import MessageRepository from "../../repositories/messageRepository.js";
 import RoomRepository from "../../repositories/roomRepository.js";
+import NotificationRepository from "../../repositories/notificationRepository.js";
 
 const messageRepository = new MessageRepository()
 const roomRepository = new RoomRepository()
+const notificationRepository = new NotificationRepository()
 
 export const socketManage = (io) => {
 
@@ -71,6 +73,27 @@ export const socketManage = (io) => {
     socket.on('mark-read', async (data)=>{
        await messageRepository.markRead(data.sender,data.receiver);
     })
+
+    socket.on('get-notifications', async (id) => { 
+      const data = await notificationRepository.findNotifications(id)
+      socket.emit('notifications', data);
+    });
+
+    // video call
+    socket.on("get-room",()=>{
+      socket.emit("room",(roomId))
+    })
+
+    socket.on("callUser",(data)=>{
+      io.to(data.userToCall).emit("callUser",{signal: data.signalData, from: data.from, name: data.name})
+
+    }) 
+
+    socket.on("answerCall", (data)=>{
+      io.to(data.to).emit("callAccepted"),data.signal
+    })   
+    
+    
 
   });
   

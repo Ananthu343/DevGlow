@@ -4,6 +4,7 @@ import cors from "cors";
 import Database from "./repositories/mainRepository.js";
 import cookieParser from "cookie-parser";
 import userRoutes from "./routes/userRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 import http from 'http';
 import { Server } from "socket.io";
 import { socketManage } from "./controllers/userControllers/socketManage.js";
@@ -28,6 +29,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.use("/api/users", userRoutes);
+app.use("/api/admin", adminRoutes);
 
 const httpServer = http.createServer(app);
 

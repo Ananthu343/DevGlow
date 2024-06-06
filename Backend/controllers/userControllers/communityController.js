@@ -10,7 +10,6 @@ const roomRepository = new RoomRepository()
 const messageRepository = new MessageRepository()
 const storage = getStorage(app)
 
-
 export const communityController = {
     getCommunities: async (req, res) => {
         try {

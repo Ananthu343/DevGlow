@@ -12,10 +12,13 @@ import Messages from "../pages/Messages";
 import Leaderboard from "../pages/Leaderboard";
 import Search from "../pages/Search";
 import PostDisplay from '../components/PostDisplay';
+import AdminPrivateRoute from '../components/AdminPrivateRoute';
+import AdminHome from '../pages/AdminHome';
 
 const UserRoutes = () => {
   return (
     <Routes>
+      {/* user side */}
           <Route path="/" element={<Home/>}/>
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/verifying" element={<VerifyEmail/>}/>
@@ -28,6 +31,10 @@ const UserRoutes = () => {
               <Route path="/community" element={<Community/>} />
               <Route path="/messages" element={<Messages/>} />
               <Route path="/leaderboard" element={<Leaderboard/>} />
+          </Route>
+          {/* admin side */}
+          <Route path="" element={<AdminPrivateRoute/>}>
+            <Route  path="/admin" element={<AdminHome/>} />
           </Route>
    </Routes>
   )
