@@ -42,7 +42,7 @@ const ChatBox = () => {
 
     useEffect(() => {
         const myData = users?.find(ele => ele._id === userInfo.devGlowAccess._id)
-        const data = users?.filter(ele => myData.followers.includes(ele._id));
+        const data = users?.filter(ele => myData?.followers.includes(ele._id));
         setFollowers(data);
     }, [users, userInfo.devGlowAccess]);
 

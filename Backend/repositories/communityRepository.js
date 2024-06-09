@@ -23,6 +23,12 @@ class CommunityRepository{
     async deleteCommunity(id) {
         return await Community.deleteOne({ _id: id });
     }
+    async restrictCommunity(id){
+        return await Community.findByIdAndUpdate(id,{status:true}, { new: true })
+    }
+    async removeRestrictCommunity(id){
+        return await Community.findByIdAndUpdate(id,{status:false}, { new: true })
+    }
 }
 
 export default CommunityRepository

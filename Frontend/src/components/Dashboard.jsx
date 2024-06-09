@@ -13,12 +13,11 @@ const Dashboard = () => {
     const handleFilterChange = (event) => {
         setFilter(event.target.value);
     };
-
+    
     useEffect(() => {
         dispatch(getDashboardData(filter))
     }, [filter,handleFilterChange])
 
-console.log(filter);
     return (
       <div className='flex flex-col w-full'>
         <div className='flex justify-between w-[100%] pl-3 pr-3 border-b pb-3'>
@@ -26,16 +25,15 @@ console.log(filter);
             <h1 className='font-semibold text-[#720058]'>Dashboard</h1>
            <div className='flex'>
            <p>filter:</p>
-            <select className='bg-[#004272] text-white rounded' value={filter} onChange={handleFilterChange}>
+            <select className=' text-white bg-[#004272] rounded' value={filter} onChange={handleFilterChange}>
               <option value="day">Day</option>
               <option value="month">Month</option>
               <option value="year">Year</option>
             </select>
            </div>
           </div>
-          <p>print</p>
         </div>
-        <div className='flex w-full h-[50%]'>
+        <div className='flex w-full'>
           <PostGraph/>
           <MessageGraph/>
         </div>

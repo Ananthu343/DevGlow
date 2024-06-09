@@ -4,6 +4,7 @@ import { postController } from "../controllers/userControllers/postController.js
 import { profileController } from "../controllers/userControllers/profileController.js";
 import { messageController } from "../controllers/userControllers/messageController.js";
 import { communityController } from "../controllers/userControllers/communityController.js";
+import { badgeController } from "../controllers/adminControllers/badgeController.js";
 import { protect } from "../middlewares/authMiddleware.js";
 import { checkRole } from "../middlewares/roleAuthorization.js";
 import { upload } from "../configs/multer.js"; 
@@ -41,6 +42,7 @@ router.patch('/blockUser',protect,checkRole("user"),profileController.blockUser)
 router.patch('/editProfile',protect,upload.single('fileUpload'),profileController.editProfile)
 router.patch('/setBanner',protect,upload.single('fileUpload'),profileController.setBanner)
 router.post('/create-community',protect,upload.single('fileUpload'),communityController.createCommunity)
+router.get('/getBadges',badgeController.getBadges)
 
 router.get('/logout',authController.logout)
 

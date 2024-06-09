@@ -4,10 +4,12 @@ import { app } from "../../configs/firebase.js";
 import { getDownloadURL, getStorage, ref, uploadBytes, deleteObject } from "firebase/storage"
 import RoomRepository from "../../repositories/roomRepository.js";
 import MessageRepository from "../../repositories/messageRepository.js";
+import UserRepository from "../../repositories/userRepository.js";
 
 const communityRepository = new CommunityRepository()
 const roomRepository = new RoomRepository()
 const messageRepository = new MessageRepository()
+const userRepository = new UserRepository()
 const storage = getStorage(app)
 
 export const communityController = {
@@ -119,8 +121,9 @@ export const communityController = {
         try {
             const communityId = req.query.id;
             const myId = getTokenData(req)
+            const myData = await userRepository.findById(myId)
             const communityData = await communityRepository.findById(communityId)
-            if (communityData.creatorId == myId) {
+            if (communityData.creatorId == myId || myData.roles.includes("admin")) {
                 await communityRepository.deleteCommunity(communityData._id)
                 const mediaUrl = communityData.profile_url
                 if (mediaUrl) {

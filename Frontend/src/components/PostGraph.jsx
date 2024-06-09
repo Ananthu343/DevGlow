@@ -47,9 +47,6 @@ const PostGraph = () => {
             }
         });
 
-        chartRef.current.width = 800; // Set canvas width
-        chartRef.current.height = 400; // Set canvas height
-
         chartInstance.resize();
 
         return () => {

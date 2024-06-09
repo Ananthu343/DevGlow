@@ -13,7 +13,7 @@ Chart.register(
   Tooltip
 );
 
-const UserGraph = ({ data }) => {
+const UserGraph = () => {
     const {userData} = useSelector(state => state.admin)
   const chartRef = useRef(null);
 
@@ -49,9 +49,6 @@ const UserGraph = ({ data }) => {
       }
     });
 
-    chartRef.current.width = 400; // Set canvas width
-    chartRef.current.height = 200; // Set canvas height
-
     chartInstance.resize();
 
     return () => {
@@ -60,7 +57,8 @@ const UserGraph = ({ data }) => {
   }, [userData]);
 
   return (
-    <div style={{ width: '100%', height: '400px' }}>
+    <div className='flex flex-col items-center' style={{ width: '100%', height: '300px' }}>
+        <p>Users</p>
       <canvas ref={chartRef} />
     </div>
   );

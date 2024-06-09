@@ -129,6 +129,10 @@ const communitySlice = createSlice({
         updateCommunityMessages: (state,action) => {
             state.communityMessages.push(action.payload)
         },
+        updateCommunityBlock:(state,action)=>{
+            let communityIndex = state.communities.findIndex(ele => ele._id === action.payload.id)
+            state.communities[communityIndex].status = action.payload.status
+        },
     },
     extraReducers: (builder)=>{
         builder
@@ -177,4 +181,4 @@ const communitySlice = createSlice({
 })
 
 export default communitySlice.reducer;
-export const {clearCommunityMessages,updateCommunityMessages} = communitySlice.actions
+export const {clearCommunityMessages,updateCommunityMessages,updateCommunityBlock} = communitySlice.actions

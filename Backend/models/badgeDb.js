@@ -13,6 +13,6 @@ const BadgeSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now } 
 })
 
-const Badge = mongoose.model("Posts",BadgeSchema);
+const Badge = mongoose.model("Badges",BadgeSchema);
 
 export default Badge

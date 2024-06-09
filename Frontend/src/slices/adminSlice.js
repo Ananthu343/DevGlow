@@ -27,6 +27,68 @@ export const getDashboardData = createAsyncThunk("admin/getDashboardData", async
     }
 });
 
+export const restrictUser = createAsyncThunk("admin/restrictUser", async (id) => {
+    const abortSignal = createAbortSignalWithTimeout(50000);
+    try {
+        const response = await axios.patch(`${admin_url}/restrictUser`, {
+            id: id,
+        }, {
+            withCredentials: true,
+            signal: abortSignal,
+        });
+        return { id, status: response.data.status };
+
+    } catch (error) {
+       handleError(error,'restrictUser')
+    }
+});
+
+export const addNewUser = createAsyncThunk("admin/addNewUser", async (data) => {
+    const abortSignal = createAbortSignalWithTimeout(10000);
+    try {
+        const response = await axios.post(`${admin_url}/addNewUser`, data, {
+            withCredentials: true,
+            signal: abortSignal, 
+        });
+
+        return response.data;
+    } catch (error) {
+        handleError(error,'addNewUser')
+    }
+});
+
+export const restrictCommunity = createAsyncThunk("admin/restrictCommunity", async (id) => {
+    const abortSignal = createAbortSignalWithTimeout(50000);
+    try {
+        const response = await axios.patch(`${admin_url}/restrictCommunity`, {
+            id: id,
+        }, {
+            withCredentials: true,
+            signal: abortSignal,
+        });
+        return { id, status: response.data.status };
+
+    } catch (error) {
+       handleError(error,'restrictUser')
+    }
+});
+
+export const addNewAdmin = createAsyncThunk("admin/addNewAdmin", async (id) => {
+    const abortSignal = createAbortSignalWithTimeout(50000);
+    try {
+        const response = await axios.patch(`${admin_url}/addNewAdmin`, {
+            id: id,
+        }, {
+            withCredentials: true,
+            signal: abortSignal,
+        });
+        return {id,roles:response.data};
+
+    } catch (error) {
+       handleError(error,'addNewAdmin')
+    }
+});
+
 
 const adminSlice = createSlice({
     name: "admin",

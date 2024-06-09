@@ -37,7 +37,7 @@ const LoginForm = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     type="password" placeholder="Password" className="border border-gray-300 w-full p-2 mb-4 rounded text-black" />
 
-                <button type="submit" className="w-full py-2 bg-[#004272] text-white rounded hover:bg-[#005f72] transition duration-200">Register</button>
+                <button type="submit" className="w-full py-2 bg-[#004272] text-white rounded hover:bg-[#005f72] transition duration-200">Login</button>
             </form>
         </div>
 

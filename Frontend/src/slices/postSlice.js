@@ -104,7 +104,6 @@ export const getUsers = createAsyncThunk("user/getUsers", async () => {
 
 export const likePost = createAsyncThunk("user/likePost", async (id) => {
     const abortSignal = createAbortSignalWithTimeout(50000);
-console.log("worked",id);
     try {
         const response = await axios.patch(`${users_url}/likePost`, {
             id: id,
@@ -197,6 +196,17 @@ const postSlice = createSlice({
         clearFeed:(state)=>{
             state.feed = []
             state.page = 1
+        },
+        updateBlockStatus:(state,action)=>{
+            let userIndex = state.users.findIndex(ele => ele._id === action.payload.id)
+            state.users[userIndex].status = action.payload.status
+        },
+        pushIntoUsers: (state,action)=>{
+            state.users.push(action.payload)
+        },
+        updateAdminStatus: (state,action)=>{
+            let userIndex = state.users.findIndex(ele => ele._id === action.payload.id)
+            state.users[userIndex].roles = action.payload.roles
         }
     },
     extraReducers: (builder) => {
@@ -275,6 +285,9 @@ export const {
     updateFeedAfterUpload,
     clearCommentsById,
     pushIntoDisplayedComments,
-    clearFeed
+    clearFeed,
+    updateBlockStatus,
+    pushIntoUsers,
+    updateAdminStatus
 
 } = postSlice.actions;

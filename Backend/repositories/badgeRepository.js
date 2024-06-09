@@ -1,4 +1,4 @@
-import Badge from "../models/badgeDb";
+import Badge from "../models/badgeDb.js";
 
 class BadgeRepository{
     async save(badge){
@@ -7,6 +7,15 @@ class BadgeRepository{
     }
     async findById(id){
         return await Badge.findById(id)
+    }
+    async editBadge(id,data){
+        return await Badge.findOneAndUpdate({ _id:id }, data ,{ new:true })
+    }
+    async deleteBadge(id) {
+        return await Badge.deleteOne({ _id: id });
+    }
+    async getAllBadge(){
+        return await Badge.find().sort({createdAt:-1})
     }
 }
 

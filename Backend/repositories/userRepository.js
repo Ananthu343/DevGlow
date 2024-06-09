@@ -87,6 +87,26 @@ class UserRepository{
     async getUserGraphData(){
         return await User.find({},{createdAt:1})
     }
+    async restrictUser(id){
+        return await User.findByIdAndUpdate(id,{status:true}, { new: true })
+    }
+    async removeRestrictUser(id){
+        return await User.findByIdAndUpdate(id,{status:false}, { new: true })
+    }
+    async pullFromRoles(userId) {
+        return await User.findOneAndUpdate(
+            { _id: userId }, 
+            { $pull: { roles : "admin" } }, 
+            { new: true }
+        );
+    }
+    async pushIntoRoles(userId) {
+        return await User.findOneAndUpdate(
+            { _id: userId }, 
+            { $addToSet: { roles : "admin" } }, 
+            { new: true }
+        );
+    }
 }
 
 export default UserRepository

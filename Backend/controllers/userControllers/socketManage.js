@@ -93,7 +93,12 @@ export const socketManage = (io) => {
       io.to(data.to).emit("callAccepted"),data.signal
     })   
     
+    socket.on('checkActive', (socket, data) => {
+      const roomId = data.roomId;
+      const hasMembers = Object.keys(io.sockets.adapter.rooms.get(roomId) || {}).length > 0;
     
+      socket.emit('activeStatus', { roomId, hasMembers }); // Send response back to client
+    });
 
   });
   
