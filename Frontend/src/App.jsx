@@ -5,9 +5,10 @@ import UserRoutes from './routes/Routes';
 import Header from './components/Header';
 import LoadingPage from './components/LoadingPage';
 import BottomNavTabs from './components/BottomNavTabs';
-import { getUsers } from './slices/postSlice';
+import { getUsers , getComments } from './slices/postSlice';
 import { getCommunities } from './slices/communitySlice';
-import { getRankings, setRanking } from './slices/leaderboardSlice';
+import { getRankings, setRanking ,getBadges} from './slices/leaderboardSlice';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -18,6 +19,8 @@ function App() {
       setUsers(action?.payload?.users);
     });
     dispatch(getCommunities());
+    dispatch(getBadges());
+    dispatch(getComments())
   }, [dispatch]);
 
   useEffect(() => {

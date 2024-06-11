@@ -3,8 +3,10 @@ import Dashboard from '../components/Dashboard';
 import UserManage from '../components/UserManage';
 import CommunityManage from '../components/CommunityManage';
 import BadgeManage from '../components/BadgeManage';
-import LeaderboardManage from '../components/LeaderboardManage';
-import ContentManage from '../components/ContentManage';
+const ContentManage = React.lazy(()=>import('../components/ContentManage') )
+import { Suspense } from 'react';
+import Loader from '../components/Loader';
+
 
 const AdminHome = () => {
   const [selectedMenu, setSelectedMenu] = useState('dashboard');
@@ -14,7 +16,6 @@ const AdminHome = () => {
     'user manage',
     'community manage',
     'badge manage',
-    'leaderboard manage',
     'content manage',
   ];
 
@@ -45,8 +46,9 @@ const AdminHome = () => {
             {selectedMenu === 'user manage' && <UserManage/>}
             {selectedMenu === 'community manage' && <CommunityManage/>}
             {selectedMenu === 'badge manage' && <BadgeManage/>}
-            {selectedMenu === 'leaderboard manage' && <LeaderboardManage/>}
+            <Suspense fallback={<Loader/>}>
             {selectedMenu === 'content manage' && <ContentManage/>}
+            </Suspense>
           </div>
         </div>
       </div>

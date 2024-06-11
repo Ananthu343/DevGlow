@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { savePost,reportUser } from '../slices/userSlice';
+import { savePost,reportUser,reportPost } from '../slices/userSlice';
 import { blockUser } from '../slices/postSlice';
 import toast from 'react-hot-toast';
 import { updateCredentials } from '../slices/authSlice';
+import { updateFeed } from '../slices/postSlice';
 import PropTypes from 'prop-types'
 
 const DropdownMenu = ({ options, document, openEdit,setAbout,openAddUsers }) => {
@@ -23,6 +24,18 @@ const DropdownMenu = ({ options, document, openEdit,setAbout,openAddUsers }) => 
             case "Report User":
                 // Report user logic
                 dispatch(reportUser(document.creatorId))
+                break;
+            case "Report Post":
+                // Report user logic
+                dispatch(reportPost(document._id)).then((action)=>{
+                    if (action.meta.requestStatus === "rejected"){
+                        const errorMessage = "Unable to report";
+                        toast.error(errorMessage);
+                    } else {
+                        dispatch(updateFeed(action.payload));
+                        toast.success("Reported");
+                    }
+                   })
                 break;
             case "Block User":
                 dispatch(blockUser(document.creatorId)).then((action)=>{

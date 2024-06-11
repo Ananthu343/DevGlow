@@ -9,7 +9,8 @@ const initialState = {
     messageData:{},
     communityData:{},
     userData:{},
-    loadingAdminPage:false
+    loadingAdminPage:false,
+    contentData:[],
 };
 
 export const getDashboardData = createAsyncThunk("admin/getDashboardData", async (filter) => {
@@ -89,6 +90,76 @@ export const addNewAdmin = createAsyncThunk("admin/addNewAdmin", async (id) => {
     }
 });
 
+export const addBadge = createAsyncThunk("admin/addBadge", async (data) => {
+    console.log(data);
+    const abortSignal = createAbortSignalWithTimeout(10000);
+    try {
+        const response = await axios.post(`${admin_url}/addBadge`, data, {
+            withCredentials: true,
+            signal: abortSignal, 
+        });
+        return response.data;
+    } catch (error) {
+        handleError(error,'addBadge')
+    }
+});
+
+export const editBadge = createAsyncThunk("admin/editBadge", async (data) => {
+    const abortSignal = createAbortSignalWithTimeout(10000);
+    try {
+        const response = await axios.patch(`${admin_url}/editBadge`, data, {
+            withCredentials: true,
+            signal: abortSignal,
+        });
+        return response.data
+    } catch (error) {
+       handleError(error,'editBadge')
+    }
+});
+
+export const deleteBadge = createAsyncThunk("admin/deleteBadge", async (id) => {
+    const abortSignal = createAbortSignalWithTimeout(10000);
+    try {
+        await axios.delete(`${admin_url}/deleteBadge`, {
+            params: { id },
+            withCredentials: true,
+            signal: abortSignal, 
+        });
+
+        return id;
+    } catch (error) {
+        handleError(error,'deleteBadge')
+    }
+});
+
+export const getAllContent = createAsyncThunk("admin/getAllContent", async () => {
+
+    const abortSignal = createAbortSignalWithTimeout(10000);
+    try {
+        const response = await axios.get(`${admin_url}/getAllContent`, {
+            withCredentials: true,
+            signal: abortSignal, 
+        });
+        return response.data;
+    } catch (error) {
+        handleError(error,'getAllContent(admin)')
+    }
+});
+
+
+export const archiveContent = createAsyncThunk("admin/archiveContent", async (contentId) => {
+    const abortSignal = createAbortSignalWithTimeout(10000);
+    try {
+      const response = await axios.patch(`${admin_url}/archiveContent`,{contentId}, {
+        withCredentials: true,
+        signal: abortSignal,
+      });
+      return response.data;
+    } catch (error) {
+      handleError(error, 'archiveContent(admin)');
+    }
+  });
+
 
 const adminSlice = createSlice({
     name: "admin",
@@ -116,6 +187,20 @@ const adminSlice = createSlice({
         })
         .addCase(getDashboardData.rejected,(state,action)=>{
             state.loadingAdminPage = false
+        })
+        .addCase(getAllContent.pending,(state,action)=>{
+            state.loadingAdminPage = true;
+        })
+        .addCase(getAllContent.fulfilled,(state,action)=>{
+            state.contentData = action.payload
+            state.loadingAdminPage = false
+        })
+        .addCase(getAllContent.rejected,(state,action)=>{
+            state.loadingAdminPage = false
+        })
+        .addCase(archiveContent.fulfilled,(state,action)=>{
+            const index = state.contentData.findIndex(ele => ele._id === action.payload._id)
+            state.contentData[index] = action.payload
         })
     }
 })

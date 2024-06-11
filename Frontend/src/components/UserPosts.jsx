@@ -10,7 +10,7 @@ import VideoPlayer from './VideoPlayer'
 import EditPost from './EditPost';
 
 const UserPosts = ({id}) => {
-    const { myPosts, users, commentsById } = useSelector(state => state.post);
+    const { profilePosts, users, commentsById } = useSelector(state => state.post);
     const { userInfo } = useSelector(state => state.auth);
     const [readMoreStates, setReadMoreStates] = useState({});
     const [openComments, setOpenComments] = useState({});
@@ -37,7 +37,8 @@ const UserPosts = ({id}) => {
       setEditPost(post)
       setModal(true)
    }
-   let posts = Array.isArray(myPosts) ? myPosts : [];
+
+   let posts = Array.isArray(profilePosts) ? profilePosts : [];
    posts = posts.filter(ele => ele.creatorId === id)
    const reversedPosts = [...posts].reverse();
     return (

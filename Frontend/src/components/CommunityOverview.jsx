@@ -4,12 +4,18 @@ import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { joinCommunity,editCommunity,deleteCommunity, leaveCommunity } from '../slices/communitySlice'
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
+import UserCard from './UserCard'
 
 const CommunityOverview = ({ community, setModal }) => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { userInfo } = useSelector(state => state.auth)
+    const { users } = useSelector(state => state.post)
     const [isEditing, setIsEditing] = useState(false);
     const [member, setMember] = useState(false);
+    const [members, showMembers] = useState(false);
+    const [creator, setCreator] = useState('');
     const [name, setName] = useState(community.name)
     const [description, setDescription] = useState(community.description)
     const [privacy, setPrivacy] = useState(community.privacy)
@@ -23,6 +29,8 @@ const CommunityOverview = ({ community, setModal }) => {
        if (community.members.includes(userInfo?.devGlowAccess._id)) {
            setMember(true)
        }
+       const creatorData = users?.find(ele => ele._id === community.creatorId)
+       setCreator(creatorData)
     },[community.members,userInfo])
 
     const handleJoin = () => {
@@ -107,7 +115,7 @@ const CommunityOverview = ({ community, setModal }) => {
     
     return (
         <div className='fixed inset-0 flex items-center justify-center z-1000'>
-            <div className='absolute w-screen h-full bg-black/60 flex justify-center items-center z-[100] top-0'>
+            <div className='absolute w-screen h-full bg-black/60 flex justify-center items-center z-[1000] top-0'>
                 <div className='bg-white rounded-[10px] w-[400px] h-auto p-3 flex flex-col justify-center text-[#720058] text-sm'>
                     <div className='flex items-center justify-between mb-4'>
                         <img src={preview ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL0sjQoYo1rZf1oYqSaRE9Q8Itv7fbij4aXRgoeAQFhw&s"} alt="Community Profile" className="w-24 h-24 object-cover rounded-full border-2 border-[#720058]" />
@@ -142,12 +150,13 @@ const CommunityOverview = ({ community, setModal }) => {
                                 >
                                     Change image
                                 </label></div>}
+                                <p className='text-sm hover:underline cursor-pointer' onClick={()=> navigate(`/userProfile/${creator._id}`)}>Creator : {creator.username}</p>
                         </div>
                     </div>
                     <hr className="my-4 border-t border-gray-200" />
                     <div className="flex items-center justify-between">
-                        <div>
-                            <span className="text-sm font-medium text-gray-700">Members:</span>
+                        <div className='hover:underline cursor-pointer'>
+                            <span onClick={()=>showMembers(!members)} className="text-sm font-medium text-gray-700">Members:</span>
                             <span className="text-sm font-medium text-gray-700">{community.members.length}</span>
                         </div>
                         <div>
@@ -174,6 +183,16 @@ const CommunityOverview = ({ community, setModal }) => {
                         {isEditing && <button onClick={handleDelete} className="bg-red-600 text-white px-4 py-2 rounded">Delete</button>}
                         {community.creatorId !== userInfo?.devGlowAccess._id ? <button onClick={() => handleJoin()} className={`${member ? "bg-red-600" : "bg-indigo-600"} text-white px-4 py-2 rounded`}>{member ? "Leave" : "Join"}</button> : isEditing ? <button onClick={handleSave} className="text-white px-4 py-2 rounded bg-[#720058]">Save</button> : <button onClick={() => setIsEditing(true)} className="bg-indigo-600 text-white px-4 py-2 rounded">Edit</button>}
                     </div>
+                    {
+                        members && <div className='w-full h-[200px] flex flex-col overflow-y-scroll'>
+                        {
+                           community.members.map((userId,index)=>{
+                            const user = users.find(ele => ele._id === userId)
+                            return <UserCard key={index} user={user} />
+                           })
+                        }
+                    </div>
+                    }
                 </div>
             </div>
         </div>

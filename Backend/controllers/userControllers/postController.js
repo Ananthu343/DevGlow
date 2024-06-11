@@ -36,16 +36,24 @@ export const postController = {
         }
     },
     getMyProfilePosts: async(req,res)=>{
+        console.log(req.query.id);
         try {
             const myId = getTokenData(req)
-            const myPosts = await postRepository.getUserPosts(myId);
-            const myData = await userRepository.findById(myId);
-            const savedPostsIds = myData.savedPosts;
-            const savedPosts = await postRepository.getSavedPosts(savedPostsIds);
-            res.status(200).json({
-                myPosts,
-                savedPosts
-            })
+                if (req.query.id === myId) {
+                     let profilePosts = await postRepository.getUserPosts(myId);
+                    let  myData = await userRepository.findById(myId);
+                    const savedPostsIds = myData.savedPosts;
+                    const savedPosts = await postRepository.getSavedPosts(savedPostsIds);
+                    res.status(200).json({
+                        profilePosts,
+                        savedPosts
+                    })
+                }else{
+                    let profilePosts = await postRepository.getUserPosts(req.query.id);
+                    res.status(200).json({
+                        profilePosts
+                    })
+                }
         } catch (error) {
             res.status(500).send({error: 'internal server error'})
             console.log(error.message);
@@ -141,6 +149,7 @@ export const postController = {
     savePost: async(req,res)=>{
         try {
             const postId = req.body.id
+            console.log(postId);
             const user = getTokenData(req)
             await userRepository.pushIntoSavedArray(user,postId)
             res.status(200).send('Post saved successfully');
@@ -259,6 +268,18 @@ export const postController = {
         } catch (error) {
             res.status(500).send({ error: 'internal server error' });
             console.log(error.message);
+        }
+    },
+    reportPost: async (req,res) => {
+        try {
+            const postId = req.body.id
+            const myId = getTokenData(req)
+            const updatedData = await postRepository.reportPost(postId,myId)
+            console.log(updatedData);
+            res.status(200).send(updatedData)
+        } catch (error) {
+            console.log(error.message);
+            res.status(500).send({error: "Internal server error"})
         }
     }
 }

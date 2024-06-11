@@ -23,6 +23,14 @@ const PostSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users'
     }],
+    reports:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users'
+    }],
+    archive:{
+        type:Boolean,
+        default: false
+    },
     createdAt: { type: Date, default: Date.now } 
 })
 

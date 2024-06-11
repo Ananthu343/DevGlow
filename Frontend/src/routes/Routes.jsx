@@ -14,6 +14,7 @@ import Search from "../pages/Search";
 import PostDisplay from '../components/PostDisplay';
 import AdminPrivateRoute from '../components/AdminPrivateRoute';
 import AdminHome from '../pages/AdminHome';
+import UserProfile from '../pages/UserProfile';
 
 const UserRoutes = () => {
   return (
@@ -26,6 +27,7 @@ const UserRoutes = () => {
           <Route path="/login" element={<Login/>}/>
           <Route path="/searchPage/:value" element={<Search/>}/>
           <Route path="/post/:postId" element={<PostDisplay/>}/>
+          <Route path="/userProfile/:userId" element={<UserProfile/>}/>
           <Route path="" element={<PrivateRoute/>}>
               <Route path="/profile" element={<MyProfile/>} />
               <Route path="/community" element={<Community/>} />

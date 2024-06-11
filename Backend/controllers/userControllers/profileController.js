@@ -110,18 +110,19 @@ export const profileController = {
             const userId = getTokenData(req)
             let fileUrl = undefined;
             if (req.file) {
-                console.log(req.file);
                 const file = req.file;
                 const filePath = `uploads/${file.originalname}`;
                 const storageRef = ref(storage, filePath);
                 await uploadBytes(storageRef, file.buffer);
                 fileUrl = await getDownloadURL(storageRef);
+                const updatedUser = await userRepository.updateUser(userId,{banner_url:fileUrl });
+                res.status(200).send(updatedUser)
+            }else{
+                res.status(401).send({error: "File not found"})
             }
-             await userRepository.updateUser(userId,{banner_url:fileUrl });
-            res.status(200).send({message:"banner set successful"})
         } catch (error) {
             console.log(error.message);
-            res.status(401).send({ error: 'Error updating banner' });
+            res.status(500).send({ error: 'Internal server error' });
         }
     },
     blockUser: async (req,res)=>{

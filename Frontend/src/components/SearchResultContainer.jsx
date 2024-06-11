@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CommunityOverview from './CommunityOverview';
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom';
 
 const SearchResultContainer = ({ value }) => {
     const { users } = useSelector(state => state.post);
@@ -12,6 +13,7 @@ const SearchResultContainer = ({ value }) => {
     const [community, setCommunity] = useState({})
     const [filteredUsers, setFilteredUsers] = useState([])
     const [filteredCommunities, setFilteredComunities] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (value === "*") {
@@ -52,7 +54,7 @@ const SearchResultContainer = ({ value }) => {
                         <ul>
                             {filteredUsers.map((user) => (
                                 <li key={user._id} className={`cursor-pointer flex flex-col w-full hover:bg-gray-100 items-center mb-2`}>
-                                    <div className='cursor-pointer flex p-2 w-full border-b items-center '>
+                                    <div onClick={()=> navigate(`/userProfile/${user?._id}`)} className='cursor-pointer flex p-2 w-full border-b items-center '>
                                         {user?.profile_url ? (
                                             <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
                                                 <img className='w-[40px] h-[40px] object-cover' src={user?.profile_url} alt="profilepic" />

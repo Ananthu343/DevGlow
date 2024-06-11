@@ -54,6 +54,18 @@ class PostRepository{
     async getPostGraphData(){
         return await Post.find({},{createdAt:1}).sort({createdAt:1})
     }
+    async getAllContent(){
+        return await Post.find().sort({createdAt:-1})
+    }
+    async archiveContent(id){
+        return await Post.findByIdAndUpdate(id,{archive:true},{new:true})
+    }
+    async unArchiveContent(id){
+        return await Post.findByIdAndUpdate(id,{archive:false},{new:true})
+    }
+    async reportPost(id,myId){
+        return await Post.findByIdAndUpdate(id,{$addToSet : {reports : myId}},{ new : true })
+    }
 }
 
 export default PostRepository

@@ -12,7 +12,6 @@ const Home = () => {
   
   useEffect(() => {
       dispatch(getFeed())
-      dispatch(getComments())
     return ()=> dispatch(clearFeed())
   }, [dispatch])
 

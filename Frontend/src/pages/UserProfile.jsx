@@ -1,16 +1,15 @@
-import React, { useEffect } from 'react'
+import React ,{useEffect} from 'react'
+import { useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { getMyProfilePosts , clearProfilePosts , getUsers} from '../slices/postSlice'
 import ProfileContainer from '../components/ProfileContainer'
 import Footer from '../components/Footer'
-import { useSelector,useDispatch } from 'react-redux'
-import { clearProfilePosts, getMyProfilePosts,getUsers } from '../slices/postSlice'
- 
 
-const MyProfile = () => {
-  const {userInfo} = useSelector((state)=>state.auth)
-  const dispatch = useDispatch()
-  const userId= userInfo.devGlowAccess._id
-  
-  useEffect(()=>{
+const UserProfile = () => {
+   const { userId } = useParams() 
+   const dispatch = useDispatch()
+
+   useEffect(()=>{
     dispatch(getMyProfilePosts(userId))
     dispatch(getUsers())
 
@@ -18,7 +17,7 @@ const MyProfile = () => {
       dispatch(clearProfilePosts())
     }
   },[dispatch])
-  
+
   return (
     <>
     <div className='w-full top-0 flex justify-center pt-[55px] mb-2'>
@@ -31,4 +30,4 @@ const MyProfile = () => {
   )
 }
 
-export default MyProfile
+export default UserProfile

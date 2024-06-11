@@ -16,6 +16,7 @@ export const badgeController = {
         }
     },
     addBadge: async (req,res) => {
+        console.log("workingg",req.body);
         try {
             let fileUrl = undefined;
             if (req.file) {
@@ -60,13 +61,13 @@ export const badgeController = {
                     await deleteObject(mediaRef);
                 }
                 dataToUpdate = {
-                    name: req.body.name,
+                    badge_name: req.body.name,
                     min_stars: req.body.minStars,
                     badge_url: fileUrl,
                 };
             } else {
                 dataToUpdate = {
-                    name: req.body.name,
+                    badge_name: req.body.name,
                     min_stars: req.body.minStars,
                 };
             }

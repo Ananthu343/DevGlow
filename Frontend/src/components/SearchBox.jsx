@@ -60,7 +60,7 @@ const SearchBox = ({ setSearchBox, searchTerm }) => {
                 {filteredUsers.length > 0 ? <h1>Users</h1> : null}
                 <div className='border-t w-full pl-4'>
                     {filteredUsers.map((user, index) => (
-                        <div className='flex items-center border-b p-1 cursor-pointer' key={index}>
+                        <div onClick={()=> navigate(`/userProfile/${user?._id}`)} className='flex items-center border-b p-1 cursor-pointer' key={index}>
                             <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
                                 <img className='w-[30px] h-[30px] object-cover' src={user?.profile_url ? user?.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
                             </div>

@@ -135,6 +135,23 @@ export const reportUser = createAsyncThunk("user/reportUser", async (id) => {
     }
 });
 
+export const reportPost = createAsyncThunk("user/reportPost", async (id) => {
+    const abortSignal = createAbortSignalWithTimeout(10000);
+
+    try {
+        const response = await axios.patch(`${users_url}/reportPost`, {
+            id: id, 
+        }, {
+            withCredentials: true,
+            signal: abortSignal,
+        });
+
+        return response.data;
+    } catch (error) {
+        handleError(error,'reportUser')
+    }
+});
+
 
 
 

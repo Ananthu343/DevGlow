@@ -23,7 +23,8 @@ export const userManageController = {
         try {
             const newData = {
                 ...req.body,
-                isVerified:true
+                isVerified:true,
+                roles:["user"]
             }
             const newUser = await userRepository.save(newData)
             console.log(newUser);
