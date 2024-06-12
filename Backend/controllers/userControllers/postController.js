@@ -5,6 +5,7 @@ import { getTokenData } from "../../utils/jwtToken.js";
 import { app } from "../../configs/firebase.js";
 import {getDownloadURL, getStorage,ref,uploadBytes,deleteObject} from "firebase/storage"
 import NotificationRepository from "../../repositories/notificationRepository.js";
+import BadgeRepository from "../../repositories/badgeRepository.js";
 
 
 const storage = getStorage(app)
@@ -13,6 +14,7 @@ const postRepository = new PostRepository()
 const userRepository = new UserRepository()
 const commentRepository = new CommentRepository()
 const notificationRepository = new NotificationRepository()
+const badgeRepository = new BadgeRepository()
 
 
 export const postController = {
@@ -182,13 +184,20 @@ export const postController = {
                 await notificationRepository.save(notificationData)
                 updatedLikeStatus = true; 
             }
-    
+            // Badge logic
+                let profilePosts = await postRepository.getUserPosts(postData.creatorId);
+                let totalStars = profilePosts.reduce((acc, cur) => {
+                    return acc += cur?.likedUsers?.length
+                }, 0)
+                const badgeId = await badgeRepository.getBadgeId(totalStars)
+                const userData = await userRepository.updateUser(postData.creatorId,{badge : badgeId})
             // Fetch the updated post data to include in the response
             const updatedPostData = await postRepository.findById(postId);
             res.status(200).send({
                 message: updatedLikeStatus ? 'Post liked successfully' : 'Post unliked successfully',
                 likeStatus: updatedLikeStatus,
-                updatedPost: updatedPostData // Include the updated post data in the response
+                updatedPost: updatedPostData ,
+                userData : userData// Include the updated post data in the response
             });
         } catch (error) {
             res.status(500).send({ error: 'Internal server error', likeStatus: false });

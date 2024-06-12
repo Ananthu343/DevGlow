@@ -40,7 +40,7 @@ const FollowToggle = ({userData}) => {
       {userInfo?.devGlowAccess._id !== userData?._id && (
                     <button
                       onClick={() => handleFollow(userData?._id)}
-                      className="text-xs cursor-pointer text-[#004272] font-semibold mr-5"
+                      className="text-xs cursor-pointer text-[#004272] font-semibold mr-3 hover:underline border p-2"
                     >
                       {followStatus ? "Unfollow" : "Follow"}
                     </button>
@@ -50,7 +50,7 @@ const FollowToggle = ({userData}) => {
 }
 
 FollowToggle.propTypes = {
-  userData: PropTypes.object.isRequired
+  userData: PropTypes.object
 };
 
 export default FollowToggle

@@ -1,46 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux';
 
 const ProgressBar = ({ bgcolor, progress, height }) => {
-    function calculatePercentage(number, maxNumber) {
-        return (number / maxNumber) * 100;
-       }
-     const stars =   calculatePercentage(progress,1500)
- const ParentDivStyle = {
-    height: height,
-    width: '400px',
-    backgroundColor: 'whitesmoke',
-    borderRadius: 40,
-    margin: 30
- };
+   const { badges } = useSelector(state => state.leaderboard)
+   const [topBadge, setTopBadge] = useState({})
 
- const ChildDivStyle = {
-    height: '100%',
-    width: `${stars}%`,
-    backgroundColor: bgcolor,
-    borderRadius: 40,
-    textAlign: 'right',
- };
+   useEffect(() => {
+      const max = badges.reduce((acc, curr) => {
+         acc = curr.min_stars > acc ? curr : acc
+         return acc
+      }, 0)
+      setTopBadge(max)
+   }, [badges])
 
- const progressTextStyle = {
-    padding: 10,
-    color: 'black',
-    fontWeight: 500,
- };
+   function calculatePercentage(number, maxNumber) {
+      return (number / maxNumber) * 100;
+   }
+   const stars = calculatePercentage(progress, topBadge?.min_stars)
+   const ParentDivStyle = {
+      height: height,
+      width: '400px',
+      backgroundColor: 'whitesmoke',
+      borderRadius: 40,
+      margin: 30
+   };
 
- return (
-    <div style={ParentDivStyle}>
-      <div style={ChildDivStyle}>
-        <span style={progressTextStyle}>{`${progress}`} stars</span>
+   const ChildDivStyle = {
+      height: '100%',
+      width: `${stars}%`,
+      backgroundColor: bgcolor,
+      borderRadius: 40,
+      textAlign: 'right',
+   };
+
+   const progressTextStyle = {
+      padding: 10,
+      color: 'black',
+      fontWeight: 500,
+   };
+
+   return (
+      <div style={ParentDivStyle}>
+         <div style={ChildDivStyle}>
+            <span style={progressTextStyle}>{`${progress}`} stars</span>
+         </div>
       </div>
-    </div>
- );
+   );
 };
 
 ProgressBar.propTypes = {
    bgcolor: PropTypes.string.isRequired,
-   progress: PropTypes.number.isRequired, 
-   height: PropTypes.number.isRequired, 
- };
+   progress: PropTypes.number.isRequired,
+   height: PropTypes.number.isRequired,
+};
 
 export default ProgressBar;

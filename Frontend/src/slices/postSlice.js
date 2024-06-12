@@ -113,7 +113,7 @@ export const likePost = createAsyncThunk("user/likePost", async (id) => {
             withCredentials: true,
             signal: abortSignal,
         });
-        return { id, likeStatus: response.data.likeStatus, updatedPost: response.data.updatedPost };
+        return { id, likeStatus: response.data.likeStatus, updatedPost: response.data.updatedPost ,userData: response.data.userData};
 
     } catch (error) {
         handleError(error, 'likePost')
@@ -234,6 +234,8 @@ const postSlice = createSlice({
                 const postFeedIndex = state.feed.findIndex(post => post._id === action.payload.id);
                 const postMyPostsIndex = state.profilePosts.findIndex(post => post._id === action.payload.id);
                 const postSavedPostsIndex = state.savedPosts.findIndex(post => post._id === action.payload.id);
+                const userIndex = state.users.findIndex(user => user._id === action.payload.userData._id)
+                state.users[userIndex] = action.payload.userData
                 if (postFeedIndex !== -1) {
                     state.feed[postFeedIndex].likedUsers = action.payload.updatedPost.likedUsers;
                 }

@@ -31,7 +31,7 @@ const CommunityOverview = ({ community, setModal }) => {
        }
        const creatorData = users?.find(ele => ele._id === community.creatorId)
        setCreator(creatorData)
-    },[community.members,userInfo])
+    },[community,userInfo,users])
 
     const handleJoin = () => {
         if (userInfo) {
@@ -46,15 +46,19 @@ const CommunityOverview = ({ community, setModal }) => {
                     }
                 })
             }else{
-                dispatch(joinCommunity(community._id)).then((action) => {
-                    if (action.meta.requestStatus === "rejected") {
-                        const errorMessage = "Unable to join";
-                        toast.error(errorMessage);
-                    } else {
-                        toast.success("Joined")
-                        setModal(false)
-                    }
-                })
+                if (community.members.length < community.user_limit) {
+                    dispatch(joinCommunity(community._id)).then((action) => {
+                        if (action.meta.requestStatus === "rejected") {
+                            const errorMessage = "Unable to join";
+                            toast.error(errorMessage);
+                        } else {
+                            toast.success("Joined")
+                            setModal(false)
+                        }
+                    })
+                }else{
+                    toast.error("Community is full")
+                }
             }
         } else {
             toast.error("You need to login")

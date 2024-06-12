@@ -23,6 +23,21 @@ export const getMessageHistory = createAsyncThunk("user/getMessageHistory", asyn
     }
 });
 
+export const getRoomId = createAsyncThunk("user/getRoomId", async (id) => {
+
+    const abortSignal = createAbortSignalWithTimeout(10000);
+    try {
+        const response = await axios.get(`${users_url}/getRoomId`, {
+            params: { id },
+            withCredentials: true,
+            signal: abortSignal, 
+        });
+        return response.data;
+    } catch (error) {
+        handleError(error,'getRoomId')
+    }
+});
+
 const messageSlice = createSlice({
     name: "message",
     initialState,

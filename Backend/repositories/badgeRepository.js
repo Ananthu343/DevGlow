@@ -17,6 +17,9 @@ class BadgeRepository{
     async getAllBadge(){
         return await Badge.find().sort({createdAt:-1})
     }
+    async getBadgeId(totalStars){
+        return await Badge.findOne({min_stars : {$lte: totalStars  }},{_id: 1})
+    }
 }
 
 export default BadgeRepository

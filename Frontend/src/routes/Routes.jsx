@@ -15,6 +15,7 @@ import PostDisplay from '../components/PostDisplay';
 import AdminPrivateRoute from '../components/AdminPrivateRoute';
 import AdminHome from '../pages/AdminHome';
 import UserProfile from '../pages/UserProfile';
+import VideoCallPage from '../pages/VideoCallPage';
 
 const UserRoutes = () => {
   return (
@@ -33,6 +34,7 @@ const UserRoutes = () => {
               <Route path="/community" element={<Community/>} />
               <Route path="/messages" element={<Messages/>} />
               <Route path="/leaderboard" element={<Leaderboard/>} />
+              <Route path="/videoCall/:id" element={<VideoCallPage/>} />
           </Route>
           {/* admin side */}
           <Route path="" element={<AdminPrivateRoute/>}>

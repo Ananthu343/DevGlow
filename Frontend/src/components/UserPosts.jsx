@@ -12,6 +12,7 @@ import EditPost from './EditPost';
 const UserPosts = ({id}) => {
     const { profilePosts, users, commentsById } = useSelector(state => state.post);
     const { userInfo } = useSelector(state => state.auth);
+    const { badges } = useSelector(state => state.leaderboard);
     const [readMoreStates, setReadMoreStates] = useState({});
     const [openComments, setOpenComments] = useState({});
     const [openShare, setOpenShare] = useState(false)
@@ -45,6 +46,7 @@ const UserPosts = ({id}) => {
       <div className='w-full md:w-[550px] h-auto flex-col md:pl-4 md:pr-4'>
         {reversedPosts?.map((document, index) => {
           const userData = users?.find(user => user._id === document.creatorId);
+          const badgeData = badges?.find(badge => badge?._id === userData?.badge);
           if(!userInfo?.devGlowAccess?.blocked.includes(userData?._id)){
             const isReadMore = readMoreStates[index] || false;
           let commentCount = 0;
@@ -65,7 +67,7 @@ const UserPosts = ({id}) => {
                     </div>
                     <div className='flex flex-col'>
                       <h1 className='text-sm font-semibold hover:text-blue-800 hover:underline hover:cursor-pointer'>{userData ? userData.username : 'Unknown'}</h1>
-                      <p className='text-[9px] text-[#979797]'>{userData?.badge ? userData.badge : 'Beginner'}</p>
+                      <p className='text-[9px] text-[#979797]'>{badgeData?.badge_name ? badgeData?.badge_name : 'Beginner'}</p>
                       <p className='text-[8px] text-[#979797]'>Posted on: {new Date(document.createdAt).toLocaleDateString()}</p>
                     </div>
                   </div>

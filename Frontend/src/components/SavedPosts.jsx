@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 const SavedPosts = () => {
     const { savedPosts, users ,commentsById } = useSelector(state => state.post);
     const { userInfo } = useSelector(state => state.auth);
+    const { badges } = useSelector(state => state.leaderboard);
     const [readMoreStates, setReadMoreStates] = useState({});
     const [modal, setModal] = useState(false)
     const [editPost, setEditPost] = useState(null)
@@ -44,6 +45,8 @@ const SavedPosts = () => {
       <div className='w-full md:w-[550px] h-auto flex-col md:pl-4 md:pr-4'>
         {savedPosts?.map((document, index) => {
           const userData = users?.find(user => user._id === document.creatorId);
+          const badgeData = badges?.find(badge => badge?._id === userData?.badge);
+
           if(!userInfo?.devGlowAccess?.blocked.includes(userData?._id)){
            if (document.archive === false || undefined) {
             const isReadMore = readMoreStates[index] || false;
@@ -65,7 +68,7 @@ const SavedPosts = () => {
                       </div>
                       <div className='flex flex-col'>
                         <h1 onClick={()=> navigate(`/userProfile/${userData._id}`)} className='text-sm font-semibold hover:text-blue-800 hover:underline hover:cursor-pointer'>{userData ? userData.username : 'Unknown'}</h1>
-                        <p className='text-[9px] text-[#979797]'>{userData?.badge ? userData.badge : 'Beginner'}</p>
+                        <p className='text-[9px] text-[#979797]'>{badgeData?.badge_name ? badgeData.badge_name : 'Beginner'}</p>
                         <p className='text-[8px] text-[#979797]'>Posted on: {new Date(document.createdAt).toLocaleDateString()}</p>
                       </div>
                     </div>
@@ -100,11 +103,13 @@ const SavedPosts = () => {
                 <div className='mt-3 mb-3 h-[1px] bg-[#004272] rounded' />
               </div>
             );
+           }else{
+            return null
            }
           } else{
             return null
           }
-        })}
+        })}  
         {modal ?
           <EditPost post={editPost} setModal={setModal} />
           : null}

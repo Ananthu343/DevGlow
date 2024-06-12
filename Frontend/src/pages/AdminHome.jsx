@@ -3,9 +3,9 @@ import Dashboard from '../components/Dashboard';
 import UserManage from '../components/UserManage';
 import CommunityManage from '../components/CommunityManage';
 import BadgeManage from '../components/BadgeManage';
-const ContentManage = React.lazy(()=>import('../components/ContentManage') )
 import { Suspense } from 'react';
 import Loader from '../components/Loader';
+const ContentManage = React.lazy(()=>import('../components/ContentManage') )
 
 
 const AdminHome = () => {

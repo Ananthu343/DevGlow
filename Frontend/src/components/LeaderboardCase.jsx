@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector,  } from 'react-redux'
+import { useSelector  } from 'react-redux'
 
 const LeaderboardCase = () => {
   const { users } = useSelector(state => state.post)

@@ -17,7 +17,7 @@ const SignupForm = () => {
     /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
     const isPasswordValid = (password) =>
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password);
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{5,}$/.test(password);
 
     const isUsernameValid = (username) =>
     /^[a-zA-Z]{3,}$/.test(username);
@@ -27,7 +27,12 @@ const SignupForm = () => {
         if(!isEmail(email)){
             toast.error("Email is not valid")
         }else if(!isPasswordValid(password)){
-            toast.error("Use a strong password")
+            toast.error(
+                "Password should follow these conditions, \n\n Is at least 5 characters long.\nContains at least one lowercase letter.\nContains at least one uppercase letter.\nContains at least one digit.\nConsists only of letters (uppercase or lowercase) and digits.",
+                {
+                  duration: 6000,
+                }
+              );
         }else if(!isUsernameValid){
             toast.error("Username should contain only letters (minimum 3)")
         }else if(password !== confirmPassword){

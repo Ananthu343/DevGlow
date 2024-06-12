@@ -7,6 +7,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@zegocloud/zego-uikit-prebuilt": "^2.5.0",
     "autoprefixer": "^10.4.18",
     "axios": "^1.6.8",
     "chart.js": "^4.4.3",
@@ -56,11 +57,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.24.6",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/plugin-transform-private-property-in-object": "^7.24.6",
     "@types/node": "^20.12.11",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^8.57.0",
-    "eslint-config-react": "^1.1.7",
-    "eslint-plugin-babel": "^5.3.1"
+    "babel-eslint": "^10.1.0"
   }
 }

@@ -22,7 +22,7 @@ const Followers = ({user}) => {
     }, [searchValue, followers]);
 
     return (
-        <div className='flex flex-col w-[40%] pl-2 pr-2 pt-2 bg-white ml-2 mr-2'>
+        <div className='flex flex-col w-full lg:w-[40%] pl-2 pr-2 pt-2 bg-white ml-2 mr-2'>
             <div className='flex justify-start p-3 border-b'>
                 <input
                     className='border pl-1 text-sm rounded-full w-[50%] h-7 focus:outline-[#720058]'

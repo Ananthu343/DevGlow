@@ -26,8 +26,9 @@ const UserSchema = new mongoose.Schema({
     type:String,
     default:""
   },
-  contactInfo:{
-    type:String,
+  badge:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Badges'
   },
   profile_visibility:{
     type:String,

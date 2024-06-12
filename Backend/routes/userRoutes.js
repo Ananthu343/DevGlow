@@ -44,6 +44,7 @@ router.patch('/setBanner',protect,upload.single('fileUpload'),profileController.
 router.post('/create-community',protect,upload.single('fileUpload'),communityController.createCommunity)
 router.get('/getBadges',badgeController.getBadges)
 router.patch('/reportPost',protect,checkRole("user"),postController.reportPost)
+router.get('/getRoomId',protect,checkRole("user"),messageController.getRoomId)
 
 router.get('/logout',authController.logout)
 
