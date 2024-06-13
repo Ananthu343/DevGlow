@@ -44,7 +44,7 @@ const Header = () => {
       <div className='fixed top-0 z-50 flex justify-center w-screen '>
         <div className='h-[50px] w-screen md:w-[85%] bg-white md:rounded-b-2xl top-0 z-50 self-center shadow-md flex p-3 flex justify-between'>
           <img onClick={() => navigate('/')} src="logo.png" alt="logo" className='cursor-pointer' />
-          <input onClick={() => setSearchBox(true)} onChange={(e) => setSearchTerm(e.target.value)} type="text" placeholder='Search' className='flex border rounded-full border-[#720058] h-8 w-[250px] text-sm focus:outline-none focus:shadow-md bg-gray-100 pl-3' />
+          <input onClick={() => setSearchBox(true)} onChange={(e) => setSearchTerm(e.target.value)} type="text" placeholder='Search' className='flex border rounded-full border-[#720058] h-8 w-[150px] lg:w-[250px] text-sm focus:outline-none focus:shadow-md bg-gray-100 pl-3' />
 
           <div className='flex text-xs text-[#979797] w-[150px] lg:w-[300px] space-x-4 '>
 
