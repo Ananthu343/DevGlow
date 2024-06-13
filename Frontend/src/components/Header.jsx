@@ -82,7 +82,7 @@ const Header = () => {
             </div>
 
           </div>
-          <div onClick={handleModal} className='cursor-pointer flex flex-col items-center justify-center w-[80px] text-xs text-[#979797]  hover:text-[#720058]'>
+          <div onClick={handleModal} className='pr-3 cursor-pointer flex flex-col items-center justify-center w-[80px] text-xs text-[#979797]  hover:text-[#720058]'>
             <img className='w-6' src="create.webp" alt="leaderboard icon" />
             <h5 className='hidden lg:flex'>Create</h5>
           </div>
