@@ -1,4 +1,4 @@
-import User from "../models/userdb.js";
+import User from "../models/userDb.js";
 
 class UserRepository {
     async save(user) {
