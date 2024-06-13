@@ -1,23 +1,23 @@
-import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import { createAbortSignalWithTimeout,handleError } from "../utils/axiosController";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAbortSignalWithTimeout, handleError } from "../utils/axiosController";
 import axios from "axios";
 
 const users_url = "http://localhost:3001/api/users";
 
 const initialState = {
     rankings: [],
-    badges:[],
+    badges: [],
 };
 
 export const getRankings = createAsyncThunk("user/getRankings", async () => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.get(`${users_url}/getRankings`, {
-            signal: abortSignal, 
+            signal: abortSignal,
         });
         return response.data.leaderboardData;
     } catch (error) {
-        handleError(error,'getRankings')
+        handleError(error, 'getRankings')
     }
 });
 
@@ -25,11 +25,11 @@ export const getBadges = createAsyncThunk("user/getBadges", async () => {
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.get(`${users_url}/getBadges`, {
-            signal: abortSignal, 
+            signal: abortSignal,
         });
         return response.data;
     } catch (error) {
-        handleError(error,'getBadges')
+        handleError(error, 'getBadges')
     }
 });
 
@@ -37,29 +37,29 @@ export const getBadges = createAsyncThunk("user/getBadges", async () => {
 const leaderboardSlice = createSlice({
     name: "leaderboard",
     initialState,
-    reducers : {
-        setRanking:(state,action)=>{
-            state.rankings = [...state.rankings,...action.payload];
+    reducers: {
+        setRanking: (state, action) => {
+            state.rankings = [...state.rankings, ...action.payload];
         },
-        addToBadges:(state,action)=>{
+        addToBadges: (state, action) => {
             state.badges.push(action.payload)
         },
-        removeFromBadges:(state,action)=>{
+        removeFromBadges: (state, action) => {
             const newData = state.badges.filter(ele => ele._id !== action.payload)
             state.badges = newData
         },
-        replaceBadge:(state,action)=>{
+        replaceBadge: (state, action) => {
             const index = state.badges.findIndex(ele => ele._id === action.payload._id)
             state.badges[index] = action.payload
         }
     },
-    extraReducers: builder =>{
+    extraReducers: builder => {
         builder
-        .addCase(getBadges.fulfilled,(state,action)=>{
-            state.badges = action.payload
-        })
+            .addCase(getBadges.fulfilled, (state, action) => {
+                state.badges = action.payload
+            })
     }
 })
 
 export default leaderboardSlice.reducer;
-export const {setRanking , addToBadges , removeFromBadges , replaceBadge} = leaderboardSlice.actions
+export const { setRanking, addToBadges, removeFromBadges, replaceBadge } = leaderboardSlice.actions

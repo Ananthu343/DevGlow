@@ -15,14 +15,14 @@ Chart.register(
 );
 
 const CommunityGraph = () => {
-    const {communityData} = useSelector(state => state.admin)
+  const { communityData } = useSelector(state => state.admin)
   const chartRef = useRef(null);
 
   useEffect(() => {
     const chartInstance = new Chart(chartRef.current, {
       type: 'bar',
       data: {
-        labels:communityData.labels,
+        labels: communityData.labels,
         datasets: [{
           label: 'Active community Messages',
           data: communityData.data,

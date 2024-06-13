@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector  } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 const LeaderboardCase = () => {
   const { users } = useSelector(state => state.post)
@@ -12,11 +12,11 @@ const LeaderboardCase = () => {
       <div className="mt-4 overflow-y-scroll h-full">
         {rankings?.length > 0 ?
           <ul>
-            {rankings?.map((ranking,index) => {
+            {rankings?.map((ranking, index) => {
               const user = users?.find(ele => ele._id === ranking._id);
               return user?.username && (
                 <li key={ranking._id}>
-                  <div className={`${index + 1 === 1? "bg-customLeaderBoardgold-bg text-white" : index + 1 === 2? "bg-customLeaderBoardsilver-bg text-white" : index + 1 === 3? "bg-customLeaderBoardbronze-bg text-white" : ""} border-2 border-white relative`}>
+                  <div className={`${index + 1 === 1 ? "bg-customLeaderBoardgold-bg text-white" : index + 1 === 2 ? "bg-customLeaderBoardsilver-bg text-white" : index + 1 === 3 ? "bg-customLeaderBoardbronze-bg text-white" : ""} border-2 border-white relative`}>
                     <div className='cursor-pointer flex p-2 w-full border-b items-center '>
                       {user?.profile_url ? (
                         <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>

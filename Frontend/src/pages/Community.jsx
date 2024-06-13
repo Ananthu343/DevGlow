@@ -7,7 +7,7 @@ import CreateCommunity from '../components/CreateCommunity'
 
 const Community = () => {
   const [modal, setModal] = useState(false)
-  
+
   return (
     <>
       <div className='w-full top-0 flex justify-center pt-[55px] mb-2'>

@@ -6,7 +6,7 @@ const VideoPlayer = ({ videoUrl }) => {
 
     useEffect(() => {
         let currentVideoRef = null;
-    
+
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting) {
@@ -24,12 +24,12 @@ const VideoPlayer = ({ videoUrl }) => {
             },
             { threshold: 0.5 }
         );
-    
+
         if (videoRef.current) {
             observer.observe(videoRef.current);
             currentVideoRef = videoRef.current;
         }
-    
+
         return () => {
             if (currentVideoRef) {
                 observer.unobserve(currentVideoRef);
@@ -53,7 +53,7 @@ const VideoPlayer = ({ videoUrl }) => {
                 width: '100%',
                 height: '100%',
                 objectFit: 'contain',
-                backgroundColor:'black'
+                backgroundColor: 'black'
             }} onClick={handleUnmute} controls>
                 <source src={videoUrl} type="video/mp4" />
                 Your browser does not support the video tag.
@@ -63,7 +63,7 @@ const VideoPlayer = ({ videoUrl }) => {
 };
 
 VideoPlayer.propTypes = {
-    videoUrl: PropTypes.string.isRequired 
+    videoUrl: PropTypes.string.isRequired
 };
 
 export default VideoPlayer;

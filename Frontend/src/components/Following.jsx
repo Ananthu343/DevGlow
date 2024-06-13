@@ -11,7 +11,7 @@ const Following = ({ user }) => {
     useEffect(() => {
         const data = users.filter(ele => user.following.includes(ele._id));
         setFollowing(data);
-    }, [users, user.following]); 
+    }, [users, user.following]);
 
     const filteredUsers = useMemo(() => {
         if (searchValue !== '') {
@@ -37,7 +37,7 @@ const Following = ({ user }) => {
                     <ul>
                         {filteredUsers.map((user) => (
                             <li key={user._id}>
-                                <UserCard user={user}/>
+                                <UserCard user={user} />
                             </li>
                         ))}
                     </ul>
@@ -48,7 +48,7 @@ const Following = ({ user }) => {
                 )
             ) : (
                 <div className='w-full flex justify-center h-full items-center'>
-                        <h1 className='font-semibold'>empty !</h1>
+                    <h1 className='font-semibold'>empty !</h1>
                 </div>
             )}
         </div>
@@ -57,6 +57,6 @@ const Following = ({ user }) => {
 
 Following.propTypes = {
     user: PropTypes.object.isRequired
-  };
+};
 
 export default Following;

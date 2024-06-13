@@ -1,7 +1,7 @@
-import React,{useEffect,useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { verifyToken } from '../slices/userSlice'
-import { useParams ,useNavigate} from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
 const Verify = () => {
@@ -10,24 +10,24 @@ const Verify = () => {
     const dispatch = useDispatch()
     const [hasRun, setHasRun] = useState(false);
 
-    useEffect(()=>{
-        if(!hasRun){
+    useEffect(() => {
+        if (!hasRun) {
             setHasRun(true)
-            dispatch(verifyToken({token})).then((res)=>{
-                if (res.meta.requestStatus === "rejected"){
+            dispatch(verifyToken({ token })).then((res) => {
+                if (res.meta.requestStatus === "rejected") {
                     const errorMessage = "Invalid token!";
                     toast.error(errorMessage);
                     navigate("/signup")
-                  }else {
-                        toast.success("Account created !")
-                        navigate("/login")
-                  }
+                } else {
+                    toast.success("Account created !")
+                    navigate("/login")
+                }
             })
         }
-    },[token, hasRun, dispatch, navigate])
+    }, [token, hasRun, dispatch, navigate])
 
-  return (
-    <div className="fixed z-50 inset-0 bg-white bg-opacity-50 backdrop-blur-md flex items-center justify-center">
+    return (
+        <div className="fixed z-50 inset-0 bg-white bg-opacity-50 backdrop-blur-md flex items-center justify-center">
             <div className="flex justify-center items-center h-screen">
                 <div aria-label="Loading..." role="status" className="flex items-center space-x-2">
                     <svg className="h-20 w-20 animate-spin stroke-gray-500" viewBox="0 0 256 256">
@@ -50,7 +50,7 @@ const Verify = () => {
                 </div>
             </div>
         </div>
-  )
+    )
 }
 
 export default Verify

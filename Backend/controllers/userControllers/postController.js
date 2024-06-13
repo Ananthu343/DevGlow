@@ -3,7 +3,7 @@ import UserRepository from "../../repositories/userRepository.js";
 import CommentRepository from "../../repositories/commentRepository.js";
 import { getTokenData } from "../../utils/jwtToken.js";
 import { app } from "../../configs/firebase.js";
-import {getDownloadURL, getStorage,ref,uploadBytes,deleteObject} from "firebase/storage"
+import { getDownloadURL, getStorage, ref, uploadBytes, deleteObject } from "firebase/storage"
 import NotificationRepository from "../../repositories/notificationRepository.js";
 import BadgeRepository from "../../repositories/badgeRepository.js";
 
@@ -18,63 +18,63 @@ const badgeRepository = new BadgeRepository()
 
 
 export const postController = {
-    getFeed:async (req,res)=>{
+    getFeed: async (req, res) => {
         try {
             const page = parseInt(req.query.page) || 1;
-            console.log("works",page);
+            console.log("works", page);
             const pageSize = 5
             const offset = (page - 1) * pageSize;
             const totalPosts = await postRepository.getTotalPostsCount();
             const totalPages = Math.ceil(totalPosts / pageSize);
             const hasMore = page < totalPages;
-            const feedData = await postRepository.getFeed(pageSize,offset)
+            const feedData = await postRepository.getFeed(pageSize, offset)
             res.status(200).json({
                 posts: feedData,
                 hasMore: hasMore
             })
         } catch (error) {
-            res.status(500).send({error: 'internal server error'})
+            res.status(500).send({ error: 'internal server error' })
             console.log(error.message);
         }
     },
-    getMyProfilePosts: async(req,res)=>{
+    getMyProfilePosts: async (req, res) => {
         console.log(req.query.id);
         try {
             const myId = getTokenData(req)
-                if (req.query.id === myId) {
-                     let profilePosts = await postRepository.getUserPosts(myId);
-                    let  myData = await userRepository.findById(myId);
-                    const savedPostsIds = myData.savedPosts;
-                    const savedPosts = await postRepository.getSavedPosts(savedPostsIds);
-                    res.status(200).json({
-                        profilePosts,
-                        savedPosts
-                    })
-                }else{
-                    let profilePosts = await postRepository.getUserPosts(req.query.id);
-                    res.status(200).json({
-                        profilePosts
-                    })
-                }
+            if (req.query.id === myId) {
+                let profilePosts = await postRepository.getUserPosts(myId);
+                let myData = await userRepository.findById(myId);
+                const savedPostsIds = myData.savedPosts;
+                const savedPosts = await postRepository.getSavedPosts(savedPostsIds);
+                res.status(200).json({
+                    profilePosts,
+                    savedPosts
+                })
+            } else {
+                let profilePosts = await postRepository.getUserPosts(req.query.id);
+                res.status(200).json({
+                    profilePosts
+                })
+            }
         } catch (error) {
-            res.status(500).send({error: 'internal server error'})
+            res.status(500).send({ error: 'internal server error' })
             console.log(error.message);
         }
     },
-    getusers:async (req,res)=>{
+    getusers: async (req, res) => {
         try {
             const userData = await userRepository.findAllUser()
             res.status(200).json(userData)
         } catch (error) {
-            res.status(500).send({error: 'internal server error'})
+            res.status(500).send({ error: 'internal server error' })
             console.log(error.message);
         }
     }
     ,
     uploadPost: async (req, res) => {
         try {
-            let fileUrl = undefined; 
-            
+            let fileUrl = undefined;
+
             if (req.file) {
                 const file = req.file;
                 const filePath = `uploads/${file.originalname + Date.now()}`;
@@ -90,17 +90,17 @@ export const postController = {
                 creatorId: user,
                 description: req.body.description,
                 visibility: req.body.visibility,
-                media: fileUrl 
+                media: fileUrl
             };
-    
+
             newPost = await postRepository.save(newPost);
-            res.status(200).send({newPost});
+            res.status(200).send({ newPost });
         } catch (error) {
             console.log(error.message);
             res.status(401).send({ error: 'Error submitting post' });
         }
     },
-    editPost: async(req,res)=>{
+    editPost: async (req, res) => {
         try {
             const postId = req.body.id
             const post = await postRepository.findById(postId)
@@ -112,28 +112,28 @@ export const postController = {
                 await uploadBytes(storageRef, file.buffer);
                 fileUrl = await getDownloadURL(storageRef);
             }
-            let updatedPost ;
-            if(fileUrl == undefined || fileUrl === post.media){
+            let updatedPost;
+            if (fileUrl == undefined || fileUrl === post.media) {
                 updatedPost = {
                     description: req.body.description,
                     visibility: req.body.visibility,
                 }
-            }else{
+            } else {
                 updatedPost = {
                     description: req.body.description,
                     visibility: req.body.visibility,
-                    media:fileUrl
+                    media: fileUrl
                 }
             }
-    
-            updatedPost = await postRepository.updatePost(postId,updatedPost);
-            res.status(200).send({message:'Post updated successfully',updatedPost});
+
+            updatedPost = await postRepository.updatePost(postId, updatedPost);
+            res.status(200).send({ message: 'Post updated successfully', updatedPost });
         } catch (error) {
             console.log(error.message);
             res.status(401).send({ error: 'Error updating post' });
         }
     },
-    deletePost: async(req,res) => {
+    deletePost: async (req, res) => {
         try {
             const postId = req.query.id
             const postData = await postRepository.findById(postId)
@@ -148,12 +148,12 @@ export const postController = {
             res.status(401).send({ error: 'Error deleting post' });
         }
     },
-    savePost: async(req,res)=>{
+    savePost: async (req, res) => {
         try {
             const postId = req.body.id
             console.log(postId);
             const user = getTokenData(req)
-            await userRepository.pushIntoSavedArray(user,postId)
+            await userRepository.pushIntoSavedArray(user, postId)
             res.status(200).send('Post saved successfully');
         } catch (error) {
             res.status(401).send({ error: 'Error saving post' });
@@ -165,102 +165,102 @@ export const postController = {
             const myId = getTokenData(req); // Assuming getTokenData returns an object with an id property
             const postId = req.body.id;
             const postData = await postRepository.findById(postId);
-            
+
             let updatedLikeStatus = false;
             if (postData.likedUsers.includes(myId)) {
                 console.log("unliked");
                 await postRepository.pullLikedUsers(postId, myId);
-                updatedLikeStatus = false; 
+                updatedLikeStatus = false;
             } else {
                 console.log("liked");
                 // Like logic
                 await postRepository.pushLikedUsers(postId, myId);
                 // NOtification logic
-                const notificationData ={
-                    sender:myId,
-                    receiver:postData.creatorId,
-                    type:"like"
+                const notificationData = {
+                    sender: myId,
+                    receiver: postData.creatorId,
+                    type: "like"
                 }
                 await notificationRepository.save(notificationData)
-                updatedLikeStatus = true; 
+                updatedLikeStatus = true;
             }
             // Badge logic
-                let profilePosts = await postRepository.getUserPosts(postData.creatorId);
-                let totalStars = profilePosts.reduce((acc, cur) => {
-                    return acc += cur?.likedUsers?.length
-                }, 0)
-                const badgeId = await badgeRepository.getBadgeId(totalStars)
-                const userData = await userRepository.updateUser(postData.creatorId,{badge : badgeId})
+            let profilePosts = await postRepository.getUserPosts(postData.creatorId);
+            let totalStars = profilePosts.reduce((acc, cur) => {
+                return acc += cur?.likedUsers?.length
+            }, 0)
+            const badgeId = await badgeRepository.getBadgeId(totalStars)
+            const userData = await userRepository.updateUser(postData.creatorId, { badge: badgeId })
             // Fetch the updated post data to include in the response
             const updatedPostData = await postRepository.findById(postId);
             res.status(200).send({
                 message: updatedLikeStatus ? 'Post liked successfully' : 'Post unliked successfully',
                 likeStatus: updatedLikeStatus,
-                updatedPost: updatedPostData ,
-                userData : userData// Include the updated post data in the response
+                updatedPost: updatedPostData,
+                userData: userData// Include the updated post data in the response
             });
         } catch (error) {
             res.status(500).send({ error: 'Internal server error', likeStatus: false });
             console.log(error.message);
         }
     },
-    comment: async(req,res)=>{
+    comment: async (req, res) => {
         const commentId = req.body.data.commentId;
-         try {
+        try {
             const myId = getTokenData(req)
             let newCommentData = {
-                creatorId:myId,
+                creatorId: myId,
                 postId: req.body.data.postId,
-                content:req.body.data.content
+                content: req.body.data.content
             }
             console.log(newCommentData);
             // Notification logic 
             const postData = await postRepository.findById(newCommentData.postId)
-            const notificationData ={
-                sender:myId,
-                receiver:postData.creatorId,
-                type:"comment"
+            const notificationData = {
+                sender: myId,
+                receiver: postData.creatorId,
+                type: "comment"
             }
             await notificationRepository.save(notificationData)
             newCommentData = await commentRepository.save(newCommentData)
             let parentData;
             if (commentId) {
-               parentData = await commentRepository.pushReplies(commentId,newCommentData._id)
+                parentData = await commentRepository.pushReplies(commentId, newCommentData._id)
             }
             res.status(200).send({
-                    newCommentData,
-                    parentData
-             });
-         } catch (error) {
-            res.status(500).send({ error: 'Internal server error'});
+                newCommentData,
+                parentData
+            });
+        } catch (error) {
+            res.status(500).send({ error: 'Internal server error' });
             console.log(error.message);
-         }
+        }
     },
-    deleteComment: async(req,res)=>{
+    deleteComment: async (req, res) => {
         const commentId = req.query.id;
-         try {
+        try {
             // const commentData = await commentRepository.findById(commentId)
-            
+
             // commentData?.replies.forEach(async ele => {
             //     await commentRepository.deleteComment(ele)
             // })
             await commentRepository.deleteComment(commentId)
             res.status(200).send("comment deleted successfully");
-         } catch (error) {
-            res.status(500).send({ error: 'Internal server error'});
-            console.log(error.message);
-         }
-    },
-    getPostComments: async (req,res) =>{
-        try {
-            const commentData = await commentRepository.getPostComments()
-            res.status(200).send({commentData});
         } catch (error) {
-            res.status(500).send({ error: 'Internal server error'});
+            res.status(500).send({ error: 'Internal server error' });
             console.log(error.message);
         }
     },
-    getPostData: async(req,res)=>{
+    getPostComments: async (req, res) => {
+        try {
+            const commentData = await commentRepository.getPostComments()
+            res.status(200).send({ commentData });
+        } catch (error) {
+            res.status(500).send({ error: 'Internal server error' });
+            console.log(error.message);
+        }
+    },
+    getPostData: async (req, res) => {
         try {
             const postId = req.query.id
             const postData = await postRepository.findById(postId)
@@ -270,25 +270,25 @@ export const postController = {
             console.log(error.message);
         }
     },
-    getLeaderboardData:async(req,res)=>{
+    getLeaderboardData: async (req, res) => {
         try {
             const leaderboardData = await postRepository.getRankingOfUsers()
-            res.status(200).json({leaderboardData})
+            res.status(200).json({ leaderboardData })
         } catch (error) {
             res.status(500).send({ error: 'internal server error' });
             console.log(error.message);
         }
     },
-    reportPost: async (req,res) => {
+    reportPost: async (req, res) => {
         try {
             const postId = req.body.id
             const myId = getTokenData(req)
-            const updatedData = await postRepository.reportPost(postId,myId)
+            const updatedData = await postRepository.reportPost(postId, myId)
             console.log(updatedData);
             res.status(200).send(updatedData)
         } catch (error) {
             console.log(error.message);
-            res.status(500).send({error: "Internal server error"})
+            res.status(500).send({ error: "Internal server error" })
         }
     }
 }

@@ -1,13 +1,13 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import CommunityOverview from './CommunityOverview';
 
 const CommunityCase = () => {
   const { communities } = useSelector(state => state.community);
-  const [modal,setModal] = useState(false)
-  const [community,setCommunity] = useState({})
+  const [modal, setModal] = useState(false)
+  const [community, setCommunity] = useState({})
 
-  const handleOverview = (community)=>{
+  const handleOverview = (community) => {
     setCommunity(community)
     setModal(true)
   }
@@ -17,9 +17,9 @@ const CommunityCase = () => {
       <p className="font-bold mb-2">Communities (Recommended)</p>
       <div className='h-[0.5px] border border-b w-full'></div>
       <div className="mt-4 overflow-y-scroll h-full">
-        {communities.length > 0? (
+        {communities.length > 0 ? (
           communities.map((community) => (
-            <div onClick={()=>handleOverview(community)} key={community._id} className="flex items-center justify-between mb-4 last:mb-0 hover:bg-gray-100 hover:cursor-pointer border-b">
+            <div onClick={() => handleOverview(community)} key={community._id} className="flex items-center justify-between mb-4 last:mb-0 hover:bg-gray-100 hover:cursor-pointer border-b">
               <div className="flex items-center">
                 <img src={community.profile_url ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL0sjQoYo1rZf1oYqSaRE9Q8Itv7fbij4aXRgoeAQFhw&s"} alt="Community Profile" className="w-10 h-10 object-cover rounded-full mr-4" />
                 <div className='flex flex-col'>
@@ -36,7 +36,7 @@ const CommunityCase = () => {
           <p className="text-center text-gray-500">No communities found.</p>
         )}
       </div>
-      {modal && <CommunityOverview setModal={setModal} community={community}/>}
+      {modal && <CommunityOverview setModal={setModal} community={community} />}
     </div>
   );
 };

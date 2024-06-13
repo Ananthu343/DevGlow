@@ -8,21 +8,21 @@ const postRepository = new PostRepository()
 const messageRepository = new MessageRepository()
 
 export const dashboardController = {
-    getDashboardData: async (req,res) => {
+    getDashboardData: async (req, res) => {
         try {
             const filter = req.query.filter.toString();
             let userData = await userRepository.getUserGraphData()
-            userData = dateFilter(filter,userData)
+            userData = dateFilter(filter, userData)
             let postData = await postRepository.getPostGraphData()
-            postData = dateFilter(filter,postData)
+            postData = dateFilter(filter, postData)
             let messageData = await messageRepository.getMessageGraphData()
-            messageData = dateFilter(filter,messageData)
+            messageData = dateFilter(filter, messageData)
             let communityData = await messageRepository.getCommunityGraphData()
-            communityData = dateFilter(filter,communityData)
-            res.status(200).json({userData,postData,messageData,communityData})
+            communityData = dateFilter(filter, communityData)
+            res.status(200).json({ userData, postData, messageData, communityData })
         } catch (error) {
             console.log(error.message);
-            res.status(500).send({error: 'internal server error'})
+            res.status(500).send({ error: 'internal server error' })
         }
     }
 }

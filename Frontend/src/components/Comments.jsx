@@ -5,7 +5,7 @@ import { commentOnPost, deleteComment } from '../slices/postSlice';
 import { timeAgo } from '../utils/timeAgo';
 import PropTypes from 'prop-types'
 
-const Comments = ({ comment, commentsById,border }) => {
+const Comments = ({ comment, commentsById, border }) => {
   const { users, feed } = useSelector(state => state.post)
   const { userInfo } = useSelector(state => state.auth)
   const userData = users.find(ele => ele._id === comment?.creatorId)
@@ -40,22 +40,22 @@ const Comments = ({ comment, commentsById,border }) => {
     <div>
       <div className={`w-[90%] h-auto p-3 mb-2 text-sm flex flex-col overflow-auto border-l ${border ?? "border-[#720058]"}`}>
         <div className='w-auto h-auto flex items-center justify-between'>
-            <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
-              <img className='w-[30px] h-[30px] object-cover' src={userData?.profile_url ? userData?.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
-            </div>
+          <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
+            <img className='w-[30px] h-[30px] object-cover' src={userData?.profile_url ? userData?.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
+          </div>
           <div className='flex flex-col w-[90%] items-between bg-gray-200 rounded-lg p-3 shadow'>
             <p className='text-xs font-semibold hover:underline cursor-pointer mb-2'>{userData?.username}</p>
             <p>{comment?.content}</p>
           </div>
         </div>
-          <div className='w-full flex justify-between mt-2'>
-            <p className='text-[11px] text-[#979797]'>{timeAgo(comment.createdAt)}</p>
-            <div className='flex'>          
+        <div className='w-full flex justify-between mt-2'>
+          <p className='text-[11px] text-[#979797]'>{timeAgo(comment.createdAt)}</p>
+          <div className='flex'>
             {comment.replies.length > 0 ? <p onClick={() => setShowReplies(!showReplies)} className='text-xs mr-2 cursor-pointer text-blue-600 hover:underline'>{showReplies ? "Hide" : comment.replies.length} replies</p> : null}
             {userInfo?.devGlowAccess?._id === comment?.creatorId || userInfo?.devGlowAccess?._id === postCreator ? <p onClick={() => dispatch(deleteComment(comment._id))} className='cursor-pointer hover:underline text-xs mr-2 text-red-600'>Remove</p> : null}
             <p onClick={() => openReplyBox(!replyBox)} className='cursor-pointer hover:underline text-xs'>Reply</p>
-            </div>
           </div>
+        </div>
         {replyBox &&
           <div className='p-3 w-full flex justify-between'>
             <input type="text" className='pl-2 rounded h-7 w-[60%] border border-2 focus:outline-[#720058] text-sm' value={content} onChange={(e) => setContent(e.target.value)} />

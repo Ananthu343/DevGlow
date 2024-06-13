@@ -2,7 +2,7 @@ import UserRepository from "../../repositories/userRepository.js";
 import NotificationRepository from "../../repositories/notificationRepository.js";
 import { getTokenData } from "../../utils/jwtToken.js";
 import { app } from "../../configs/firebase.js";
-import {getDownloadURL, getStorage,ref,uploadBytes,deleteObject} from "firebase/storage"
+import { getDownloadURL, getStorage, ref, uploadBytes, deleteObject } from "firebase/storage"
 
 const storage = getStorage(app)
 
@@ -10,7 +10,7 @@ const userRepository = new UserRepository()
 const notificationRepository = new NotificationRepository()
 
 export const profileController = {
-    getUserData: async(req,res)=>{
+    getUserData: async (req, res) => {
         try {
             const userId = req.query.id
             const userData = await userRepository.findById(userId)
@@ -20,7 +20,7 @@ export const profileController = {
             console.log(error.message);
         }
     },
-    reportUser: async(req,res)=>{
+    reportUser: async (req, res) => {
         try {
             const userId = req.body.id;
             await userRepository.reportUser(userId)
@@ -32,7 +32,7 @@ export const profileController = {
     },
     followUser: async (req, res) => {
         try {
-            const myId = getTokenData(req); 
+            const myId = getTokenData(req);
             const newUserId = req.body.id;
             const myData = await userRepository.findById(myId);
             let updatedFollowStatus = false;
@@ -50,22 +50,24 @@ export const profileController = {
                 await userRepository.pushIntoFollowers(newUserId, myId);
                 updatedFollowStatus = true; // User is now followed
                 // Notification logic
-                const notificationData ={
-                    sender:myId,
-                    receiver:newUserId,
-                    type:"follow"
+                const notificationData = {
+                    sender: myId,
+                    receiver: newUserId,
+                    type: "follow"
                 }
                 await notificationRepository.save(notificationData)
             }
             const updatedUser = await userRepository.findById(newUserId)
-            res.status(200).send({ message: updatedFollowStatus ? 'User followed successfully' 
-            : 'User unfollowed successfully', followStatus: updatedFollowStatus,updatedUser });
+            res.status(200).send({
+                message: updatedFollowStatus ? 'User followed successfully'
+                    : 'User unfollowed successfully', followStatus: updatedFollowStatus, updatedUser
+            });
         } catch (error) {
             res.status(500).send({ error: 'Error following user', followStatus: false });
             console.log(error.message);
         }
     },
-    editProfile: async(req,res)=>{
+    editProfile: async (req, res) => {
         try {
             const userId = getTokenData(req)
             const user = await userRepository.findById(userId)
@@ -77,25 +79,25 @@ export const profileController = {
                 await uploadBytes(storageRef, file.buffer);
                 fileUrl = await getDownloadURL(storageRef);
             }
-            let updatedProfile ;
-            if(fileUrl == undefined || fileUrl === user.profile_url){
+            let updatedProfile;
+            if (fileUrl == undefined || fileUrl === user.profile_url) {
                 updatedProfile = {
                     username: req.body.username,
                     about: req.body.about,
                     gender: req.body.gender,
                     dob: req.body.dob,
                 }
-            }else{
+            } else {
                 updatedProfile = {
                     username: req.body.username,
                     about: req.body.about,
                     gender: req.body.gender,
                     dob: req.body.dob,
-                    profile_url:fileUrl
+                    profile_url: fileUrl
                 }
             }
-    
-            const updatedData = await userRepository.updateUser(userId,updatedProfile);
+
+            const updatedData = await userRepository.updateUser(userId, updatedProfile);
             res.status(200).json({
                 devGlowAccess: updatedData
             });
@@ -104,7 +106,7 @@ export const profileController = {
             res.status(401).send({ error: 'Error updating post' });
         }
     },
-    setBanner: async(req,res)=>{
+    setBanner: async (req, res) => {
         console.log(req.file);
         try {
             const userId = getTokenData(req)
@@ -115,24 +117,24 @@ export const profileController = {
                 const storageRef = ref(storage, filePath);
                 await uploadBytes(storageRef, file.buffer);
                 fileUrl = await getDownloadURL(storageRef);
-                const updatedUser = await userRepository.updateUser(userId,{banner_url:fileUrl });
+                const updatedUser = await userRepository.updateUser(userId, { banner_url: fileUrl });
                 res.status(200).send(updatedUser)
-            }else{
-                res.status(401).send({error: "File not found"})
+            } else {
+                res.status(401).send({ error: "File not found" })
             }
         } catch (error) {
             console.log(error.message);
             res.status(500).send({ error: 'Internal server error' });
         }
     },
-    blockUser: async (req,res)=>{
+    blockUser: async (req, res) => {
         try {
-            const myId = getTokenData(req); 
+            const myId = getTokenData(req);
             const userId = req.body.id;
-            const updatedData = await userRepository.pushIntoBlocked(myId,userId);
-            res.status(200).send({updatedData})
+            const updatedData = await userRepository.pushIntoBlocked(myId, userId);
+            res.status(200).send({ updatedData })
         } catch (error) {
-            res.status(500).send({ error: 'Internal server error'});
+            res.status(500).send({ error: 'Internal server error' });
             console.log(error.message);
         }
     }

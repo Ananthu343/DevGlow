@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { verifyEmail} from '../slices/userSlice'
+import { verifyEmail } from '../slices/userSlice'
 import toast from 'react-hot-toast'
 
 const SignupForm = () => {
@@ -14,43 +14,43 @@ const SignupForm = () => {
     const navigate = useNavigate();
 
     const isEmail = (email) =>
-    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+        /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
     const isPasswordValid = (password) =>
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{5,}$/.test(password);
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{5,}$/.test(password);
 
     const isUsernameValid = (username) =>
-    /^[a-zA-Z]{3,}$/.test(username);
+        /^[a-zA-Z]{3,}$/.test(username);
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        if(!isEmail(email)){
+        if (!isEmail(email)) {
             toast.error("Email is not valid")
-        }else if(!isPasswordValid(password)){
+        } else if (!isPasswordValid(password)) {
             toast.error(
                 "Password should follow these conditions, \n\n Is at least 5 characters long.\nContains at least one lowercase letter.\nContains at least one uppercase letter.\nContains at least one digit.\nConsists only of letters (uppercase or lowercase) and digits.",
                 {
-                  duration: 6000,
+                    duration: 6000,
                 }
-              );
-        }else if(!isUsernameValid){
+            );
+        } else if (!isUsernameValid) {
             toast.error("Username should contain only letters (minimum 3)")
-        }else if(password !== confirmPassword){
+        } else if (password !== confirmPassword) {
             toast.error("Password didn't match")
-        }else{
+        } else {
             const data = {
                 username, email, password
             }
-            dispatch(verifyEmail(data)).then((res)=>{
-                if (res.meta.requestStatus === "rejected"){
+            dispatch(verifyEmail(data)).then((res) => {
+                if (res.meta.requestStatus === "rejected") {
                     const errorMessage = "Email not accepted";
                     toast.error(errorMessage);
-                }else{
+                } else {
                     navigate("/verifying")
                 }
             })
         }
-        
+
     }
 
     return (

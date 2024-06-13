@@ -17,26 +17,26 @@ const ChatBox = () => {
     }, [socket, userInfo?.devGlowAccess?._id]);
 
     useEffect(() => {
-       if (socket) {
-        const timer = setInterval(debouncedFetchUnreadMessages, 500);
- 
-        socket.on('unreadMessages', (data) => {
-            const senderCounts = new Map();
-            data.forEach((ele) => {
-                if (senderCounts.has(ele.sender)) {
-                    senderCounts.set(ele.sender, senderCounts.get(ele.sender) + 1);
-                } else {
-                    senderCounts.set(ele.sender, 1);
-                }
+        if (socket) {
+            const timer = setInterval(debouncedFetchUnreadMessages, 500);
+
+            socket.on('unreadMessages', (data) => {
+                const senderCounts = new Map();
+                data.forEach((ele) => {
+                    if (senderCounts.has(ele.sender)) {
+                        senderCounts.set(ele.sender, senderCounts.get(ele.sender) + 1);
+                    } else {
+                        senderCounts.set(ele.sender, 1);
+                    }
+                });
+                const organizedData = Array.from(senderCounts.entries()).map(([sender, count]) => ({
+                    sender,
+                    count
+                }));
+                setUnreadData(organizedData)
             });
-            const organizedData = Array.from(senderCounts.entries()).map(([sender, count]) => ({
-                sender,
-                count
-            })); 
-            setUnreadData(organizedData)
-        });
-        return () => clearInterval(timer);
-       }
+            return () => clearInterval(timer);
+        }
 
     }, [debouncedFetchUnreadMessages, socket])
 
@@ -52,7 +52,7 @@ const ChatBox = () => {
             sender: user._id,
             receiver: userInfo.devGlowAccess._id
         }
-        socket.emit("mark-read",(data))
+        socket.emit("mark-read", (data))
         openChatBox(<Chat receiver={user} />)
     }
 
@@ -65,27 +65,27 @@ const ChatBox = () => {
                     <ul>
                         {followers.map((user) => {
                             const unreadCount = unreadData.find(ele => ele.sender === user._id)
-                            return(
+                            return (
                                 <li key={user._id} className={` cursor-pointer flex w-full hover:bg-gray-100 items-center mb-2 ${selectedUserId === user._id ? 'border-b shadow-lg' : ''}`}>
-                                <div onClick={() => openChat(user)} className='cursor-pointer flex p-2 w-full border-b items-center '>
-                                    {user?.profile_url ? (
-                                        <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
-                                            <img className='w-[40px] h-[40px] object-cover' src={user?.profile_url} alt="profilepic" />
-                                        </div>
-                                    ) : (
-                                        <img className='border border-[#720058] w-[40px] h-[40px] rounded-full mr-2 hidden lg:flex'
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"
-                                            alt="profile pic" />
-                                    )}
+                                    <div onClick={() => openChat(user)} className='cursor-pointer flex p-2 w-full border-b items-center '>
+                                        {user?.profile_url ? (
+                                            <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
+                                                <img className='w-[40px] h-[40px] object-cover' src={user?.profile_url} alt="profilepic" />
+                                            </div>
+                                        ) : (
+                                            <img className='border border-[#720058] w-[40px] h-[40px] rounded-full mr-2 hidden lg:flex'
+                                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"
+                                                alt="profile pic" />
+                                        )}
 
-                                    <h2 className="text-sm font-semibold">{user.username}</h2>
-                                </div>
-                                    <div className='w-5 bg-[#004272] flex justify-center items-center rounded-full text-white mr-2'>
-                                    <p >{unreadCount?.count}</p>
+                                        <h2 className="text-sm font-semibold">{user.username}</h2>
                                     </div>
-                            </li>
+                                    <div className='w-5 bg-[#004272] flex justify-center items-center rounded-full text-white mr-2'>
+                                        <p >{unreadCount?.count}</p>
+                                    </div>
+                                </li>
                             )
-})}
+                        })}
                     </ul>
 
                     : (

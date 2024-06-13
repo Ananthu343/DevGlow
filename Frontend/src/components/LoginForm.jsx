@@ -6,23 +6,23 @@ import { loginUser } from '../slices/userSlice';
 import { setCredentials } from '../slices/authSlice';
 
 const LoginForm = () => {
-    const [email,setEmail] = useState('');
-    const [password,setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const dispatch = useDispatch()
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(loginUser({email,password})).then((action)=>{
-         if (action.meta.requestStatus === "rejected"){
-             const errorMessage = "Invalid email or password";
-             toast.error(errorMessage);
-         } else {
-             dispatch(setCredentials(action.payload));
-         }
+        dispatch(loginUser({ email, password })).then((action) => {
+            if (action.meta.requestStatus === "rejected") {
+                const errorMessage = "Invalid email or password";
+                toast.error(errorMessage);
+            } else {
+                dispatch(setCredentials(action.payload));
+            }
         })
     }
-  return (
-    <div className='bg-white p-8 rounded shadow-lg w-96 backdrop-blur-lg bg-white/20'>
+    return (
+        <div className='bg-white p-8 rounded shadow-lg w-96 backdrop-blur-lg bg-white/20'>
             <h2 className="text-2xl font-bold mb-6 ">Login</h2>
             <form onSubmit={handleSubmit}>
                 <p>Email</p>
@@ -41,7 +41,7 @@ const LoginForm = () => {
             </form>
         </div>
 
-  )
+    )
 }
 
 export default LoginForm

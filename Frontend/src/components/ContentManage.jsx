@@ -1,4 +1,4 @@
-import React, { useEffect, useState , useMemo } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllContent } from '../slices/adminSlice'
 import UserCard from './UserCard'
@@ -17,28 +17,28 @@ const ContentManage = () => {
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
-};
+  };
 
   useEffect(() => {
     dispatch(getAllContent())
-  }, [])
+  }, [dispatch])
 
   const filteredData = useMemo(() => {
     let data = contentData;
 
     switch (filter) {
-        case "Archived":
-            data = contentData.filter(content => content.archive === true);
-            break;
-        case "Report":
-            data = contentData.filter(content => content.reportCount > 20);
-            break;
-        default:
-            break;
+      case "Archived":
+        data = contentData.filter(content => content.archive === true);
+        break;
+      case "Report":
+        data = contentData.filter(content => content.reportCount > 20);
+        break;
+      default:
+        break;
     }
 
     return data;
-}, [contentData, filter]);
+  }, [contentData, filter]);
 
   const handleView = (content, creator) => {
     const data = {
@@ -66,13 +66,13 @@ const ContentManage = () => {
         <div className='w-[30%] flex justify-between'>
           <h1 className='font-semibold text-[#720058]'>Content manage</h1>
           <div className='flex'>
-                        <p>filter:</p>
-                        <select onChange={handleFilterChange} value={filter} className='text-white bg-[#004272] rounded'>
-                            <option value="All">All</option>
-                            <option value="Archived">Archived</option>
-                            <option value="Report">To report</option>
-                        </select>
-           </div>
+            <p>filter:</p>
+            <select onChange={handleFilterChange} value={filter} className='text-white bg-[#004272] rounded'>
+              <option value="All">All</option>
+              <option value="Archived">Archived</option>
+              <option value="Report">To report</option>
+            </select>
+          </div>
         </div>
       </div>
       <div className='w-full h-[550px] flex flex-col overflow-y-scroll '>
@@ -103,7 +103,7 @@ const ContentManage = () => {
 
                       </td>
                       <td>
-                        <svg onClick={()=>handleArchive(content._id)} xmlns="http://www.w3.org/2000/svg" fill={content.archive ? "black" : "none"} viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 cursor-pointer">
+                        <svg onClick={() => handleArchive(content._id)} xmlns="http://www.w3.org/2000/svg" fill={content.archive ? "black" : "none"} viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 cursor-pointer">
                           <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0-3-3m3 3 3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
                         </svg>
 

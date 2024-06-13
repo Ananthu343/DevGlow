@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createCommunity } from '../slices/communitySlice';
 import toast from 'react-hot-toast';
 import PropTypes from 'prop-types'

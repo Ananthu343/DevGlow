@@ -9,29 +9,32 @@ body {
     background-attachment: fixed;
     background-size: cover;
 }
+
 /* Line Styles */
 .line {
     width: 50px;
     height: 2px;
-    background-color: #720058; /* Change color as needed */
+    background-color: #720058;
+    /* Change color as needed */
     transition: transform 0.3s ease-in-out;
-   }
-   
-   /* Animation Classes */
-   .animate-icon1 {
+}
+
+/* Animation Classes */
+.animate-icon1 {
     transform: translateX(0);
-   }
-   
-   .animate-icon2 {
-    transform: translateX(80px); /* Adjust based on icon position */
-   }
-   
-   .animate-icon3 {
-    transform: translateX(160px); /* Adjust based on icon position */
-   }
+}
 
-   .animate-icon4 {
-    transform: translateX(240px); /* Adjust based on icon position */
-   }
+.animate-icon2 {
+    transform: translateX(80px);
+    /* Adjust based on icon position */
+}
 
-  
+.animate-icon3 {
+    transform: translateX(160px);
+    /* Adjust based on icon position */
+}
+
+.animate-icon4 {
+    transform: translateX(240px);
+    /* Adjust based on icon position */
+}

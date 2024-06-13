@@ -1,56 +1,56 @@
-import React , {useState} from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import { editBadge } from '../slices/adminSlice';
 import { replaceBadge } from '../slices/leaderboardSlice';
 
-const EditBadge = ({badge,setModal}) => {
-  const [preview, setPreview] = useState(<img className='object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500'
-    src={badge.badge_url}
-    alt='badge_img' />);
-const [name, setName] = useState(badge.badge_name)
-const [minStars, setMinStars] = useState(badge.min_stars)
-const [media, setMedia] = useState({})
+const EditBadge = ({ badge, setModal }) => {
+    const [preview, setPreview] = useState(<img className='object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500'
+        src={badge.badge_url}
+        alt='badge_img' />);
+    const [name, setName] = useState(badge.badge_name)
+    const [minStars, setMinStars] = useState(badge.min_stars)
+    const [media, setMedia] = useState({})
 
-const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
-const formData = new FormData()
+    const formData = new FormData()
 
-  const uploadFile = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        const fileType = file.type.split('/')[0];
-        const previewURL = URL.createObjectURL(file);
+    const uploadFile = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const fileType = file.type.split('/')[0];
+            const previewURL = URL.createObjectURL(file);
 
-        if (fileType === 'image') {
-            setPreview(<img className='object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500' src={previewURL} alt="File Preview" />);
-        } else {
-            toast.error("Select a image file")
+            if (fileType === 'image') {
+                setPreview(<img className='object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500' src={previewURL} alt="File Preview" />);
+            } else {
+                toast.error("Select a image file")
+            }
         }
+        setMedia(file)
     }
-    setMedia(file)
-}
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    formData.append('name', name)
-    formData.append('minStars', minStars)
-    formData.append('fileUpload', media)
-    formData.append('id', badge._id)
-    dispatch(editBadge(formData)).then((action) => {
-        if (action.meta.requestStatus === "rejected") {
-            const errorMessage = "Error creating badge";
-            toast.error(errorMessage);
-        } else {
-            toast.success("Done !")
-            dispatch(replaceBadge(action.payload))
-        }
-    })
-    setModal(false)
-}
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        formData.append('name', name)
+        formData.append('minStars', minStars)
+        formData.append('fileUpload', media)
+        formData.append('id', badge._id)
+        dispatch(editBadge(formData)).then((action) => {
+            if (action.meta.requestStatus === "rejected") {
+                const errorMessage = "Error creating badge";
+                toast.error(errorMessage);
+            } else {
+                toast.success("Done !")
+                dispatch(replaceBadge(action.payload))
+            }
+        })
+        setModal(false)
+    }
 
-  return (
-    <div className='fixed inset-0 flex items-center justify-center z-50'>
+    return (
+        <div className='fixed inset-0 flex items-center justify-center z-50'>
             <div className='absolute w-screen h-full bg-black/60 flex justify-center items-center z-[100] top-0 '>
                 <div className='bg-white rounded-[10px] w-[400px] h-auto p-3 flex flex-col justify-center text-[#720058] text-sm'>
                     <form onSubmit={handleSubmit}>
@@ -71,7 +71,7 @@ const formData = new FormData()
                                 >
                                     Edit badge icon
                                 </label>
- 
+
                             </div>
                         </div>
 
@@ -85,7 +85,7 @@ const formData = new FormData()
                                         Badge name
                                     </label>
                                     <input
-      
+
                                         onChange={e => setName(e.target.value)}
                                         type="text"
                                         id="name"
@@ -125,7 +125,7 @@ const formData = new FormData()
                 </div>
             </div>
         </div>
-  )
+    )
 }
 
 export default EditBadge

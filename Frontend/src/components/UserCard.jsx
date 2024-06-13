@@ -4,17 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const UserCard = ({ user }) => {
-    const { userInfo } = useSelector( state => state.auth )
-    const { badges } = useSelector( state => state.leaderboard )
-    const [badge,setBadge] = useState({})
+    const { userInfo } = useSelector(state => state.auth)
+    const { badges } = useSelector(state => state.leaderboard)
+    const [badge, setBadge] = useState({})
     const navigate = useNavigate()
 
-    useEffect(()=>{
-       const badgeData = badges.find(badge => badge._id === user.badge)
-       setBadge(badgeData)
-    },[badges,user])
+    useEffect(() => {
+        const badgeData = badges.find(badge => badge._id === user.badge)
+        setBadge(badgeData)
+    }, [badges, user])
 
-    const handleNavigation = () =>{
+    const handleNavigation = () => {
         if (user._id === userInfo.devGlowAccess._id) {
             navigate('/profile')
         } else {

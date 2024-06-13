@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import UserCard from './UserCard';
 import CreateCommunity from './CreateCommunity';
 import { restrictCommunity } from '../slices/adminSlice';
-import { updateCommunityBlock , deleteCommunity } from '../slices/communitySlice';
+import { updateCommunityBlock, deleteCommunity } from '../slices/communitySlice';
 import toast from 'react-hot-toast';
 
 

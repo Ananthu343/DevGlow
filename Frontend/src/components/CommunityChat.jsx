@@ -12,7 +12,7 @@ import PropTypes from 'prop-types'
 const CommunityChat = ({ communityId }) => {
     const socket = useSocket();
     const { userInfo } = useSelector(state => state.auth)
-    const { communityMessages,communities } = useSelector(state => state.community)
+    const { communityMessages, communities } = useSelector(state => state.community)
     const { users } = useSelector(state => state.post)
     const messagesEndRef = useRef(null);
     const [message, setMessage] = useState('');
@@ -22,32 +22,32 @@ const CommunityChat = ({ communityId }) => {
     const [addUsers, openAddUsers] = useState(false);
     const dispatch = useDispatch()
 
-    useEffect(()=>{
+    useEffect(() => {
         const communityData = communities.find(ele => ele._id === communityId)
         setCommunity(communityData)
-      },[communities,communityId])
+    }, [communities, communityId])
 
     useEffect(() => {
-       if (socket) {
-        socket.emit('join-community-room', (communityId))
-        dispatch(getCommunityHistory(communityId))
-        return () => {
-            dispatch(clearCommunityMessages())
-            socket.emit('leave-room')
-        };
-       }
-    }, [dispatch, communityId,socket]);
+        if (socket) {
+            socket.emit('join-community-room', (communityId))
+            dispatch(getCommunityHistory(communityId))
+            return () => {
+                dispatch(clearCommunityMessages())
+                socket.emit('leave-room')
+            };
+        }
+    }, [dispatch, communityId, socket]);
 
     useEffect(() => {
         if (socket) {
             const handleReceive = (data) => {
-              dispatch(updateCommunityMessages(data));
-              console.log(data);
+                dispatch(updateCommunityMessages(data));
+                console.log(data);
             }
             socket.on('receive-community-message', handleReceive);
             return () => {
-              socket.off('receive-community-message', handleReceive); 
-              dispatch(clearCommunityMessages());
+                socket.off('receive-community-message', handleReceive);
+                dispatch(clearCommunityMessages());
             };
         }
     }, [socket, dispatch])
@@ -95,7 +95,7 @@ const CommunityChat = ({ communityId }) => {
                         </div>
                     </div>
                 </div>
-                {userInfo?.devGlowAccess._id === community.creatorId ? <DropdownMenu setAbout={setModal} openAddUsers={openAddUsers} options={["About","Add users"]}/> : <DropdownMenu setAbout={setModal} options={["About"]}/>}
+                {userInfo?.devGlowAccess._id === community.creatorId ? <DropdownMenu setAbout={setModal} openAddUsers={openAddUsers} options={["About", "Add users"]} /> : <DropdownMenu setAbout={setModal} options={["About"]} />}
             </div>
             <div className=' w-full p-3 h-[90%] overflow-auto border-2 bg-customCommunity-bg'>
                 <ul className='space-y-4'>
@@ -145,14 +145,14 @@ const CommunityChat = ({ communityId }) => {
                     )}
                 </div>
             </form>
-            {modal && <CommunityOverview setModal={setModal} community={community}/>}
-            {addUsers && <AddUsers openAddUsers={openAddUsers} communityId={community._id}/>}
+            {modal && <CommunityOverview setModal={setModal} community={community} />}
+            {addUsers && <AddUsers openAddUsers={openAddUsers} communityId={community._id} />}
         </div>
     );
 }
 
 CommunityChat.propTypes = {
     communityId: PropTypes.string.isRequired,
-  };
+};
 
 export default CommunityChat

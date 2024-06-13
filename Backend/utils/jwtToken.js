@@ -12,8 +12,8 @@ export const generateToken = async (res, data) => {
     if (isValidObjectId(data)) {
         const userId = data
         const user = await userRepository.findById(userId);
-        const userRoles =  user.roles;
-        token = jwt.sign({ userId,userRoles }, `${key}`, { expiresIn: "30d" })
+        const userRoles = user.roles;
+        token = jwt.sign({ userId, userRoles }, `${key}`, { expiresIn: "30d" })
     } else {
         token = jwt.sign({ data }, `${key}`, { expiresIn: "30d" })
     }
@@ -37,10 +37,10 @@ export const deleteToken = (res) => {
 }
 
 export const getTokenData = (req) => {
-    const token = req.cookies.jwt; 
-    const decoded = jwt.verify(token, `${key}`); 
-    const userId = decoded.userId; 
-    const data = decoded.data; 
+    const token = req.cookies.jwt;
+    const decoded = jwt.verify(token, `${key}`);
+    const userId = decoded.userId;
+    const data = decoded.data;
     if (userId) {
         return userId
     } else {

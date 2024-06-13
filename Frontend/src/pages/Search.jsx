@@ -5,11 +5,11 @@ import NotificationCase from '../components/NotificationCase'
 import SearchResultContainer from '../components/SearchResultContainer'
 
 const Search = () => {
-    const {value} = useParams()
+  const { value } = useParams()
   return (
     <div className=' w-[85%] pt-[60px] flex justify-center  top-0 mx-auto'>
       <NotificationCase />
-      <SearchResultContainer value={value}/>
+      <SearchResultContainer value={value} />
       <LeaderboardCase />
     </div>
   )

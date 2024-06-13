@@ -22,7 +22,7 @@ const CommunityBox = () => {
                     <ul>
                         {communities.map((community) => (
                             community.members.includes(userInfo.devGlowAccess._id) &&
-                                <li key={community._id} className={`cursor-pointer flex flex-col w-full hover:bg-gray-100 items-center mb-2 ${selectedCommunityId === community._id ? 'border-b shadow-lg' : ''}`}>
+                            <li key={community._id} className={`cursor-pointer flex flex-col w-full hover:bg-gray-100 items-center mb-2 ${selectedCommunityId === community._id ? 'border-b shadow-lg' : ''}`}>
                                 <div onClick={() => openChat(community)} className='cursor-pointer flex p-2 w-full border-b items-center '>
                                     {community.profile_url ? (
                                         <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
@@ -36,7 +36,7 @@ const CommunityBox = () => {
 
                                     <h2 className="text-sm font-semibold">{community.name ?? "Unknown"}</h2>
                                 </div>
-                            </li> 
+                            </li>
                         ))}
                     </ul>
 

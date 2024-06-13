@@ -14,7 +14,7 @@ const MenuBar = ({ handleLogout }) => {
                 </div>
                 <div className='bg-[#979797] w-[1px] h-5'></div>
                 <h3 className='ml-3 text-sm font-semibold'>{userInfo?.devGlowAccess.username}</h3>
-            </div>:null}
+            </div> : null}
             {
                 userInfo ?
                     <button className=' text-sm lg:hidden w-full  hover:bg-gray-200 mb-2' onClick={() => navigate('/profile')}>My profile</button>
@@ -38,6 +38,6 @@ const MenuBar = ({ handleLogout }) => {
 
 MenuBar.propTypes = {
     handleLogout: PropTypes.func.isRequired
-  };
+};
 
 export default MenuBar

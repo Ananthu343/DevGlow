@@ -15,14 +15,14 @@ Chart.register(
 );
 
 const MessageGraph = () => {
-    const {messageData} = useSelector(state => state.admin)
+  const { messageData } = useSelector(state => state.admin)
   const chartRef = useRef(null);
 
   useEffect(() => {
     const chartInstance = new Chart(chartRef.current, {
       type: 'bar',
       data: {
-        labels:messageData.labels,
+        labels: messageData.labels,
         datasets: [{
           label: 'Personal Messages',
           data: messageData.data,

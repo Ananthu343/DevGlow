@@ -17,7 +17,7 @@ const LeaderboardContainer = () => {
             }
         });
     }, [rankings, userInfo.devGlowAccess._id]);
-    
+
     useEffect(() => {
         if (searchQuery.trim() === '') {
             setFilteredRankings(rankings);

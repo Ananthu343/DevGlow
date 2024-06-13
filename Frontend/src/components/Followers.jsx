@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import UserCard from './UserCard';
 import PropTypes from 'prop-types'
 
-const Followers = ({user}) => {
+const Followers = ({ user }) => {
     const [searchValue, setSearchValue] = useState('');
     const [followers, setFollowers] = useState([]);
     const { users } = useSelector(state => state.post);
@@ -11,7 +11,7 @@ const Followers = ({user}) => {
     useEffect(() => {
         const data = users.filter(ele => user.followers.includes(ele._id));
         setFollowers(data);
-    }, [users, user.followers]); 
+    }, [users, user.followers]);
 
     const filteredUsers = useMemo(() => {
         if (searchValue !== '') {
@@ -37,7 +37,7 @@ const Followers = ({user}) => {
                     <ul>
                         {filteredUsers.map((user) => (
                             <li key={user._id}>
-                                <UserCard user={user}/>
+                                <UserCard user={user} />
                             </li>
                         ))}
                     </ul>
@@ -48,7 +48,7 @@ const Followers = ({user}) => {
                 )
             ) : (
                 <div className='w-full flex justify-center h-full items-center'>
-                        <h1 className='font-semibold'>empty !</h1>
+                    <h1 className='font-semibold'>empty !</h1>
                 </div>
             )}
         </div>
@@ -56,7 +56,7 @@ const Followers = ({user}) => {
 }
 
 Followers.propTypes = {
-    user: PropTypes.object.isRequired, 
-  };
+    user: PropTypes.object.isRequired,
+};
 
 export default Followers

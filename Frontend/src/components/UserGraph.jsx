@@ -14,7 +14,7 @@ Chart.register(
 );
 
 const UserGraph = () => {
-    const {userData} = useSelector(state => state.admin)
+  const { userData } = useSelector(state => state.admin)
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const UserGraph = () => {
 
   return (
     <div className='flex flex-col items-center' style={{ width: '100%', height: '300px' }}>
-        <p>Users</p>
+      <p>Users</p>
       <canvas ref={chartRef} />
     </div>
   );

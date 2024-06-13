@@ -1,39 +1,39 @@
 import mongoose from "mongoose";
 
 const PostSchema = new mongoose.Schema({
-    creatorId :{
+    creatorId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users'
     },
-    description:{
-        type:String
+    description: {
+        type: String
     },
-    visibility:{
-        type:String,
-        default:"Public"
+    visibility: {
+        type: String,
+        default: "Public"
     },
-    media:{
-        type:String,
+    media: {
+        type: String,
     },
-    stars:{
-        type:Number,
+    stars: {
+        type: Number,
         default: 0
     },
-    likedUsers:[{
+    likedUsers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users'
     }],
-    reports:[{
+    reports: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users'
     }],
-    archive:{
-        type:Boolean,
+    archive: {
+        type: Boolean,
         default: false
     },
-    createdAt: { type: Date, default: Date.now } 
+    createdAt: { type: Date, default: Date.now }
 })
 
-const Post = mongoose.model("Posts",PostSchema);
+const Post = mongoose.model("Posts", PostSchema);
 
 export default Post

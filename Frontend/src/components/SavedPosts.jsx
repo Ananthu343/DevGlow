@@ -10,45 +10,45 @@ import CommentsContainer from './CommentsContainer'
 import { useNavigate } from 'react-router-dom'
 
 const SavedPosts = () => {
-    const { savedPosts, users ,commentsById } = useSelector(state => state.post);
-    const { userInfo } = useSelector(state => state.auth);
-    const { badges } = useSelector(state => state.leaderboard);
-    const [readMoreStates, setReadMoreStates] = useState({});
-    const [modal, setModal] = useState(false)
-    const [editPost, setEditPost] = useState(null)
-    const [openComments, setOpenComments] = useState({});
-    const [openShare, setOpenShare] = useState(false)
+  const { savedPosts, users, commentsById } = useSelector(state => state.post);
+  const { userInfo } = useSelector(state => state.auth);
+  const { badges } = useSelector(state => state.leaderboard);
+  const [readMoreStates, setReadMoreStates] = useState({});
+  const [modal, setModal] = useState(false)
+  const [editPost, setEditPost] = useState(null)
+  const [openComments, setOpenComments] = useState({});
+  const [openShare, setOpenShare] = useState(false)
 
-    const navigate = useNavigate()
-      
-    const toggleComments = (postId) => {
-      setOpenComments(prevState => ({
-        ...prevState,
-        [postId]: !prevState[postId],
-      }));
-    };
-  
-    const toggleReadMore = (index) => {
-      setReadMoreStates(prevStates => ({
-        ...prevStates,
-        [index]: !prevStates[index],
-      }));
-    };
+  const navigate = useNavigate()
 
-    const openEdit = (post) => {
-      setEditPost(post)
-      setModal(true)
-    }
-  
-      
-    return (
-      <div className='w-full md:w-[550px] h-auto flex-col md:pl-4 md:pr-4'>
-        {savedPosts?.map((document, index) => {
-          const userData = users?.find(user => user._id === document.creatorId);
-          const badgeData = badges?.find(badge => badge?._id === userData?.badge);
+  const toggleComments = (postId) => {
+    setOpenComments(prevState => ({
+      ...prevState,
+      [postId]: !prevState[postId],
+    }));
+  };
 
-          if(!userInfo?.devGlowAccess?.blocked.includes(userData?._id)){
-           if (document.archive === false || undefined) {
+  const toggleReadMore = (index) => {
+    setReadMoreStates(prevStates => ({
+      ...prevStates,
+      [index]: !prevStates[index],
+    }));
+  };
+
+  const openEdit = (post) => {
+    setEditPost(post)
+    setModal(true)
+  }
+
+
+  return (
+    <div className='w-full md:w-[550px] h-auto flex-col md:pl-4 md:pr-4'>
+      {savedPosts?.map((document, index) => {
+        const userData = users?.find(user => user._id === document.creatorId);
+        const badgeData = badges?.find(badge => badge?._id === userData?.badge);
+
+        if (!userInfo?.devGlowAccess?.blocked.includes(userData?._id)) {
+          if (document.archive === false || undefined) {
             const isReadMore = readMoreStates[index] || false;
             let commentCount = 0;
             Object.keys(commentsById).forEach(key => {
@@ -57,7 +57,7 @@ const SavedPosts = () => {
                 commentCount++
               }
             });
-  
+
             return (
               <div key={index}>
                 <div className='bg-white rounded shadow-lg pt-2 pb-2'>
@@ -67,14 +67,14 @@ const SavedPosts = () => {
                         <img className='w-[40px] h-[40px] object-cover' src={userData?.profile_url ? userData?.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
                       </div>
                       <div className='flex flex-col'>
-                        <h1 onClick={()=> navigate(`/userProfile/${userData._id}`)} className='text-sm font-semibold hover:text-blue-800 hover:underline hover:cursor-pointer'>{userData ? userData.username : 'Unknown'}</h1>
+                        <h1 onClick={() => navigate(`/userProfile/${userData._id}`)} className='text-sm font-semibold hover:text-blue-800 hover:underline hover:cursor-pointer'>{userData ? userData.username : 'Unknown'}</h1>
                         <p className='text-[9px] text-[#979797]'>{badgeData?.badge_name ? badgeData.badge_name : 'Beginner'}</p>
                         <p className='text-[8px] text-[#979797]'>Posted on: {new Date(document.createdAt).toLocaleDateString()}</p>
                       </div>
                     </div>
                     <div className='flex '>
                       <FollowToggle userData={userData} />
-                      {userInfo?.devGlowAccess._id === userData?._id ? <DropdownMenu options={["Edit Post"]} document={document} openEdit={openEdit} /> : <DropdownMenu options={["Save Post", "Report User", "Block User","Report Post"]} document={document} />}
+                      {userInfo?.devGlowAccess._id === userData?._id ? <DropdownMenu options={["Edit Post"]} document={document} openEdit={openEdit} /> : <DropdownMenu options={["Save Post", "Report User", "Block User", "Report Post"]} document={document} />}
                     </div>
                   </div>
                   <div className='border-t w-full h-auto mt-2 mb-2 pl-3 pr-3 break-words'>
@@ -103,21 +103,21 @@ const SavedPosts = () => {
                 <div className='mt-3 mb-3 h-[1px] bg-[#004272] rounded' />
               </div>
             );
-           }else{
-            return null
-           }
-          } else{
+          } else {
             return null
           }
-        })}  
-        {modal ?
-          <EditPost post={editPost} setModal={setModal} />
-          : null}
-        {openShare ?
-          <Share post={document._id} setOpenShare={setOpenShare} />
-          : null}
-      </div>
-    );
+        } else {
+          return null
+        }
+      })}
+      {modal ?
+        <EditPost post={editPost} setModal={setModal} />
+        : null}
+      {openShare ?
+        <Share post={document._id} setOpenShare={setOpenShare} />
+        : null}
+    </div>
+  );
 }
 
 export default SavedPosts

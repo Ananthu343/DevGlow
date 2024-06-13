@@ -42,7 +42,7 @@ const Header = () => {
     <>
       <div className='fixed top-0 z-50 flex justify-center w-screen '>
         <div className='h-[50px] w-screen md:w-[85%] bg-white md:rounded-b-2xl top-0 z-50 self-center shadow-md flex p-3 flex justify-between'>
-          <img onClick={()=> navigate('/')} src="logo.png" alt="logo" className='cursor-pointer'/>
+          <img onClick={() => navigate('/')} src="logo.png" alt="logo" className='cursor-pointer' />
           <input onClick={() => setSearchBox(true)} onChange={(e) => setSearchTerm(e.target.value)} type="text" placeholder='Search' className='flex border rounded-full border-[#720058] h-8 w-[250px] text-sm focus:outline-none focus:shadow-md bg-gray-100 pl-3' />
 
           <div className='flex text-xs text-[#979797] w-[150px] lg:w-[300px] space-x-4 '>
@@ -131,7 +131,7 @@ const Header = () => {
           }
           <div className='bg-[#979797] w-[1px] hidden lg:flex'></div>
           <div className='hidden lg:flex border border-[#720058] rounded-full overflow-hidden mr-2 w-[30px] h-[30px] object-cover'>
-            <img  src={userInfo?.devGlowAccess.profile_url ? userInfo?.devGlowAccess.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
+            <img src={userInfo?.devGlowAccess.profile_url ? userInfo?.devGlowAccess.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
           </div>
         </div>
       </div>

@@ -28,7 +28,7 @@ export const authController = {
                 email,
                 password: "Applicant",
                 token,
-                roles:["user"]
+                roles: ["user"]
             }
             await userRepository.save(applicantData)
             const clientMail = process.env.MY_EMAIL
@@ -59,9 +59,9 @@ export const authController = {
             const { token } = req.body
             const { email } = data
             const applicant = await userRepository.findByEmail(email)
-            if(applicant.isVerified !== true){
+            if (applicant.isVerified !== true) {
                 if (applicant && applicant.token == token) {
-                    await userRepository.updateUser(applicant._id, { ...data, isVerified: true})
+                    await userRepository.updateUser(applicant._id, { ...data, isVerified: true })
                     deleteToken(res)
                     res.status(200).json({ message: "token verified" })
                 } else {
@@ -92,7 +92,7 @@ export const authController = {
             console.log(error.message);
         }
     },
-    logout: async (req,res)=>{
+    logout: async (req, res) => {
         try {
             deleteToken(res)
             res.status(200).json({ message: "Logged out successfully" });

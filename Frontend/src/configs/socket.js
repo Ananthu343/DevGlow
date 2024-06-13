@@ -7,17 +7,17 @@ const SocketContext = createContext();
 export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
-  useEffect(()=>{
+  useEffect(() => {
     const socket = io("http://localhost:3001");
     socket.on('connect', () => {
       console.log('Connected to server');
     });
     setSocket(socket)
-    return ()=>{
+    return () => {
       socket.disconnect();
       console.log("disconnected");
     }
-  },[])
+  }, [])
 
   return (
     <SocketContext.Provider value={socket}>

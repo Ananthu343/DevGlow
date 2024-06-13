@@ -19,30 +19,30 @@ export default function VideoCall({ roomId }) {
         appId, serverSecret, roomID, userInfo.devGlowAccess._id, userInfo.devGlowAccess.username
       );
       zc = ZegoUIKitPrebuilt.create(kitToken);
-    
+
       zc.joinRoom({
         container: element,
         scenario: {
           mode: ZegoUIKitPrebuilt.OneONoneCall,
         },
-        screenSharingConfig:false,
+        screenSharingConfig: false,
         showPreJoinView: false,
         onLeaveRoom: () => {
-            navigate('/messages')
-          }
+          navigate('/messages')
+        }
       });
     };
-    
+
     joinRoom(videoRef.current);
-    
+
     return () => {
       if (zc) {
         zc.destroy();
       }
     };
-  }, [roomId, userInfo]);
+  }, [roomId, userInfo, navigate]);
 
-  
+
   return (
     <div>
       {/* Video Call Container */}

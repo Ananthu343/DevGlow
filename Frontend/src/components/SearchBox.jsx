@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState,useRef } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CommunityOverview from './CommunityOverview';
@@ -9,19 +9,19 @@ const SearchBox = ({ setSearchBox, searchTerm }) => {
     const { users } = useSelector(state => state.post);
     const { communities } = useSelector(state => state.community);
     const navigate = useNavigate()
-    const [modal,setModal] = useState(false)
-    const [community,setCommunity] = useState({})
+    const [modal, setModal] = useState(false)
+    const [community, setCommunity] = useState({})
     const searchTermRef = useRef();
-  
-    const handleOverview = (community)=>{
-      setCommunity(community)
-      setModal(true)
+
+    const handleOverview = (community) => {
+        setCommunity(community)
+        setModal(true)
     }
 
     useEffect(() => {
-        searchTermRef.current = searchTerm; 
+        searchTermRef.current = searchTerm;
         if (searchTermRef.current === "") {
-            searchTermRef.current = "*"; 
+            searchTermRef.current = "*";
         }
     }, [searchTerm])
 
@@ -60,7 +60,7 @@ const SearchBox = ({ setSearchBox, searchTerm }) => {
                 {filteredUsers.length > 0 ? <h1>Users</h1> : null}
                 <div className='border-t w-full pl-4'>
                     {filteredUsers.map((user, index) => (
-                        <div onClick={()=> navigate(`/userProfile/${user?._id}`)} className='flex items-center border-b p-1 cursor-pointer' key={index}>
+                        <div onClick={() => navigate(`/userProfile/${user?._id}`)} className='flex items-center border-b p-1 cursor-pointer' key={index}>
                             <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
                                 <img className='w-[30px] h-[30px] object-cover' src={user?.profile_url ? user?.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
                             </div>
@@ -93,7 +93,7 @@ const SearchBox = ({ setSearchBox, searchTerm }) => {
                     <p onClick={handleSearchPage} className='text-[11px] text-[#004272] hover:underline cursor-pointer'>See all</p>
                 </div>
             </div>
-            {modal && <CommunityOverview setModal={setModal} community={community}/>}
+            {modal && <CommunityOverview setModal={setModal} community={community} />}
         </div>
     );
 
@@ -102,6 +102,6 @@ const SearchBox = ({ setSearchBox, searchTerm }) => {
 SearchBox.propTypes = {
     searchTerm: PropTypes.string.isRequired,
     setSearchBox: PropTypes.func.isRequired
-  };
+};
 
 export default SearchBox;

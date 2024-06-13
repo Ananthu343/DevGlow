@@ -54,7 +54,7 @@ const SearchResultContainer = ({ value }) => {
                         <ul>
                             {filteredUsers.map((user) => (
                                 <li key={user._id} className={`cursor-pointer flex flex-col w-full hover:bg-gray-100 items-center mb-2`}>
-                                    <div onClick={()=> navigate(`/userProfile/${user?._id}`)} className='cursor-pointer flex p-2 w-full border-b items-center '>
+                                    <div onClick={() => navigate(`/userProfile/${user?._id}`)} className='cursor-pointer flex p-2 w-full border-b items-center '>
                                         {user?.profile_url ? (
                                             <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
                                                 <img className='w-[40px] h-[40px] object-cover' src={user?.profile_url} alt="profilepic" />
@@ -103,7 +103,7 @@ const SearchResultContainer = ({ value }) => {
 
 SearchResultContainer.propTypes = {
     value: PropTypes.string.isRequired
-  };
+};
 
 export default SearchResultContainer;
 

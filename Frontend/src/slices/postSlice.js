@@ -12,7 +12,7 @@ const initialState = {
     profilePosts: [],
     savedPosts: [],
     commentsById: [],
-    userPosts:[],
+    userPosts: [],
 };
 
 export const getFeed = createAsyncThunk("user/getFeed", async (page) => {
@@ -75,7 +75,7 @@ export const getMyProfilePosts = createAsyncThunk("user/getMyProfilePosts", asyn
     const abortSignal = createAbortSignalWithTimeout(10000);
     try {
         const response = await axios.get(`${users_url}/getMyProfilePosts`, {
-            params:{id : id},
+            params: { id: id },
             withCredentials: true,
             signal: abortSignal,
         });
@@ -113,7 +113,7 @@ export const likePost = createAsyncThunk("user/likePost", async (id) => {
             withCredentials: true,
             signal: abortSignal,
         });
-        return { id, likeStatus: response.data.likeStatus, updatedPost: response.data.updatedPost ,userData: response.data.userData};
+        return { id, likeStatus: response.data.likeStatus, updatedPost: response.data.updatedPost, userData: response.data.userData };
 
     } catch (error) {
         handleError(error, 'likePost')
@@ -210,7 +210,7 @@ const postSlice = createSlice({
             let userIndex = state.users.findIndex(ele => ele._id === action.payload.id)
             state.users[userIndex].roles = action.payload.roles
         },
-        clearProfilePosts: (state,action) => {
+        clearProfilePosts: (state, action) => {
             state.profilePosts = []
         }
     },

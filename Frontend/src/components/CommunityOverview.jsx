@@ -1,8 +1,8 @@
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import React from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { joinCommunity,editCommunity,deleteCommunity, leaveCommunity } from '../slices/communitySlice'
+import { joinCommunity, editCommunity, deleteCommunity, leaveCommunity } from '../slices/communitySlice'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import UserCard from './UserCard'
@@ -25,13 +25,13 @@ const CommunityOverview = ({ community, setModal }) => {
 
     const formData = new FormData()
 
-    useEffect(()=>{
-       if (community.members.includes(userInfo?.devGlowAccess._id)) {
-           setMember(true)
-       }
-       const creatorData = users?.find(ele => ele._id === community.creatorId)
-       setCreator(creatorData)
-    },[community,userInfo,users])
+    useEffect(() => {
+        if (community.members.includes(userInfo?.devGlowAccess._id)) {
+            setMember(true)
+        }
+        const creatorData = users?.find(ele => ele._id === community.creatorId)
+        setCreator(creatorData)
+    }, [community, userInfo, users])
 
     const handleJoin = () => {
         if (userInfo) {
@@ -45,7 +45,7 @@ const CommunityOverview = ({ community, setModal }) => {
                         setModal(false)
                     }
                 })
-            }else{
+            } else {
                 if (community.members.length < community.user_limit) {
                     dispatch(joinCommunity(community._id)).then((action) => {
                         if (action.meta.requestStatus === "rejected") {
@@ -56,23 +56,23 @@ const CommunityOverview = ({ community, setModal }) => {
                             setModal(false)
                         }
                     })
-                }else{
+                } else {
                     toast.error("Community is full")
                 }
             }
         } else {
             toast.error("You need to login")
         }
-        
+
     }
 
-    
+
     const uploadFile = (event) => {
         const file = event.target.files[0];
         if (file) {
             const fileType = file.type.split('/')[0];
             const previewURL = URL.createObjectURL(file);
-            
+
             if (fileType === 'image') {
                 setPreview(previewURL);
             } else {
@@ -84,7 +84,7 @@ const CommunityOverview = ({ community, setModal }) => {
 
     const handleSave = (e) => {
         e.preventDefault();
-        formData.append('id',community._id)
+        formData.append('id', community._id)
         formData.append('name', name)
         formData.append('description', description)
         formData.append('privacy', privacy)
@@ -103,7 +103,7 @@ const CommunityOverview = ({ community, setModal }) => {
         setModal(false);
     };
 
-    const handleDelete = ()=>{
+    const handleDelete = () => {
         dispatch(deleteCommunity(community._id)).then((action) => {
             if (action.meta.requestStatus === "rejected") {
                 const errorMessage = "Unable to delete";
@@ -116,7 +116,7 @@ const CommunityOverview = ({ community, setModal }) => {
         setIsEditing(false)
         setModal(false);
     }
-    
+
     return (
         <div className='fixed inset-0 flex items-center justify-center z-1000'>
             <div className='absolute w-screen h-full bg-black/60 flex justify-center items-center z-[1000] top-0'>
@@ -154,13 +154,13 @@ const CommunityOverview = ({ community, setModal }) => {
                                 >
                                     Change image
                                 </label></div>}
-                                <p className='text-sm hover:underline cursor-pointer' onClick={()=> navigate(`/userProfile/${creator._id}`)}>Creator : {creator.username}</p>
+                            <p className='text-sm hover:underline cursor-pointer' onClick={() => navigate(`/userProfile/${creator._id}`)}>Creator : {creator.username}</p>
                         </div>
                     </div>
                     <hr className="my-4 border-t border-gray-200" />
                     <div className="flex items-center justify-between">
                         <div className='hover:underline cursor-pointer'>
-                            <span onClick={()=>showMembers(!members)} className="text-sm font-medium text-gray-700">Members:</span>
+                            <span onClick={() => showMembers(!members)} className="text-sm font-medium text-gray-700">Members:</span>
                             <span className="text-sm font-medium text-gray-700">{community.members.length}</span>
                         </div>
                         <div>
@@ -189,13 +189,13 @@ const CommunityOverview = ({ community, setModal }) => {
                     </div>
                     {
                         members && <div className='w-full h-[200px] flex flex-col overflow-y-scroll'>
-                        {
-                           community.members.map((userId,index)=>{
-                            const user = users.find(ele => ele._id === userId)
-                            return <UserCard key={index} user={user} />
-                           })
-                        }
-                    </div>
+                            {
+                                community.members.map((userId, index) => {
+                                    const user = users.find(ele => ele._id === userId)
+                                    return <UserCard key={index} user={user} />
+                                })
+                            }
+                        </div>
                     }
                 </div>
             </div>
@@ -204,7 +204,7 @@ const CommunityOverview = ({ community, setModal }) => {
 }
 
 CommunityOverview.propTypes = {
-    community: PropTypes.object.isRequired, 
+    community: PropTypes.object.isRequired,
     setModal: PropTypes.func.isRequired
 }
 

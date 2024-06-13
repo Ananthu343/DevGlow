@@ -30,14 +30,27 @@ const AddUsers = ({ communityId, openAddUsers }) => {
             communityId:community._id,
             newUserId: userId
           }
-        dispatch(addUser(data)).then((action) => {
-            if (action.meta.requestStatus === "rejected") {
-                const errorMessage = "Something went wrong";
-                toast.error(errorMessage);
-            } else {
-                toast.success("Done")
-            }
-        })
+        if (community.members.includes(userId)) {
+            dispatch(addUser(data)).then((action) => {
+                if (action.meta.requestStatus === "rejected") {
+                    const errorMessage = "Something went wrong";
+                    toast.error(errorMessage);
+                } else {
+                    toast.success("Done")
+                }
+            }) 
+        }else if (community.members.length < community.user_limit) {
+            dispatch(addUser(data)).then((action) => {
+                if (action.meta.requestStatus === "rejected") {
+                    const errorMessage = "Something went wrong";
+                    toast.error(errorMessage);
+                } else {
+                    toast.success("Done")
+                }
+            }) 
+        } else {
+            toast.error("Community is full")
+        }
     }
 
 

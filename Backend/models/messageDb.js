@@ -9,18 +9,18 @@ const MessageSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users'
   },
-  communityId:{
+  communityId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Community'
   },
   content: String,
   readStatus: {
-    type:Boolean,
-    default:false
+    type: Boolean,
+    default: false
   },
-  createdAt: { type: Date, default: Date.now } 
+  createdAt: { type: Date, default: Date.now }
 });
 
-const Message = mongoose.model("Messages",MessageSchema);
+const Message = mongoose.model("Messages", MessageSchema);
 
 export default Message

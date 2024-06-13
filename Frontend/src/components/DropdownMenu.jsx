@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { savePost,reportUser,reportPost } from '../slices/userSlice';
+import { savePost, reportUser, reportPost } from '../slices/userSlice';
 import { blockUser } from '../slices/postSlice';
 import toast from 'react-hot-toast';
 import { updateCredentials } from '../slices/authSlice';
 import { updateFeed } from '../slices/postSlice';
 import PropTypes from 'prop-types'
 
-const DropdownMenu = ({ options, document, openEdit,setAbout,openAddUsers }) => {
+const DropdownMenu = ({ options, document, openEdit, setAbout, openAddUsers }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch()
 
@@ -27,32 +27,32 @@ const DropdownMenu = ({ options, document, openEdit,setAbout,openAddUsers }) => 
                 break;
             case "Report Post":
                 // Report user logic
-                dispatch(reportPost(document._id)).then((action)=>{
-                    if (action.meta.requestStatus === "rejected"){
+                dispatch(reportPost(document._id)).then((action) => {
+                    if (action.meta.requestStatus === "rejected") {
                         const errorMessage = "Unable to report";
                         toast.error(errorMessage);
                     } else {
                         dispatch(updateFeed(action.payload));
                         toast.success("Reported");
                     }
-                   })
+                })
                 break;
             case "Block User":
-                dispatch(blockUser(document.creatorId)).then((action)=>{
-                    if (action.meta.requestStatus === "rejected"){
+                dispatch(blockUser(document.creatorId)).then((action) => {
+                    if (action.meta.requestStatus === "rejected") {
                         const errorMessage = "Unable to block";
                         toast.error(errorMessage);
                     } else {
-                        dispatch(updateCredentials({devGlowAccess: action.payload}));
+                        dispatch(updateCredentials({ devGlowAccess: action.payload }));
                     }
-                   })
+                })
                 break;
             case "About":
                 setAbout(true)
-                break;    
+                break;
             case "Add users":
                 openAddUsers(true)
-                break;    
+                break;
             default:
                 break;
         }
@@ -97,10 +97,10 @@ const DropdownMenu = ({ options, document, openEdit,setAbout,openAddUsers }) => 
 }
 DropdownMenu.propTypes = {
     options: PropTypes.array.isRequired,
-    document: PropTypes.object, 
+    document: PropTypes.object,
     openEdit: PropTypes.func,
-    setAbout: PropTypes.func, 
-    openAddUsers: PropTypes.func, 
-  };
+    setAbout: PropTypes.func,
+    openAddUsers: PropTypes.func,
+};
 
 export default DropdownMenu

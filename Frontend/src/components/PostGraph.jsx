@@ -1,17 +1,17 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { LineController, LineElement, CategoryScale, Chart, Filler, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import 'chart.js/auto';
 import { useSelector } from 'react-redux';
 
 Chart.register(
-  LineController,
-  LineElement,
-  CategoryScale,
-  Filler,
-  Legend,
-  LinearScale,
-  Title,
-  Tooltip
+    LineController,
+    LineElement,
+    CategoryScale,
+    Filler,
+    Legend,
+    LinearScale,
+    Title,
+    Tooltip
 );
 
 const PostGraph = () => {
@@ -51,7 +51,7 @@ const PostGraph = () => {
 
         return () => {
             chartInstance.destroy();
-        };  
+        };
     }, [postData]);
 
     return (

@@ -1,5 +1,5 @@
-import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import { createAbortSignalWithTimeout,handleError } from "../utils/axiosController";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAbortSignalWithTimeout, handleError } from "../utils/axiosController";
 import axios from "axios";
 
 const users_url = "http://localhost:3001/api/users";
@@ -15,11 +15,11 @@ export const getMessageHistory = createAsyncThunk("user/getMessageHistory", asyn
         const response = await axios.get(`${users_url}/getMessageHistory`, {
             params: { id },
             withCredentials: true,
-            signal: abortSignal, 
+            signal: abortSignal,
         });
         return response.data;
     } catch (error) {
-        handleError(error,'getMessageHistory')
+        handleError(error, 'getMessageHistory')
     }
 });
 
@@ -30,32 +30,32 @@ export const getRoomId = createAsyncThunk("user/getRoomId", async (id) => {
         const response = await axios.get(`${users_url}/getRoomId`, {
             params: { id },
             withCredentials: true,
-            signal: abortSignal, 
+            signal: abortSignal,
         });
         return response.data;
     } catch (error) {
-        handleError(error,'getRoomId')
+        handleError(error, 'getRoomId')
     }
 });
 
 const messageSlice = createSlice({
     name: "message",
     initialState,
-    reducers : {
+    reducers: {
         clearMessages: (state) => {
             state.messages = []
         },
-        updateMessages: (state,action) => {
+        updateMessages: (state, action) => {
             state.messages.push(action.payload)
         },
     },
-    extraReducers: (builder)=>{
+    extraReducers: (builder) => {
         builder
-        .addCase(getMessageHistory.fulfilled,(state,action)=>{
-            state.messages = [...action.payload.messageHistory]
-        })
+            .addCase(getMessageHistory.fulfilled, (state, action) => {
+                state.messages = [...action.payload.messageHistory]
+            })
     }
 })
 
 export default messageSlice.reducer;
-export const {clearMessages,updateMessages} = messageSlice.actions
+export const { clearMessages, updateMessages } = messageSlice.actions

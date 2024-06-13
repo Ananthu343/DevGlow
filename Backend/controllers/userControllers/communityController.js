@@ -140,29 +140,29 @@ export const communityController = {
             res.status(500).send({ error: "internal server error" })
         }
     },
-    getCommunityHistory : async(req,res)=>{
+    getCommunityHistory: async (req, res) => {
         try {
             const communityId = req.query.id
             const data = await messageRepository.getCommunityHistory(communityId)
-            res.status(200).json({communityHistory : data})
+            res.status(200).json({ communityHistory: data })
             console.log(data);
         } catch (error) {
             console.log(error.message);
             res.status(500).send({ error: "internal server error" })
         }
     },
-    addUser : async(req,res)=>{
+    addUser: async (req, res) => {
         try {
             const communityId = req.body.communityId
             const userId = req.body.newUserId
             const communityData = await communityRepository.findById(communityId)
             let updatedData;
             if (communityData.members.includes(userId)) {
-                 updatedData = await communityRepository.pullFromMembers(communityId,userId)
+                updatedData = await communityRepository.pullFromMembers(communityId, userId)
             } else {
-                 updatedData = await communityRepository.addToMembers(communityId,userId)
+                updatedData = await communityRepository.addToMembers(communityId, userId)
             }
-            res.status(200).json({updatedData})
+            res.status(200).json({ updatedData })
         } catch (error) {
             console.log(error.message);
             res.status(500).send({ error: "internal server error" })

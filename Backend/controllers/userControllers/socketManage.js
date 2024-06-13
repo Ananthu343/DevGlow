@@ -10,12 +10,12 @@ export const socketManage = (io) => {
 
   io.on('connection', (socket) => {
     console.log('New client connected');
-    let roomId; 
+    let roomId;
 
     socket.on('join-person-room', async (connections) => {
       const room = await roomRepository.findByConnections(connections);
       if (room) {
-        console.log("joined old person room",room);
+        console.log("joined old person room", room);
         roomId = room._id;
       } else {
         const newRoom = await roomRepository.save(connections);
@@ -23,23 +23,23 @@ export const socketManage = (io) => {
         console.log("newRoommm");
       }
       roomId = roomId.toString()
-      console.log(roomId,connections[1]);
+      console.log(roomId, connections[1]);
       socket.join(roomId);
     });
-  
+
     socket.on('send', async (data) => {
       await messageRepository.save(data);
       socket.to(roomId).emit('receive', data);
-      console.log(roomId,data.receiver);
+      console.log(roomId, data.receiver);
     });
 
-    socket.on('typing', async () => { 
+    socket.on('typing', async () => {
       console.log(roomId);
       if (roomId) {
-        socket.to(roomId).emit('typingStatus', {status : true});
-      setTimeout(() => {
-        socket.to(roomId).emit('typingStatus', {status : false});
-      }, 1000);
+        socket.to(roomId).emit('typingStatus', { status: true });
+        setTimeout(() => {
+          socket.to(roomId).emit('typingStatus', { status: false });
+        }, 1000);
       }
     });
 
@@ -54,7 +54,7 @@ export const socketManage = (io) => {
     socket.on('join-community-room', async (id) => {
       console.log(id);
       const room = await roomRepository.findByCommunityId(id);
-      console.log("joined community room",room);
+      console.log("joined community room", room);
       roomId = room._id;
       roomId = roomId.toString()
       socket.join(roomId);
@@ -65,26 +65,26 @@ export const socketManage = (io) => {
       socket.to(roomId).emit('receive-community-message', data);
     });
 
-    socket.on('get-unread-messages', async (id)=>{
+    socket.on('get-unread-messages', async (id) => {
       const data = await messageRepository.getUnread(id);
-      socket.emit('unreadMessages',data)
+      socket.emit('unreadMessages', data)
     })
 
-    socket.on('mark-read', async (data)=>{
-       await messageRepository.markRead(data.sender,data.receiver);
+    socket.on('mark-read', async (data) => {
+      await messageRepository.markRead(data.sender, data.receiver);
     })
 
-    socket.on('get-notifications', async (id) => { 
+    socket.on('get-notifications', async (id) => {
       const data = await notificationRepository.findNotifications(id)
       socket.emit('notifications', data);
     });
 
     // video call
-    socket.on("get-room",()=>{
-      socket.emit("room",(roomId))
+    socket.on("get-room", () => {
+      socket.emit("room", (roomId))
     })
-    
+
   });
-  
-   
+
+
 }

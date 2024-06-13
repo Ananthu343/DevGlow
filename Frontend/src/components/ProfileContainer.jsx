@@ -143,7 +143,7 @@ const ProfileContainer = ({ userId }) => {
                         <p className='text-xs text-[#979797] mb-2'>{user?.gender ?? "He/She"}</p>
                         <div className='flex items-center'>
                             <p className='text-xs text-[#979797]'>{badge?.badge_name ?? "Badge not earned!"}</p>
-                           
+
                         </div>
                         <div className='flex items-center mt-2'>
                             <p className='text-sm font-medium'>{totalStars ?? "0"}</p>
@@ -158,8 +158,8 @@ const ProfileContainer = ({ userId }) => {
                             <p className='text-xs font-bold text-[#004272]'>{user?.followers?.length ?? "0"} Followers</p>
                             <p className='text-xs font-bold text-[#004272]'>{user?.following?.length ?? "0"} Following</p>
                         </div>
-                         <div className='ml-2 border-2 border-[#720058] w-[20px] h-[20px] md:w-[80px] md:h-[80px] rounded-full overflow-hidden'>
-                                <img src={badge?.badge_url ? badge?.badge_url : "https://img.freepik.com/free-vector/shield_24908-54457.jpg?size=626&ext=jpg&ga=GA1.1.1141335507.1717804800&semt=ais_user"} alt="profile pic" />
+                        <div className='ml-2 border-2 border-[#720058] w-[20px] h-[20px] md:w-[80px] md:h-[80px] rounded-full overflow-hidden'>
+                            <img src={badge?.badge_url ? badge?.badge_url : "https://img.freepik.com/free-vector/shield_24908-54457.jpg?size=626&ext=jpg&ga=GA1.1.1141335507.1717804800&semt=ais_user"} alt="profile pic" />
                         </div>
                     </div>
                 </div>

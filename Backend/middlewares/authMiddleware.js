@@ -2,11 +2,11 @@ import jwt from "jsonwebtoken";
 import dotenv from 'dotenv'
 dotenv.config()
 
-export const protect = async(req,res,next)=>{
+export const protect = async (req, res, next) => {
     try {
         const token = req.cookies.jwt;
         if (token) {
-            try {   
+            try {
                 next();
             } catch (error) {
                 console.log(error.message);

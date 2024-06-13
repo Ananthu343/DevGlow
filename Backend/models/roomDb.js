@@ -5,13 +5,13 @@ const RoomSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users'
   }],
-  communityId:{
+  communityId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Community'
   },
-  createdAt: { type: Date, default: Date.now } 
+  createdAt: { type: Date, default: Date.now }
 });
 
-const Room = mongoose.model("Rooms",RoomSchema);
+const Room = mongoose.model("Rooms", RoomSchema);
 
 export default Room

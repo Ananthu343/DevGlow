@@ -9,46 +9,46 @@ import PropTypes from 'prop-types'
 import VideoPlayer from './VideoPlayer'
 import EditPost from './EditPost';
 
-const UserPosts = ({id}) => {
-    const { profilePosts, users, commentsById } = useSelector(state => state.post);
-    const { userInfo } = useSelector(state => state.auth);
-    const { badges } = useSelector(state => state.leaderboard);
-    const [readMoreStates, setReadMoreStates] = useState({});
-    const [openComments, setOpenComments] = useState({});
-    const [openShare, setOpenShare] = useState(false)
-    const [modal, setModal] = useState(false)
-    const [editPost,setEditPost] = useState(null)
+const UserPosts = ({ id }) => {
+  const { profilePosts, users, commentsById } = useSelector(state => state.post);
+  const { userInfo } = useSelector(state => state.auth);
+  const { badges } = useSelector(state => state.leaderboard);
+  const [readMoreStates, setReadMoreStates] = useState({});
+  const [openComments, setOpenComments] = useState({});
+  const [openShare, setOpenShare] = useState(false)
+  const [modal, setModal] = useState(false)
+  const [editPost, setEditPost] = useState(null)
 
-    const toggleComments = (postId) => {
-      setOpenComments(prevState => ({
-        ...prevState,
-        [postId]: !prevState[postId],
-      }));
-    };
-  
-      
-   const toggleReadMore = (index) => {
-      setReadMoreStates(prevStates => ({
-        ...prevStates,
-        [index]: !prevStates[index],
-      }));
-   };
-  
-   const openEdit = (post) =>{
-      setEditPost(post)
-      setModal(true)
-   }
+  const toggleComments = (postId) => {
+    setOpenComments(prevState => ({
+      ...prevState,
+      [postId]: !prevState[postId],
+    }));
+  };
 
-   let posts = Array.isArray(profilePosts) ? profilePosts : [];
-   posts = posts.filter(ele => ele.creatorId === id)
-   const reversedPosts = [...posts].reverse();
-    return (
-      <div className='w-full md:w-[550px] h-auto flex-col md:pl-4 md:pr-4'>
-        {reversedPosts?.map((document, index) => {
-          const userData = users?.find(user => user._id === document.creatorId);
-          const badgeData = badges?.find(badge => badge?._id === userData?.badge);
-          if(!userInfo?.devGlowAccess?.blocked.includes(userData?._id)){
-            const isReadMore = readMoreStates[index] || false;
+
+  const toggleReadMore = (index) => {
+    setReadMoreStates(prevStates => ({
+      ...prevStates,
+      [index]: !prevStates[index],
+    }));
+  };
+
+  const openEdit = (post) => {
+    setEditPost(post)
+    setModal(true)
+  }
+
+  let posts = Array.isArray(profilePosts) ? profilePosts : [];
+  posts = posts.filter(ele => ele.creatorId === id)
+  const reversedPosts = [...posts].reverse();
+  return (
+    <div className='w-full md:w-[550px] h-auto flex-col md:pl-4 md:pr-4'>
+      {reversedPosts?.map((document, index) => {
+        const userData = users?.find(user => user._id === document.creatorId);
+        const badgeData = badges?.find(badge => badge?._id === userData?.badge);
+        if (!userInfo?.devGlowAccess?.blocked.includes(userData?._id)) {
+          const isReadMore = readMoreStates[index] || false;
           let commentCount = 0;
           Object.keys(commentsById).forEach(key => {
             const value = commentsById[key];
@@ -102,18 +102,18 @@ const UserPosts = ({id}) => {
               <div className='mt-3 mb-3 h-[1px] bg-[#004272] rounded' />
             </div>
           );
-          } else{
-            return null
-          }
-        })}
-        {modal ? 
-        <EditPost post={editPost} setModal={setModal}/>
-   : null}
-   {openShare ?
-          <Share post={document._id} setOpenShare={setOpenShare} />
-          : null}
-      </div>
-    );
+        } else {
+          return null
+        }
+      })}
+      {modal ?
+        <EditPost post={editPost} setModal={setModal} />
+        : null}
+      {openShare ?
+        <Share post={document._id} setOpenShare={setOpenShare} />
+        : null}
+    </div>
+  );
 }
 
 UserPosts.propTypes = {

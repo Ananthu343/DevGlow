@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deletePost, editPost } from '../slices/userSlice';
-import { updateFeed,updateFeedAfterDelete } from '../slices/postSlice';
+import { updateFeed, updateFeedAfterDelete } from '../slices/postSlice';
 import toast from 'react-hot-toast';
 import PropTypes from 'prop-types'
 
@@ -66,7 +66,7 @@ const EditPost = ({ setModal, post }) => {
                 const errorMessage = "Unable to delete";
                 toast.error(errorMessage);
             } else {
-                dispatch(updateFeedAfterDelete({postId:post._id}))
+                dispatch(updateFeedAfterDelete({ postId: post._id }))
                 toast.success("Deleted")
             }
         })
@@ -125,8 +125,8 @@ const EditPost = ({ setModal, post }) => {
 }
 
 EditPost.propTypes = {
-    post: PropTypes.object.isRequired, 
+    post: PropTypes.object.isRequired,
     setModal: PropTypes.func.isRequired
-  };
+};
 
 export default EditPost

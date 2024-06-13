@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,34 +14,34 @@ const BottomNavTabs = () => {
     }
   }, [userInfo, active])
 
-  const handleNavigate = (page,index)=>{
-     switch (page) {
-        case "Home":
-            navigate('/')
-            setActive(index)
-            break;
-     
-        case "Community":
-            navigate('/community')
-            setActive(index)
-            break;
-     
-        case "Message":
-            navigate('/messages')
-            setActive(index)
-            break;
-     
-        case "Leaderboard":
-            navigate('/leaderboard')
-            setActive(index)
-            break;
-     
-        default:
-            navigate('/')
-            setActive(0)
-            break;
-     }
-  }  
+  const handleNavigate = (page, index) => {
+    switch (page) {
+      case "Home":
+        navigate('/')
+        setActive(index)
+        break;
+
+      case "Community":
+        navigate('/community')
+        setActive(index)
+        break;
+
+      case "Message":
+        navigate('/messages')
+        setActive(index)
+        break;
+
+      case "Leaderboard":
+        navigate('/leaderboard')
+        setActive(index)
+        break;
+
+      default:
+        navigate('/')
+        setActive(0)
+        break;
+    }
+  }
 
 
   const icons = [
@@ -56,10 +56,10 @@ const BottomNavTabs = () => {
       <div className="flex justify-around items-center">
         {icons.map((icon, index) => (
           <button
-          key={index}
+            key={index}
             type="button"
-            className={`p-2 rounded-md ${index === active? 'border-b shadow-lg border-[#720058]' : ''}`}
-            onClick={()=> handleNavigate(icon.name,index)}
+            className={`p-2 rounded-md ${index === active ? 'border-b shadow-lg border-[#720058]' : ''}`}
+            onClick={() => handleNavigate(icon.name, index)}
           >
             <img className='w-6' src={icon.src} alt={icon.alt} />
           </button>

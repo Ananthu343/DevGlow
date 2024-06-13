@@ -5,7 +5,7 @@ import CommunityManage from '../components/CommunityManage';
 import BadgeManage from '../components/BadgeManage';
 import { Suspense } from 'react';
 import Loader from '../components/Loader';
-const ContentManage = React.lazy(()=>import('../components/ContentManage') )
+const ContentManage = React.lazy(() => import('../components/ContentManage'))
 
 
 const AdminHome = () => {
@@ -33,21 +33,20 @@ const AdminHome = () => {
               <div
                 key={menu}
                 onClick={() => handleMenu(menu)}
-                className={`w-full h-[50px] shadow flex justify-center items-center cursor-pointer transition duration-300 ease-in-out transform hover:scale-105 ${
-                  selectedMenu === menu ? 'bg-gray-200 text-[#720058]' : 'text-gray-500'
-                }`}
+                className={`w-full h-[50px] shadow flex justify-center items-center cursor-pointer transition duration-300 ease-in-out transform hover:scale-105 ${selectedMenu === menu ? 'bg-gray-200 text-[#720058]' : 'text-gray-500'
+                  }`}
               >
                 {menu.toUpperCase()}
               </div>
             ))}
           </div>
           <div className='w-full bg-white h-[400px] lg:h-auto flex justify-center items-center p-2'>
-            {selectedMenu === 'dashboard' && <Dashboard/>}
-            {selectedMenu === 'user manage' && <UserManage/>}
-            {selectedMenu === 'community manage' && <CommunityManage/>}
-            {selectedMenu === 'badge manage' && <BadgeManage/>}
-            <Suspense fallback={<Loader/>}>
-            {selectedMenu === 'content manage' && <ContentManage/>}
+            {selectedMenu === 'dashboard' && <Dashboard />}
+            {selectedMenu === 'user manage' && <UserManage />}
+            {selectedMenu === 'community manage' && <CommunityManage />}
+            {selectedMenu === 'badge manage' && <BadgeManage />}
+            <Suspense fallback={<Loader />}>
+              {selectedMenu === 'content manage' && <ContentManage />}
             </Suspense>
           </div>
         </div>

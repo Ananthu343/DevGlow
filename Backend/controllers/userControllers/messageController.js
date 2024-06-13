@@ -6,26 +6,26 @@ const messageRepository = new MessageRepository()
 const roomRepository = new RoomRepository()
 
 export const messageController = {
-    getMessageHistory : async(req,res)=>{
-        console.log("worked",req.query.id);
+    getMessageHistory: async (req, res) => {
+        console.log("worked", req.query.id);
         try {
             const myId = getTokenData(req)
-            const data = await messageRepository.getHistory(myId,req.query.id)
-            res.status(200).json({messageHistory : data})
+            const data = await messageRepository.getHistory(myId, req.query.id)
+            res.status(200).json({ messageHistory: data })
         } catch (error) {
             console.log(error.message);
-            res.status(500).send({error: 'internal server error'})
+            res.status(500).send({ error: 'internal server error' })
         }
     },
-    getRoomId: async(req,res) =>{
+    getRoomId: async (req, res) => {
         try {
             let userId = req.query.id
             let myId = getTokenData(req)
-            const room = await roomRepository.findByConnections([userId,myId]);
+            const room = await roomRepository.findByConnections([userId, myId]);
             res.status(200).send(room._id)
         } catch (error) {
             console.log(error.message);
-            res.status(500).send({error: 'internal server error'})
+            res.status(500).send({ error: 'internal server error' })
         }
     }
 }

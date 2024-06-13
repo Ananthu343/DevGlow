@@ -15,8 +15,8 @@ export const badgeController = {
             res.status(500).send({ error: "internal server error" })
         }
     },
-    addBadge: async (req,res) => {
-        console.log("workingg",req.body);
+    addBadge: async (req, res) => {
+        console.log("workingg", req.body);
         try {
             let fileUrl = undefined;
             if (req.file) {
@@ -88,7 +88,7 @@ export const badgeController = {
                 await deleteObject(mediaRef);
             }
             await badgeRepository.deleteBadge(badgeId)
-            res.status(200).send("community deleted successfully");        
+            res.status(200).send("community deleted successfully");
         } catch (error) {
             console.log(error.message);
             res.status(500).send({ error: "internal server error" })

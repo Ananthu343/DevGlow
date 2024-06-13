@@ -19,8 +19,8 @@ export function timeAgo(time) {
     }
 
     const seconds = (+new Date() - timeValue) / 1000;
-    const token = seconds >= 0? 'ago' : 'from now';
-    const listChoice = seconds >= 0? 1 : 2;
+    const token = seconds >= 0 ? 'ago' : 'from now';
+    const listChoice = seconds >= 0 ? 1 : 2;
 
     const timeFormats = [
         [60, 'seconds', 1],
