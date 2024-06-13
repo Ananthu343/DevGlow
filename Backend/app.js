@@ -18,7 +18,7 @@ const db = new Database(connectionString);
 db.connect();
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: clientPath,
   credentials: true,
   exposedHeaders: ["set-cookie"],
 };
@@ -35,7 +35,7 @@ const httpServer = http.createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:3000", ""],
+    origin: [clientPath, ""],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   },
