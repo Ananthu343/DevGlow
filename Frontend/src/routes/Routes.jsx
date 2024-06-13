@@ -16,12 +16,14 @@ import AdminPrivateRoute from '../components/AdminPrivateRoute';
 import AdminHome from '../pages/AdminHome';
 import UserProfile from '../pages/UserProfile';
 import VideoCallPage from '../pages/VideoCallPage';
+import NotFound from '../pages/NotFound';
 
 const UserRoutes = () => {
   return (
     <Routes>
       {/* user side */}
       <Route path="/" element={<Home />} />
+      <Route path="*" element={<NotFound />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/verifying" element={<VerifyEmail />} />
       <Route path="/verifyEmail/:token" element={<Verify />} />
