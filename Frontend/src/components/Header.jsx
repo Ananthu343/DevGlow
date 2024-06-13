@@ -12,6 +12,7 @@ const Header = () => {
   const [searchBox, setSearchBox] = useState(false)
   const [activeIcon, setActiveIcon] = useState(null);
   const [menu, setOpenMenu] = useState(false)
+  const [showButton, setShowButton] = useState(false)
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -130,9 +131,24 @@ const Header = () => {
               : <button className='bg-[#720058] text-white w-[80px] rounded-full text-sm hidden lg:flex justify-center items-center' onClick={() => navigate('/signup')}>Register</button>
           }
           <div className='bg-[#979797] w-[1px] hidden lg:flex'></div>
-          <div className='hidden lg:flex border border-[#720058] rounded-full overflow-hidden mr-2 w-[30px] h-[30px] object-cover'>
-            <img src={userInfo?.devGlowAccess.profile_url ? userInfo?.devGlowAccess.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
-          </div>
+          {!userInfo?.devGlowAccess.roles.includes("admin") ?
+            <div className='hidden lg:flex border border-[#720058] rounded-full overflow-hidden mr-2 w-[30px] h-[30px] object-cover'>
+              <img src={userInfo?.devGlowAccess.profile_url ? userInfo?.devGlowAccess.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
+            </div> :
+            <div className='relative hidden lg:flex border border-[#720058] rounded-full overflow-hidden mr-2 w-[30px] h-[30px] object-cover cursor-pointer' onMouseEnter={() => setShowButton(true)} onMouseLeave={() => setShowButton(false)}>
+              {/* Image Container */}
+              <div className={`absolute inset-0 ${showButton ? 'transform rotateY-180' : ''}`}>
+                <img
+                  src={userInfo?.devGlowAccess.profile_url ? userInfo.devGlowAccess.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"}
+                  alt="profilepic"
+                  className="object-cover w-full h-full transform transition-transform duration-500 ease-in-out"
+                />
+              </div>
+              {/* Button Container */}
+              <div className={`absolute inset-0 flex items-center justify-center ${showButton ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500 ease-in-out`}>
+                <button onClick={() => navigate('/admin')} className="bg-[#004272] text-white px-2 py-1 rounded text-[13px]">Adm</button>
+              </div>
+            </div>}
         </div>
       </div>
       {modal ?
