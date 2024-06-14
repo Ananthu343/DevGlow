@@ -13,7 +13,7 @@ const DropdownMenu = ({ options, document, openEdit, setAbout, openAddUsers }) =
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (!userInfo.devGlowAccess && isOpen) {
+        if (!userInfo && isOpen) {
             setIsOpen(false)
         }
     }, [userInfo,isOpen])
