@@ -13,10 +13,10 @@ const DropdownMenu = ({ options, document, openEdit, setAbout, openAddUsers }) =
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (!userInfo) {
+        if (!userInfo.devGlowAccess && isOpen) {
             setIsOpen(false)
         }
-    }, [userInfo])
+    }, [userInfo,isOpen])
 
     const handleOptionClick = (option) => {
         switch (option) {
