@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { savePost, reportUser, reportPost } from '../slices/userSlice';
 import { blockUser } from '../slices/postSlice';
 import toast from 'react-hot-toast';
@@ -8,8 +8,15 @@ import { updateFeed } from '../slices/postSlice';
 import PropTypes from 'prop-types'
 
 const DropdownMenu = ({ options, document, openEdit, setAbout, openAddUsers }) => {
+    const { userInfo } = useSelector(state => state.auth)
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (!userInfo) {
+            setIsOpen(false)
+        }
+    }, [userInfo])
 
     const handleOptionClick = (option) => {
         switch (option) {

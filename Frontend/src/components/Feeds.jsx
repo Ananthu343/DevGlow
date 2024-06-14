@@ -74,7 +74,7 @@ const Feeds = () => {
                   commentCount++
                 }
               });
-              
+
               let visibility = true;
               switch (document.visibility) {
                 case "Me only":
@@ -86,7 +86,7 @@ const Feeds = () => {
                     visibility = true
                   }else{
                     const creator = users?.find(ele => ele._id === document.creatorId)
-                    visibility = !creator.includes(userInfo?.devGlowAccess._id) ? false : true;
+                    visibility = !creator.followers.includes(userInfo?.devGlowAccess._id) ? false : true;
                   }
                   break;
                 case "No one":
