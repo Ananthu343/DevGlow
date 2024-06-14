@@ -78,22 +78,15 @@ const Feeds = () => {
               let visibility = true;
               switch (document.visibility) {
                 case "Me only":
-                  visibility = document.creatorId === userInfo?.devGlowAccess._id
+                  visibility = document?.creatorId === userInfo?.devGlowAccess._id
                   break;
                   
                 case "Followers":
                   if (document.creatorId === userInfo?.devGlowAccess._id) {
                     visibility = true
                   }else{
-                    const creator = users?.find(ele => ele._id === document.creatorId)
+                    const creator = users?.find(ele => ele._id === document?.creatorId)
                     visibility = !creator.followers.includes(userInfo?.devGlowAccess._id) ? false : true;
-                  }
-                  break;
-                case "No one":
-                  if (document.creatorId === userInfo?.devGlowAccess._id) {
-                    visibility = true
-                  }else{
-                    visibility = false
                   }
                   break;
                 default : 
