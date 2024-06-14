@@ -62,7 +62,7 @@ const Feeds = () => {
       >
 
         {feed?.map((document, index) => {
-          const userData = users?.find(user => user._id === document.creatorId);
+          const userData = users?.find(user => user._id === document?.creatorId);
           const badgeData = badges.find(badge => badge?._id === userData?.badge)
           if (!userInfo?.devGlowAccess?.blocked.includes(userData?._id)) {
             if (document.archive === false || undefined) {
@@ -76,13 +76,13 @@ const Feeds = () => {
               });
 
               let visibility = true;
-              switch (document.visibility) {
+              switch (document?.visibility) {
                 case "Me only":
                   visibility = document?.creatorId === userInfo?.devGlowAccess._id
                   break;
                   
                 case "Followers":
-                  if (document.creatorId === userInfo?.devGlowAccess._id) {
+                  if (document?.creatorId === userInfo?.devGlowAccess._id) {
                     visibility = true
                   }else{
                     const creator = users?.find(ele => ele._id === document?.creatorId)
