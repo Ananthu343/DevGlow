@@ -18,7 +18,7 @@ const db = new Database(connectionString);
 db.connect();
 
 const corsOptions = {
-  origin: clientPath,
+  origin: [clientPath, "https://www.devglow.site"],
   credentials: true,
   exposedHeaders: ["set-cookie"],
 };
@@ -35,7 +35,7 @@ const httpServer = http.createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: [clientPath, ""],
+    origin: [clientPath, "https://www.devglow.site"],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   },
