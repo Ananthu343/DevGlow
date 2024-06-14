@@ -101,7 +101,7 @@ const CommunityChat = ({ communityId }) => {
                 <ul className='space-y-4'>
                     {communityMessages.map((message, index) => {
                         let userData = users.find(ele => ele._id === message.sender);
-                        const isSender = message.sender === userInfo.devGlowAccess._id;
+                        const isSender = message.sender === userInfo?.devGlowAccess._id;
                         return (
                             <li key={index} className={`mb-1 ${isSender ? 'ml-auto w-[50%]' : 'w-[50%]'}`}>
                                 <div className={`rounded-lg p-3 ${isSender ? 'flex bg-white justify-end' : 'bg-gray-100'} shadow-md`}>

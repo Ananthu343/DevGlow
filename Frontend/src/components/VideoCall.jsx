@@ -16,7 +16,7 @@ export default function VideoCall({ roomId }) {
     const joinRoom = async (element) => {
       const roomID = roomId;
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-        appId, serverSecret, roomID, userInfo.devGlowAccess._id, userInfo.devGlowAccess.username
+        appId, serverSecret, roomID, userInfo?.devGlowAccess._id, userInfo?.devGlowAccess.username
       );
       zc = ZegoUIKitPrebuilt.create(kitToken);
 

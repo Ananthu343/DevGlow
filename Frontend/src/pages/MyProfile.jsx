@@ -8,7 +8,7 @@ import { clearProfilePosts, getMyProfilePosts, getUsers } from '../slices/postSl
 const MyProfile = () => {
   const { userInfo } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
-  const userId = userInfo.devGlowAccess._id
+  const userId = userInfo?.devGlowAccess._id
 
   useEffect(() => {
     dispatch(getMyProfilePosts(userId))

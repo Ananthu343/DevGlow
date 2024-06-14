@@ -74,8 +74,34 @@ const Feeds = () => {
                   commentCount++
                 }
               });
+              
+              let visibility = true;
+              switch (document.visibility) {
+                case "Me only":
+                  visibility = document.creatorId === userInfo?.devGlowAccess._id
+                  break;
+                  
+                case "Followers":
+                  if (document.creatorId === userInfo?.devGlowAccess._id) {
+                    visibility = true
+                  }else{
+                    const creator = users?.find(ele => ele._id === document.creatorId)
+                    visibility = !creator.includes(userInfo?.devGlowAccess._id) ? false : true;
+                  }
+                  break;
+                case "No one":
+                  if (document.creatorId === userInfo?.devGlowAccess._id) {
+                    visibility = true
+                  }else{
+                    visibility = false
+                  }
+                  break;
+                default : 
+                  visibility = true;
+                  break;
+              }
 
-              return (
+              return visibility &&  (
                 <div key={index}>
                   <div className='bg-white rounded shadow-lg pt-2 pb-2'>
                     <div className='w-full h-10 p-3 flex justify-between items-center'>

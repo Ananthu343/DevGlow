@@ -12,11 +12,11 @@ const LeaderboardContainer = () => {
 
     useEffect(() => {
         rankings?.forEach((element, index) => {
-            if (element._id === userInfo.devGlowAccess._id) {
+            if (element._id === userInfo?.devGlowAccess._id) {
                 setMyRank({ rank: index, stars: element.size });
             }
         });
-    }, [rankings, userInfo.devGlowAccess._id]);
+    }, [rankings, userInfo?.devGlowAccess._id]);
 
     useEffect(() => {
         if (searchQuery.trim() === '') {

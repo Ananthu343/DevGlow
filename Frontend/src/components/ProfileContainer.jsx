@@ -168,7 +168,7 @@ const ProfileContainer = ({ userId }) => {
                     <p className='font-semibold text-sm mt-4'>{user?.about ?? "Set profile now!"}</p>
                 </div>
                 {
-                    userId === userInfo.devGlowAccess._id ?
+                    userId === userInfo?.devGlowAccess._id ?
                         <div className='flex-col'>
                             <p className='text-xs text-[#979797] mb-1'>Settings</p>
                             <p onClick={() => setModal(true)} className='text-xs font-bold #004272] cursor-pointer'>Edit profile</p>
@@ -199,7 +199,7 @@ const ProfileContainer = ({ userId }) => {
                     <p className='text-xs text-[#979797]'>{badge?.badge_name ?? "Badge not earned!"}</p>
                 </div>
                 <div className='w-[33.3%] h-auto flex justify-center items-center'>
-                    {userInfo.devGlowAccess._id !== user._id ? <FollowToggle userData={user} /> : <button className='p-2 bg-[#004272] hover:bg-[#004260] rounded w-15 h-10 text-white text-xs font-semibold'>Edit profile</button>}
+                    {userInfo?.devGlowAccess._id !== user._id ? <FollowToggle userData={user} /> : <button className='p-2 bg-[#004272] hover:bg-[#004260] rounded w-15 h-10 text-white text-xs font-semibold'>Edit profile</button>}
                 </div>
             </div>
             <div className='flex flex-col lg:hidden h-auto w-full p-3 justify-center items-center border-t-2'>
@@ -208,8 +208,8 @@ const ProfileContainer = ({ userId }) => {
             </div>
             <div className='h-auto w-full p-4'>
                 <div className='w-full flex mt-2 mb-2  '>
-                    <button onClick={() => menu("openPosts")} className={myPostsMenu ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>{userId === userInfo.devGlowAccess._id ? "My posts" : "Posts"}</button>
-                    {userId === userInfo.devGlowAccess._id ? <button onClick={() => menu("openSavedPost")} className={savedPostsMenu ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>Saved posts</button> : null}
+                    <button onClick={() => menu("openPosts")} className={myPostsMenu ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>{userId === userInfo?.devGlowAccess._id ? "My posts" : "Posts"}</button>
+                    {userId === userInfo?.devGlowAccess._id ? <button onClick={() => menu("openSavedPost")} className={savedPostsMenu ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>Saved posts</button> : null}
                     <button onClick={() => menu("openFollowers")} className={followers ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>Followers</button>
                     <button onClick={() => menu("openFollowing")} className={following ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>Following</button>
                 </div>
@@ -217,7 +217,7 @@ const ProfileContainer = ({ userId }) => {
                 <div className='w-full flex justify-center pt-2 bg-custom-bg'>
                     {savedPostsMenu && <CommunityCase />}
                     {myPostsMenu && <CommunityCase />}
-                    {savedPostsMenu && userId === userInfo.devGlowAccess._id && <SavedPosts />}
+                    {savedPostsMenu && userId === userInfo?.devGlowAccess._id && <SavedPosts />}
                     {followers && <SuggestionsCase />}
                     {following && <SuggestionsCase />}
                     {following && <Following user={user} />}
@@ -226,7 +226,7 @@ const ProfileContainer = ({ userId }) => {
                     <NotificationCase />
                 </div>
             </div>
-            {modal && userId === userInfo.devGlowAccess._id ?
+            {modal && userId === userInfo?.devGlowAccess._id ?
                 <EditProfile setModal={setModal} setUser={setUser} />
                 : null}
         </>

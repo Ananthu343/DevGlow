@@ -8,17 +8,17 @@ import PropTypes from 'prop-types'
 const EditProfile = ({ setModal, setUser }) => {
   const { userInfo } = useSelector(state => state.auth)
   const [preview, setPreview] = useState(null);
-  const [username, setUsername] = useState(userInfo.devGlowAccess.username)
-  const [about, setAbout] = useState(userInfo.devGlowAccess?.about)
-  const [gender, setGender] = useState(userInfo.devGlowAccess?.gender)
-  const [dob, setDob] = useState(userInfo.devGlowAccess?.dob)
+  const [username, setUsername] = useState(userInfo?.devGlowAccess.username)
+  const [about, setAbout] = useState(userInfo?.devGlowAccess?.about)
+  const [gender, setGender] = useState(userInfo?.devGlowAccess?.gender)
+  const [dob, setDob] = useState(userInfo?.devGlowAccess?.dob)
   const [media, setMedia] = useState({})
 
   useEffect(() => {
-    if (userInfo.devGlowAccess?.profile_url !== '') {
+    if (userInfo?.devGlowAccess?.profile_url !== '') {
       setPreview(<img
         className='object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500'
-        src={userInfo.devGlowAccess?.profile_url} alt='profile_pic' />)
+        src={userInfo?.devGlowAccess?.profile_url} alt='profile_pic' />)
     } else {
       setPreview(<img className='object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500'
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"
@@ -104,7 +104,7 @@ const EditProfile = ({ setModal, setUser }) => {
                     id="username"
                     className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
                     placeholder="Your full name"
-                    defaultValue={userInfo.devGlowAccess.username}
+                    defaultValue={userInfo?.devGlowAccess.username}
                     required
                   />
                 </div>
@@ -124,7 +124,7 @@ const EditProfile = ({ setModal, setUser }) => {
                   className="bg-indigo-50 border  border-indigo-300 text-gray-400 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
                   placeholder="I am a developer"
                   required
-                  defaultValue={userInfo.devGlowAccess?.about}
+                  defaultValue={userInfo?.devGlowAccess?.about}
                 />
               </div>
 
@@ -136,7 +136,7 @@ const EditProfile = ({ setModal, setUser }) => {
                   Gender
                 </label>
                 <select onChange={(e) => setGender(e.target.value)} className="block w-full p-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
-                  <option value={userInfo.devGlowAccess?.gender}>{userInfo.devGlowAccess?.gender}</option>
+                  <option value={userInfo?.devGlowAccess?.gender}>{userInfo?.devGlowAccess?.gender}</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                   <option value="Others">Others</option>
@@ -155,7 +155,7 @@ const EditProfile = ({ setModal, setUser }) => {
                   id="dob"
                   className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
                   placeholder="format : 21-05-2022"
-                  value={userInfo.devGlowAccess?.dob}
+                  value={userInfo?.devGlowAccess?.dob}
                 />
               </div>
               <div className="flex justify-end">

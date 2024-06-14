@@ -41,16 +41,16 @@ const ChatBox = () => {
     }, [debouncedFetchUnreadMessages, socket])
 
     useEffect(() => {
-        const myData = users?.find(ele => ele._id === userInfo.devGlowAccess._id)
+        const myData = users?.find(ele => ele._id === userInfo?.devGlowAccess._id)
         const data = users?.filter(ele => myData?.followers.includes(ele._id));
         setFollowers(data);
-    }, [users, userInfo.devGlowAccess]);
+    }, [users, userInfo?.devGlowAccess]);
 
     const openChat = (user) => {
         setSelectedUserId(user._id)
         const data = {
             sender: user._id,
-            receiver: userInfo.devGlowAccess._id
+            receiver: userInfo?.devGlowAccess._id
         }
         socket.emit("mark-read", (data))
         openChatBox(<Chat receiver={user} />)

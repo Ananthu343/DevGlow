@@ -15,7 +15,7 @@ const UserCard = ({ user }) => {
     }, [badges, user])
 
     const handleNavigation = () => {
-        if (user._id === userInfo.devGlowAccess._id) {
+        if (user._id === userInfo?.devGlowAccess._id) {
             navigate('/profile')
         } else {
             navigate(`/userProfile/${user?._id}`)
