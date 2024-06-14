@@ -85,8 +85,7 @@ const Feeds = () => {
                   if (document?.creatorId === userInfo?.devGlowAccess._id) {
                     visibility = true
                   }else{
-                    const creator = users?.find(ele => ele._id === document?.creatorId)
-                    visibility = !creator?.followers.includes(userInfo?.devGlowAccess._id) ? false : true;
+                    visibility = !userData?.followers.includes(userInfo?.devGlowAccess._id) ? false : true;
                   }
                   break;
                 default : 
