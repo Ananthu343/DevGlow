@@ -202,7 +202,7 @@ const ProfileContainer = ({ userId }) => {
                     {userInfo?.devGlowAccess._id !== user._id ? <FollowToggle userData={user} /> : <button className='p-2 bg-[#004272] hover:bg-[#004260] rounded w-15 h-10 text-white text-xs font-semibold'>Edit profile</button>}
                 </div>
             </div>
-            <div className='flex flex-col lg:hidden h-auto w-full p-3 justify-center items-center border-t-2'>
+            <div className='flex flex-col lg:hidden h-auto w-full p-3 pl-4 pr-4 justify-center items-center border-t-2'>
                 <p className='font-semibold text-sm mt-4'>{user?.about ?? "Set profile now!"}</p>
                 <ProgressBar bgcolor="gold" progress={totalStars} height={5} />
             </div>
