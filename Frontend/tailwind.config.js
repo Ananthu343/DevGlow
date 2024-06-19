@@ -23,7 +23,7 @@ module.exports = {
      extend: {},
   },
   plugins: [
-    import('tailwind-scrollbar'),
+    require('tailwind-scrollbar')({ nocompatible: true }),
   ],
  }
 
