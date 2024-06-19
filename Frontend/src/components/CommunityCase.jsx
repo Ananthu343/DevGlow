@@ -16,7 +16,7 @@ const CommunityCase = () => {
     <div className='hidden lg:flex flex-col bg-white p-3 rounded w-[280px] h-[250px] text-sm text-[#720058] shadow-lg sticky top-[60px] '>
       <p className="font-bold mb-2">Communities (Recommended)</p>
       <div className='h-[0.5px] border border-b w-full'></div>
-      <div className={`mt-4 ${communities.length > 3 ? "scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700 scrollbar-track-slate-300 overflow-y-scroll" : ""} h-full`}>
+      <div className={`mt-4 ${communities.length > 3 ? "scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700 scrollbar-track-slate-300 h-32 overflow-y-scroll" : ""} h-full`}>
         {communities.length > 0 ? (
           communities.map((community) => (
             <div onClick={() => handleOverview(community)} key={community._id} className="flex items-center justify-between mb-4 last:mb-0 hover:bg-gray-100 hover:cursor-pointer border-b">
