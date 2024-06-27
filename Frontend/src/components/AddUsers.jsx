@@ -66,7 +66,7 @@ const AddUsers = ({ communityId, openAddUsers }) => {
                         value={searchValue}
                         onChange={(e) => setSearchValue(e.target.value)}
                     />
-                    <div className='w-full h-[400px] border-2 mb-2 overflow-y-scroll'>
+                    <div className='w-full h-[400px] border-2 mb-2 custom-scrollbar overflow-y-scroll'>
                         {filteredUsers?.length > 0 ?
                             <ul>
                                 {filteredUsers?.map((user) => (

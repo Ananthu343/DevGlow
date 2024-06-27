@@ -47,7 +47,7 @@ const ContentOverview = ({ setModal, data }) => {
           <div className='w-full flex justify-end'>
             <button onClick={() => setModal(false)}><img className='w-7' src="close.jpg" alt="close" /></button>
           </div>
-          <div className='h-full w-full overflow-y-scroll pt-2'>
+          <div className='h-full w-full custom-scrollbar overflow-y-scroll pt-2'>
             <div className='bg-white rounded shadow-lg'>
               <div className='w-full h-10 p-3 flex justify-between items-center'>
                 <div className='flex w-auto h-auto justify-between items-center '>

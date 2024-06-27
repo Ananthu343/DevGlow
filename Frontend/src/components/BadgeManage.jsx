@@ -39,7 +39,7 @@ const BadgeManage = () => {
                 </div>
                 <button onClick={() => setModal(true)} className='text-white bg-[#004272] rounded pl-2 pr-2'>Add new badge</button>
             </div>
-            <div className='w-full h-[550px] overflow-y-scroll flex items-center justify-center'>
+            <div className='w-full h-[550px] custom-scrollbar overflow-y-scroll flex items-center justify-center'>
                 {
                     badges?.length > 0 ?
                         <table className="min-w-max w-full h-full divide-y divide-gray-200">

@@ -55,7 +55,7 @@ const CommentsContainer = ({ postId }) => {
           )}
         </div>
       </div>
-      <div className=' w-full h-[200px] overflow-y-scroll rounded-t border-t border-2 border-gray-300 p-3'>
+      <div className=' w-full h-[200px] custom-scrollbar overflow-y-scroll rounded-t border-t border-2 border-gray-300 p-3'>
         {Object.values(commentsById).map(comment => (
           !replies.includes(comment._id) && comment.postId === postId && <Comments key={comment.createdAt} comment={comment} commentsById={commentsById} />
         ))}

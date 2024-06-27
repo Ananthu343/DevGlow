@@ -75,7 +75,7 @@ const ContentManage = () => {
           </div>
         </div>
       </div>
-      <div className='w-full h-[550px] flex flex-col overflow-y-scroll '>
+      <div className='w-full h-[550px] flex flex-col custom-scrollbar overflow-y-scroll '>
         {
           filteredData?.length > 0 ?
             <table className="min-w-max w-full h-full divide-y divide-gray-200">

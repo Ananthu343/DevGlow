@@ -35,7 +35,7 @@ const LeaderboardContainer = () => {
         <div className='h-[auto] w-full lg:w-[75%] bg-white mr-2 rounded-lg p-3 bg-customLeaderBoard-bg mb-2 flex flex-col items-center justify-center p-4 shadow-lg'>
             <h1 className='text-white font-semibold mb-2'>Rankings (International)</h1>
             <div className='w-full bg-white border-2 border-[#720058] rounded mb-2'>
-                <div className="overflow-y-scroll max-h-[600px]">
+                <div className="custom-scrollbar overflow-y-scroll max-h-[600px]">
                     <table className="min-w-max w-full h-full divide-y divide-gray-200">
                         <thead className="bg-white/40">
                             <tr>

@@ -15,7 +15,7 @@ const CommunityBox = () => {
 
     return (
         <div className='lg:flex justify-between w-full'>
-            <div className='hidden h-[600px] border-r lg:flex w-[30%] bg-white p-3 flex-col rounded-l text-sm font-semibold text-[#720058] overflow-y-scroll'>
+            <div className='hidden h-[600px] border-r lg:flex w-[30%] bg-white p-3 flex-col rounded-l text-sm font-semibold text-[#720058] custom-scrollbar overflow-y-scroll'>
                 <p>My communities</p>
                 <div className='h-[0.5px] border border-b w-full mb-2'></div>
                 {communities?.length > 0 ?

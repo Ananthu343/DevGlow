@@ -27,7 +27,7 @@ const NotificationCase = () => {
     <div className='hidden lg:flex flex-col bg-white p-3 rounded w-[280px] h-[250px] text-sm  shadow-lg sticky top-[60px]'>
       <p className="font-bold mb-2 text-[#720058]">Notification</p>
       <div className='h-[0.5px] border border-b w-full'></div>
-      <div className="mt-4 overflow-y-scroll h-full">
+      <div className="mt-4 custom-scrollbar overflow-y-scroll h-full">
         {notifications.length > 0 ? (
           notifications?.map((notification) => {
             const userData = users?.find(ele => ele._id === notification.sender)

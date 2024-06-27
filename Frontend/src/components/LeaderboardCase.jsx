@@ -9,7 +9,7 @@ const LeaderboardCase = () => {
     <div className='hidden lg:flex  flex-col bg-white p-3 rounded w-[280px] h-[250px] text-sm text-[#720058] shadow-lg mb-2'>
       <p className="font-bold mb-2">Leaderboard</p>
       <div className='h-[0.5px] border border-b w-full'></div>
-      <div className="mt-4 overflow-y-scroll h-full">
+      <div className="mt-4 custom-scrollbar overflow-y-scroll h-full">
         {rankings?.length > 0 ?
           <ul>
             {rankings?.map((ranking, index) => {

@@ -188,7 +188,7 @@ const CommunityOverview = ({ community, setModal }) => {
                         {community.creatorId !== userInfo?.devGlowAccess._id ? <button onClick={() => handleJoin()} className={`${member ? "bg-red-600" : "bg-indigo-600"} text-white px-4 py-2 rounded`}>{member ? "Leave" : "Join"}</button> : isEditing ? <button onClick={handleSave} className="text-white px-4 py-2 rounded bg-[#720058]">Save</button> : <button onClick={() => setIsEditing(true)} className="bg-indigo-600 text-white px-4 py-2 rounded">Edit</button>}
                     </div>
                     {
-                        members && <div className='w-full h-[200px] flex flex-col overflow-y-scroll'>
+                        members && <div className='w-full h-[200px] flex flex-col custom-scrollbar overflow-y-scroll'>
                             {
                                 community.members.map((userId, index) => {
                                     const user = users.find(ele => ele._id === userId)
