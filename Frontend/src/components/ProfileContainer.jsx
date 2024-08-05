@@ -91,6 +91,8 @@ const ProfileContainer = ({ userId }) => {
     const fileInputRef = useRef(null);
 
     const handleFileChange = (event) => {
+        console.log("banner");
+        
         const file = event.target.files[0];
         if (file) {
             const formData = new FormData();

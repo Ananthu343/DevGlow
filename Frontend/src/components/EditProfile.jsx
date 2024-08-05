@@ -30,8 +30,7 @@ const EditProfile = ({ setModal, setUser }) => {
   const formData = new FormData()
 
   const uploadFile = (event) => {
-    event.stopPropagation()
-    console.log("hi");
+    console.log("profile");
     const file = event.target.files[0];
     if (file) {
       const fileType = file.type.split('/')[0];
