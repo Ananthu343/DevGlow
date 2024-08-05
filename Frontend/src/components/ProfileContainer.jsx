@@ -136,7 +136,7 @@ const ProfileContainer = ({ userId }) => {
                 </div>
             </div>
             <div className='hidden lg:flex w-full p-3 h-auto  justify-around'>
-                <div className='border-2 border-[#720058] w-[100px] h-[100px] md:w-[150px] md:h-[150px] rounded-full mt-[-50px] ml-[40%] md:ml-[5%] overflow-hidden object-contain'>
+                <div className='border-2 border-[#720058] w-[100px] h-[100px] md:w-[150px] md:h-[150px] rounded-full mt-[-50px] ml-[40%] md:ml-[5%] overflow-hidden object-cover'>
                     <img src={user?.profile_url ? user.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profile pic" />
                 </div>
                 <div className='flex'>
