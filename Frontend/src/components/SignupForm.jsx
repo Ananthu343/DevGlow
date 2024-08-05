@@ -20,7 +20,7 @@ const SignupForm = () => {
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{5,}$/.test(password);
 
     const isUsernameValid = (username) =>
-        /^[a-zA-Z]{3,}$/.test(username);
+        /^\S[a-zA-Z]{3,}$/.test(username);
 
     const handleSubmit = async (e) => {
         e.preventDefault()

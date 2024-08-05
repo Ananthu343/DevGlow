@@ -30,6 +30,7 @@ const EditProfile = ({ setModal, setUser }) => {
   const formData = new FormData()
 
   const uploadFile = (event) => {
+    event.stopPropagation()
     console.log("hi");
     const file = event.target.files[0];
     if (file) {
@@ -44,6 +45,7 @@ const EditProfile = ({ setModal, setUser }) => {
     }
     setMedia(file)
   }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     formData.append('username', username)
