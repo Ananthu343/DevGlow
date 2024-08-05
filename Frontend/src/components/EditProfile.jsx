@@ -76,17 +76,16 @@ const EditProfile = ({ setModal, setUser }) => {
 
                 <input
                   type="file"
-                  className="sr-only py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 cursor-pointer"
-                  id="fileUpload"
+                  className="sr-only"
+                  id="fileUploadProfile"
                   onChange={uploadFile}
-                  placeholder='Change Your Picture'
-                >Change Your Picture</input>
-                {/* <label
-                  htmlFor="fileUpload"
-                  className=""
-                > */}
-                  {/* Change Your Picture */}
-                {/* </label> */}
+                />
+                <label
+                  htmlFor="fileUploadProfile"
+                  className="py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 cursor-pointer"
+                >
+                  Change Your Picture
+                </label>
 
               </div>
             </div>
