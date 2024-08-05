@@ -80,7 +80,7 @@ const EditProfile = ({ setModal, setUser }) => {
                   id="fileUpload"
                   onChange={uploadFile}
                   placeholder='Change Your Picture'
-                />
+                >Change Your Picture</input>
                 {/* <label
                   htmlFor="fileUpload"
                   className=""
