@@ -30,6 +30,8 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
+app.get('/test',(req,res)=> res.send("success"))
+
 
 const httpServer = http.createServer(app);
 
