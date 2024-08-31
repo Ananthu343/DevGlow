@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { createAbortSignalWithTimeout, handleError } from "../utils/axiosController";
 import axios from "axios";
 
-const users_url = "https://devglowapi.devglow.site/api/users";
+const users_url = "https://devglow.onrender.com/api/users";
 
 const initialState = {
     communities: [],
