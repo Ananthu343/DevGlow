@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { createAbortSignalWithTimeout, handleError } from "../utils/axiosController";
 import axios from "axios";
 
-const admin_url = "https://devglow.onrender.com/api/admin";
+const admin_url = "https://devglow-production.up.railway.app/api/admin";
 
 const initialState = {
     postData: {},

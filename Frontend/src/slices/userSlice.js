@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { createAbortSignalWithTimeout, handleError } from '../utils/axiosController'
 
-const users_url = "https://devglow.onrender.com/api/users"
+const users_url = "https://devglow-production.up.railway.app/api/users"
 
 
 export const verifyEmail = createAsyncThunk("user/verify", async (data) => {
