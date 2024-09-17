@@ -13,15 +13,15 @@ export const generateToken = async (res, data) => {
         const userId = data
         const user = await userRepository.findById(userId);
         const userRoles = user.roles;
-        token = jwt.sign({ userId, userRoles }, `${key}`, { expiresIn: "30d" })
+        token = jwt.sign({ userId, userRoles }, `${key}`, { expiresIn: "50d" })
     } else {
-        token = jwt.sign({ data }, `${key}`, { expiresIn: "30d" })
+        token = jwt.sign({ data }, `${key}`, { expiresIn: "50d" })
     }
     res.cookie("jwt", token, {
         httpOnly: true,
         secure: true,
         sameSite: 'None',
-        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+        maxAge: 50 * 24 * 60 * 60 * 1000, // 30 days
     })
     return token
 }
