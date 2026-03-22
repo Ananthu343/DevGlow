@@ -8,7 +8,7 @@ export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const socket = io("https://devglowapi.devglow.site");
+    const socket = io("http://localhost:3001");
     socket.on('connect', () => {
       console.log('Connected to server');
     });

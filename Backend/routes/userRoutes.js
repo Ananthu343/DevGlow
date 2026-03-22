@@ -11,6 +11,7 @@ import { upload } from "../configs/multer.js";
 
 const router = express.Router()
 
+
 router.post('/verify/email', authController.verifyEmail)
 router.post('/verify/token', authController.verifyToken)
 router.post('/login', authController.login)

@@ -8,6 +8,7 @@ const userRepository = new UserRepository()
 export const authController = {
     verifyEmail: async (req, res) => {
         try {
+            console.log("transporter");
             const transporter = nodemailer.createTransport({
                 service: 'Gmail', // or another email service
                 auth: {
@@ -15,6 +16,8 @@ export const authController = {
                     pass: process.env.MY_PASS,
                 },
             });
+            console.log(transporter);
+            
             const { email } = req.body;
             const userExists = await userRepository.findByEmail(email)
             if (userExists) {
