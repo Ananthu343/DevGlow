@@ -31,10 +31,10 @@ const Feeds = () => {
     }));
   };
 
-  const toggleReadMore = (index) => {
+  const toggleReadMore = (id) => {
     setReadMoreStates(prevStates => ({
       ...prevStates,
-      [index]: !prevStates[index],
+      [id]: !prevStates[id],
     }));
   };
 
@@ -66,7 +66,7 @@ const Feeds = () => {
           const badgeData = badges.find(badge => badge?._id === userData?.badge)
           if (!userInfo?.devGlowAccess?.blocked.includes(userData?._id)) {
             if (document.archive === false || undefined) {
-              const isReadMore = readMoreStates[index] || false;
+              const isReadMore = readMoreStates[document._id] || false;
               let commentCount = 0;
               Object.keys(commentsById).forEach(key => {
                 const value = commentsById[key];
@@ -94,7 +94,7 @@ const Feeds = () => {
               }
 
               return visibility &&  (
-                <div key={index}>
+                <div key={document._id}>
                   <div className='bg-white rounded-2xl shadow-soft border border-slate-100 pt-4 pb-2 mb-6 overflow-hidden'>
                     <div className='w-full h-10 px-4 flex justify-between items-center mb-2'>
                       <div className='flex w-auto h-auto justify-between items-center '>
@@ -115,7 +115,7 @@ const Feeds = () => {
                     <div className='w-full h-auto mt-2 mb-3 px-4 break-words'>
                       <p className='text-[14.5px] text-slate-800 leading-relaxed'>
                         {isReadMore ? document.description : document.description.length > 50 ? document.description.slice(0, 100) + '...' : document.description}
-                        {document.description.length > 100 ? <span onClick={() => toggleReadMore(index)} className="read-or-hide text-slate-500 font-medium ml-1 text-sm cursor-pointer hover:text-slate-800">
+                        {document.description.length > 100 ? <span onClick={() => toggleReadMore(document._id)} className="read-or-hide text-slate-500 font-medium ml-1 text-sm cursor-pointer hover:text-slate-800">
                           {isReadMore ? "Show less" : "Read more"}
                         </span> : null}
                       </p>

@@ -28,10 +28,10 @@ const SavedPosts = () => {
     }));
   };
 
-  const toggleReadMore = (index) => {
+  const toggleReadMore = (id) => {
     setReadMoreStates(prevStates => ({
       ...prevStates,
-      [index]: !prevStates[index],
+      [id]: !prevStates[id],
     }));
   };
 
@@ -49,7 +49,7 @@ const SavedPosts = () => {
 
         if (!userInfo?.devGlowAccess?.blocked.includes(userData?._id)) {
           if (document.archive === false || undefined) {
-            const isReadMore = readMoreStates[index] || false;
+            const isReadMore = readMoreStates[document._id] || false;
             let commentCount = 0;
             Object.keys(commentsById).forEach(key => {
               const value = commentsById[key];
@@ -77,7 +77,7 @@ const SavedPosts = () => {
             }
   
             return visibility && (
-              <div key={index}>
+              <div key={document._id}>
                 <div className='bg-white rounded shadow-lg pt-2 pb-2'>
                   <div className='w-full h-10 p-3 flex justify-between items-center'>
                     <div className='flex w-auto h-auto justify-between items-center '>
@@ -98,7 +98,7 @@ const SavedPosts = () => {
                   <div className='border-t w-full h-auto mt-2 mb-2 pl-3 pr-3 break-words'>
                     <p className='text-sm'>
                       {isReadMore ? document.description : document.description.slice(0, 50)}
-                      {document.description.length > 50 ? <span onClick={() => toggleReadMore(index)} className="read-or-hide text-black text-xs cursor-pointer">
+                      {document.description.length > 50 ? <span onClick={() => toggleReadMore(document._id)} className="read-or-hide text-black text-xs cursor-pointer">
                         {isReadMore ? "..show less" : " ..read more"}
                       </span> : null}
                     </p>

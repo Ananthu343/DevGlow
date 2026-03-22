@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { createAbortSignalWithTimeout, handleError } from '../utils/axiosController';
+import { editProfile, setBanner } from './userSlice';
 
 const users_url = `${process.env.REACT_APP_BACKEND_URL}/api/users`;
 
@@ -285,6 +286,20 @@ const postSlice = createSlice({
                 const userIndex = state.users.findIndex(user => user._id === action.payload.id);
                 if (userIndex !== -1) {
                     state.users[userIndex].blocked = action.payload.blocked;
+                }
+            })
+            .addCase(editProfile.fulfilled, (state, action) => {
+                const updatedUser = action.payload.devGlowAccess;
+                const userIndex = state.users?.findIndex(u => u._id === updatedUser._id);
+                if (userIndex !== undefined && userIndex !== -1) {
+                    state.users[userIndex] = { ...state.users[userIndex], ...updatedUser };
+                }
+            })
+            .addCase(setBanner.fulfilled, (state, action) => {
+                const updatedUser = action.payload;
+                const userIndex = state.users?.findIndex(u => u._id === updatedUser._id);
+                if (userIndex !== undefined && userIndex !== -1) {
+                    state.users[userIndex] = { ...state.users[userIndex], ...updatedUser };
                 }
             })
     }
