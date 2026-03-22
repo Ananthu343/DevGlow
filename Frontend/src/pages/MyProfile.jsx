@@ -21,8 +21,8 @@ const MyProfile = () => {
 
   return (
     <>
-      <div className='w-full top-0 flex justify-center pt-[55px] mb-2'>
-        <div className='h-auto w-full md:w-[85%] bg-white rounded-2xl shadow-lg'>
+      <div className="w-full max-w-7xl mx-auto pt-[85px] px-4 flex justify-center mb-8">
+        <div className="w-full bg-white/80 backdrop-blur-xl rounded-3xl shadow-soft border border-slate-100 overflow-hidden">
           <ProfileContainer userId={userId} />
         </div>
       </div>

@@ -38,34 +38,39 @@ const Comments = ({ comment, commentsById, border }) => {
   }
   return (
     <div>
-      <div className={`w-[90%] h-auto p-3 mb-2 text-sm flex flex-col overflow-auto border-l ${border ?? "border-[#720058]"}`}>
-        <div className='w-auto h-auto flex items-center justify-between'>
-          <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
-            <img className='w-[30px] h-[30px] object-cover' src={userData?.profile_url ? userData?.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
+      <div className={`w-full h-auto py-2 mb-1 text-sm flex flex-col border-l-2 transition-all ${border ?? "border-slate-200 ml-1"}`}>
+        <div className='w-full flex items-start gap-3 pl-3'>
+          <div className='w-8 h-8 rounded-full overflow-hidden flex-shrink-0 shadow-sm border border-slate-200 mt-1'>
+            <img className='w-full h-full object-cover' src={userData?.profile_url ? userData?.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
           </div>
-          <div className='flex flex-col w-[90%] items-between bg-gray-200 rounded-lg p-3 shadow'>
-            <p className='text-xs font-semibold hover:underline cursor-pointer mb-2'>{userData?.username}</p>
-            <p>{comment?.content}</p>
-          </div>
-        </div>
-        <div className='w-full flex justify-between mt-2'>
-          <p className='text-[11px] text-[#979797]'>{timeAgo(comment.createdAt)}</p>
-          <div className='flex'>
-            {comment.replies.length > 0 ? <p onClick={() => setShowReplies(!showReplies)} className='text-xs mr-2 cursor-pointer text-blue-600 hover:underline'>{showReplies ? "Hide" : comment.replies.length} replies</p> : null}
-            {userInfo?.devGlowAccess?._id === comment?.creatorId || userInfo?.devGlowAccess?._id === postCreator ? <p onClick={() => dispatch(deleteComment(comment._id))} className='cursor-pointer hover:underline text-xs mr-2 text-red-600'>Remove</p> : null}
-            <p onClick={() => openReplyBox(!replyBox)} className='cursor-pointer hover:underline text-xs'>Reply</p>
-          </div>
-        </div>
-        {replyBox &&
-          <div className='p-3 w-full flex justify-between'>
-            <input type="text" className='pl-2 rounded h-7 w-[60%] border border-2 focus:outline-[#720058] text-sm' value={content} onChange={(e) => setContent(e.target.value)} />
-            <div className='flex w-[30%] justify-around'>
-              <img onClick={() => setOpenEmoji(!openEmoji)} className="w-6 cursor-pointer" src="https://static.vecteezy.com/system/resources/previews/011/855/241/non_2x/cheerful-emoji-icon-perfect-for-website-or-social-media-application-sign-and-symbol-vector.jpg" alt="" />
-              <button onClick={handleCommentPost} className='bg-[#720058] text-white text-sm font-semibold rounded pl-2 pr-2'>Post</button>
+          <div className='flex flex-col flex-grow'>
+            <div className='bg-slate-50 border border-slate-100 rounded-2xl rounded-tl-sm p-3 shadow-sm'>
+              <p className='text-xs font-bold text-slate-800 hover:text-indigo-600 hover:underline cursor-pointer mb-1 transition-colors'>{userData?.username}</p>
+              <p className='text-slate-700 leading-relaxed text-[13px]'>{comment?.content}</p>
             </div>
-            <div className='absolute mt-7'>
+            
+            <div className='w-full flex justify-between items-center mt-1.5 px-1'>
+              <p className='text-[11px] font-medium text-slate-400'>{timeAgo(comment.createdAt)}</p>
+              <div className='flex items-center gap-3'>
+                {comment.replies.length > 0 && <p onClick={() => setShowReplies(!showReplies)} className='text-[11px] font-semibold cursor-pointer text-indigo-500 hover:text-indigo-700 transition-colors'>{showReplies ? "Hide replies" : `${comment.replies.length} replies`}</p>}
+                {(userInfo?.devGlowAccess?._id === comment?.creatorId || userInfo?.devGlowAccess?._id === postCreator) && <p onClick={() => dispatch(deleteComment(comment._id))} className='cursor-pointer hover:text-red-700 text-[11px] font-semibold text-red-500 transition-colors'>Delete</p>}
+                <p onClick={() => openReplyBox(!replyBox)} className='cursor-pointer text-slate-500 hover:text-slate-800 text-[11px] font-semibold transition-colors'>Reply</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {replyBox &&
+          <div className='mt-3 w-full flex items-center gap-2 pl-12 pr-2'>
+            <input type="text" placeholder="Write a reply..." className='px-3 rounded-lg h-9 flex-grow border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-[13px] bg-slate-50 transition-all' value={content} onChange={(e) => setContent(e.target.value)} />
+            <div className='flex items-center gap-2 relative'>
+              <div onClick={() => setOpenEmoji(!openEmoji)} className="w-9 h-9 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center cursor-pointer hover:bg-slate-100 transition-colors">
+                <span className="text-sm">😀</span>
+              </div>
+              <button onClick={handleCommentPost} className='bg-indigo-600 hover:bg-indigo-700 transition-colors text-white text-[12px] font-semibold rounded-lg px-4 h-9 shadow-sm'>Reply</button>
+              
               {openEmoji && (
-                <div className='absolute mt-3'>
+                <div className='absolute z-50 right-0 top-10 shadow-glass rounded-xl overflow-hidden'>
                   <EmojiPicker onEmojiClick={handleEmojiSelect} />
                 </div>
               )}
@@ -74,11 +79,11 @@ const Comments = ({ comment, commentsById, border }) => {
         }
 
         {showReplies && (
-          <div className=' w-[99%]'>
+          <div className='w-full pl-6 mt-3'>
             {comment?.replies && comment?.replies.map(replyId => {
               const reply = commentsById[replyId];
               const uniqueKey = `${comment.id}-${replyId}`;
-              return <Comments key={uniqueKey} comment={reply} commentsById={commentsById} border={"border-blue-500"} />;
+              return <Comments key={uniqueKey} comment={reply} commentsById={commentsById} border={"border-slate-300 ml-3"} />;
             })}
           </div>
         )}

@@ -15,26 +15,26 @@ const CommunityBox = () => {
 
     return (
         <div className='lg:flex justify-between w-full'>
-            <div className='hidden h-[600px] border-r lg:flex w-[30%] bg-white p-3 flex-col rounded-l text-sm font-semibold text-[#720058] custom-scrollbar overflow-y-scroll'>
-                <p>My communities</p>
-                <div className='h-[0.5px] border border-b w-full mb-2'></div>
+            <div className='hidden h-[600px] border-r border-slate-100 lg:flex w-[30%] bg-white p-4 flex-col text-sm font-semibold text-slate-800 custom-scrollbar overflow-y-scroll'>
+                <p className="text-slate-900 font-bold mb-2">My communities</p>
+                <hr className='border-slate-100 w-full mb-3'/>
                 {communities?.length > 0 ?
                     <ul>
                         {communities.map((community) => (
                             community.members.includes(userInfo?.devGlowAccess._id) &&
-                            <li key={community._id} className={`cursor-pointer flex flex-col w-full hover:bg-gray-100 items-center mb-2 ${selectedCommunityId === community._id ? 'border-b shadow-lg' : ''}`}>
-                                <div onClick={() => openChat(community)} className='cursor-pointer flex p-2 w-full border-b items-center '>
+                            <li key={community._id} className={`cursor-pointer flex flex-col w-full items-center mb-2 px-2 py-1 rounded-xl transition-all ${selectedCommunityId === community._id ? 'bg-slate-100 shadow-sm' : 'hover:bg-slate-50'}`}>
+                                <div onClick={() => openChat(community)} className='flex p-2 w-full items-center '>
                                     {community.profile_url ? (
-                                        <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
+                                        <div className='border border-slate-200 rounded-full overflow-hidden mr-3 shadow-sm'>
                                             <img className='w-[40px] h-[40px] object-cover' src={community?.profile_url} alt="profilepic" />
                                         </div>
                                     ) : (
-                                        <img className='border border-[#720058] w-[40px] h-[40px] rounded-full mr-2 hidden lg:flex'
+                                        <img className='border border-slate-200 shadow-sm w-[40px] h-[40px] rounded-full mr-3 hidden lg:flex'
                                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL0sjQoYo1rZf1oYqSaRE9Q8Itv7fbij4aXRgoeAQFhw&s"
                                             alt="profile pic" />
                                     )}
 
-                                    <h2 className="text-sm font-semibold">{community.name ?? "Unknown"}</h2>
+                                    <h2 className="text-sm font-semibold text-slate-800">{community.name ?? "Unknown"}</h2>
                                 </div>
                             </li>
                         ))}
@@ -42,46 +42,45 @@ const CommunityBox = () => {
 
                     : (
                         <div className='w-full flex justify-center h-full items-center'>
-                            <h1 className='font-semibold'>empty !</h1>
+                            <h1 className='font-medium text-slate-500'>No communities found</h1>
                         </div>
                     )}
-                <div className='h-[0.5px] border border-b w-full mt-5'></div>
             </div>
-            <div className='lg:hidden  w-full p-3 bg-white overflow-x-auto flex flex-col border-b-3 text-sm font-semibold text-[#720058]'>
-                <p>My communities</p>
+            <div className='lg:hidden w-full px-2 pt-3 pb-2 bg-white overflow-x-auto flex flex-col border-b border-slate-100 text-sm font-semibold text-slate-900'>
+                <p className="ml-2">My communities</p>
                 {communities?.length > 0 ?
-                    <ul className="flex overflow-x-scroll w-full p-2">
+                    <ul className="flex overflow-x-scroll w-full p-2 gap-2 custom-scrollbar">
                         {communities.map((community) => (
-                            <li key={community._id} className={`cursor-pointer flex w-[100px] hover:bg-gray-100 items-center mb-2 border-r ${selectedCommunityId === community._id ? 'border-b shadow-lg' : ''}`} style={{ height: '40px' }}> {/* Adjusted height */}
-                                <div onClick={() => openChat(community)} className='cursor-pointer flex flex-col w-full border-b items-center '>
+                            <li key={community._id} className={`cursor-pointer shrink-0 flex items-center p-2 rounded-xl transition-all ${selectedCommunityId === community._id ? 'bg-slate-100 shadow-sm' : 'hover:bg-slate-50'}`}>
+                                <div onClick={() => openChat(community)} className='flex items-center '>
                                     {community.profile_url ? (
-                                        <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
-                                            <img className='w-[30px] h-[30px] object-cover' src={community?.profile_url} alt="profilepic" />
+                                        <div className='border border-slate-200 shadow-sm rounded-full overflow-hidden mr-2'>
+                                            <img className='w-[36px] h-[36px] object-cover' src={community?.profile_url} alt="profilepic" />
                                         </div>
                                     ) : (
-                                        <img className='border border-[#720058]  w-[40px] h-[40px] rounded-full mr-2 hidden lg:flex'
+                                        <img className='border border-slate-200 shadow-sm w-[36px] h-[36px] rounded-full mr-2'
                                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL0sjQoYo1rZf1oYqSaRE9Q8Itv7fbij4aXRgoeAQFhw&s"
                                             alt="profile pic" />
                                     )}
 
-                                    <h2 className="text-xs font-semibold">{community.name ?? "Unknown"}</h2>
+                                    <h2 className="text-xs font-semibold whitespace-nowrap">{community.name ?? "Unknown"}</h2>
                                 </div>
                             </li>
                         ))}
                     </ul>
                     : (
-                        <div className='w-full flex justify-center h-full items-center'>
-                            <h1 className='font-semibold'>empty!</h1>
+                        <div className='w-full flex justify-center h-full items-center py-4'>
+                            <h1 className='font-semibold text-slate-500'>empty!</h1>
                         </div>
                     )}
             </div>
 
-            <div className='w-full bg-white h-[400px] lg:h-[600px] flex justify-center items-center p-2'>
-                {chatBox ? chatBox : <div className='h-full w-full flex flex-col items-center border-4 justify-center'>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[100px]">
+            <div className='w-full bg-white h-[600px] flex justify-center items-center'>
+                {chatBox ? chatBox : <div className='h-full w-full flex flex-col items-center justify-center opacity-60'>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1" stroke="currentColor" className="w-[100px] text-slate-300 mb-4">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
                     </svg>
-                    <p className='text-[20px] text-[#979797]'>Make the connection !!!</p>
+                    <p className='text-lg font-medium text-slate-500'>Select a community to make connection</p>
                 </div>}
             </div>
         </div>

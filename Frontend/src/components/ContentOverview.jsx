@@ -41,8 +41,8 @@ const ContentOverview = ({ setModal, data }) => {
 
 
   return (
-    <div className='fixed inset-0 flex items-center justify-center z-50'>
-      <div className='absolute w-screen h-full bg-black/60 flex justify-center items-center z-[100] top-0'>
+    <div className='fixed inset-0 flex items-center justify-center z-[200]'>
+      <div className='fixed inset-0 w-full h-screen bg-black/60 flex justify-center items-center z-[200]'>
         <div className='bg-white rounded-[10px] w-[600px] h-[600px] p-3 flex flex-col justify-center text-[#720058] text-sm '>
           <div className='w-full flex justify-end'>
             <button onClick={() => setModal(false)}><img className='w-7' src="close.jpg" alt="close" /></button>

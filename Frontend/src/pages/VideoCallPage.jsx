@@ -24,8 +24,8 @@ const VideoCallPage = () => {
 
   return (
     <>
-      <div className='w-full top-0 flex justify-center pt-[55px] mb-2'>
-        <div className='h-screen w-[90%] md:w-[85%] lg:rounded-2xl shadow-lg flex justify-center bg-gray-200'>
+      <div className="w-full max-w-7xl mx-auto pt-[85px] px-4 flex justify-center mb-8 h-[calc(100vh-85px)]">
+        <div className="w-full h-full bg-slate-900 rounded-3xl shadow-2xl border border-slate-800 overflow-hidden flex justify-center relative">
           {roomId && <VideoCall roomId={roomId} />}
         </div>
       </div>

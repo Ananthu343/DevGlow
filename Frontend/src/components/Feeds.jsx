@@ -48,7 +48,7 @@ const Feeds = () => {
   }
 
   return (
-    <div className='w-full md:w-[550px] h-auto flex-col md:pl-4 md:pr-4'>
+    <div className='w-full max-w-[600px] h-auto flex-col md:px-2'>
       <InfiniteScroll
         dataLength={feed.length}
         next={fetchData}
@@ -95,28 +95,28 @@ const Feeds = () => {
 
               return visibility &&  (
                 <div key={index}>
-                  <div className='bg-white rounded shadow-lg pt-2 pb-2'>
-                    <div className='w-full h-10 p-3 flex justify-between items-center'>
+                  <div className='bg-white rounded-2xl shadow-soft border border-slate-100 pt-4 pb-2 mb-6 overflow-hidden'>
+                    <div className='w-full h-10 px-4 flex justify-between items-center mb-2'>
                       <div className='flex w-auto h-auto justify-between items-center '>
-                        <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
+                        <div className='border border-slate-200 rounded-full overflow-hidden mr-3 shadow-sm flex-shrink-0'>
                           <img className='w-[40px] h-[40px] object-cover' src={userData?.profile_url ? userData?.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
                         </div>
                         <div className='flex flex-col'>
-                          <h1 onClick={() => navigate(`/userProfile/${userData._id}`)} className='text-sm font-semibold hover:text-blue-800 hover:underline hover:cursor-pointer'>{userData ? userData.username : 'Unknown'}</h1>
-                          <p className='text-[9px] text-[#979797]'>{badgeData?.badge_name ? badgeData?.badge_name : 'Beginner'}</p>
-                          <p className='text-[8px] text-[#979797]'>Posted on: {new Date(document.createdAt).toLocaleDateString()}</p>
+                          <h1 onClick={() => navigate(`/userProfile/${userData._id}`)} className='text-[15px] text-slate-900 font-semibold hover:text-slate-700 hover:underline hover:cursor-pointer leading-tight'>{userData ? userData.username : 'Unknown'}</h1>
+                          <p className='text-[11px] text-slate-500 font-medium'>{badgeData?.badge_name ? badgeData?.badge_name : 'Beginner'}</p>
+                          <p className='text-[10px] text-slate-400'>Posted on: {new Date(document.createdAt).toLocaleDateString()}</p>
                         </div>
                       </div>
-                      <div className='flex '>
+                      <div className='flex items-center gap-2'>
                         <FollowToggle userData={userData} />
                         {userInfo?.devGlowAccess._id === userData?._id ? <DropdownMenu options={["Edit Post"]} document={document} openEdit={openEdit} /> : <DropdownMenu options={["Save Post", "Report User", "Block User", "Report Post"]} document={document} />}
                       </div>
                     </div>
-                    <div className='border-t w-full h-auto mt-2 mb-2 pl-3 pr-3 break-words'>
-                      <p className='text-sm'>
-                        {isReadMore ? document.description : document.description.slice(0, 50)}
-                        {document.description.length > 50 ? <span onClick={() => toggleReadMore(index)} className="read-or-hide text-black text-xs cursor-pointer">
-                          {isReadMore ? "..show less" : " ..read more"}
+                    <div className='w-full h-auto mt-2 mb-3 px-4 break-words'>
+                      <p className='text-[14.5px] text-slate-800 leading-relaxed'>
+                        {isReadMore ? document.description : document.description.length > 50 ? document.description.slice(0, 100) + '...' : document.description}
+                        {document.description.length > 100 ? <span onClick={() => toggleReadMore(index)} className="read-or-hide text-slate-500 font-medium ml-1 text-sm cursor-pointer hover:text-slate-800">
+                          {isReadMore ? "Show less" : "Read more"}
                         </span> : null}
                       </p>
                     </div>
@@ -124,18 +124,18 @@ const Feeds = () => {
                       document.media ? document.media.includes("mp4") ? <VideoPlayer videoUrl={document.media} /> : <img src={document.media} alt="media" className='w-full' />
                         : null
                     }
-                    <div className='mt-1 w-full flex justify-between pl-2 pr-2 text-[11px] text-[#979797]'>
-                      <p className='flex items-center'><img className='w-4' src="star.webp" alt="" />{document.likedUsers?.length}</p>
+                    <div className='mt-3 w-full flex justify-between px-4 text-[12px] text-slate-500 font-medium mb-3'>
+                      <p className='flex items-center'><img className='w-4 mr-1 opacity-70' src="star.webp" alt="" />{document.likedUsers?.length} likes</p>
                       <p>{commentCount} comments</p>
                     </div>
-                    <div className='border-t w-full flex justify-around pl-3 pr-3 text-[12px]'>
+                    <hr className='border-slate-100 mb-1 mx-4'/>
+                    <div className='w-full flex justify-around px-2 text-[13px] font-medium text-slate-600'>
                       <LikeToggle document={document} />
-                      <p onClick={() => toggleComments(document._id)} className='flex items-center cursor-pointer p-2 hover:bg-gray-100 hover:text-blue-600'><img className='w-5 mr-1' src="comment.png" alt="" />Comment</p>
-                      <p onClick={() => setOpenShare(true)} className='flex items-center cursor-pointer p-2 hover:bg-gray-100 hover:text-blue-600'><img className='w-3 mr-1' src="share.png" alt="" />Share</p>
+                      <p onClick={() => toggleComments(document._id)} className='flex items-center cursor-pointer px-4 py-2 rounded-xl hover:bg-slate-50 hover:text-slate-900 transition-colors'><img className='w-5 mr-2 opacity-80' src="comment.png" alt="" />Comment</p>
+                      <p onClick={() => setOpenShare(true)} className='flex items-center cursor-pointer px-4 py-2 rounded-xl hover:bg-slate-50 hover:text-slate-900 transition-colors'><img className='w-4 mr-2 opacity-80' src="share.png" alt="" />Share</p>
                     </div>
                   </div>
                   {openComments[document._id] ? <CommentsContainer postId={document._id} /> : null}
-                  <div className='mt-3 mb-3 h-[1px] bg-[#004272] rounded' />
                 </div>
               );
             } else {

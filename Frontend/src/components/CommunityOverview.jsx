@@ -118,8 +118,8 @@ const CommunityOverview = ({ community, setModal }) => {
     }
 
     return (
-        <div className='fixed inset-0 flex items-center justify-center z-1000'>
-            <div className='absolute w-screen h-full bg-black/60 flex justify-center items-center z-[1000] top-0'>
+        <div className='fixed inset-0 flex items-center justify-center z-[200]'>
+            <div className='fixed inset-0 w-full h-screen bg-black/60 flex justify-center items-center z-[200]'>
                 <div className='bg-white rounded-[10px] w-[400px] h-auto p-3 flex flex-col justify-center text-[#720058] text-sm'>
                     <div className='flex items-center justify-between mb-4'>
                         <img src={preview ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL0sjQoYo1rZf1oYqSaRE9Q8Itv7fbij4aXRgoeAQFhw&s"} alt="Community Profile" className="w-24 h-24 object-cover rounded-full border-2 border-[#720058]" />

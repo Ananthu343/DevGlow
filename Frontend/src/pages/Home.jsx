@@ -16,12 +16,17 @@ const Home = () => {
   }, [dispatch])
 
   return (
-    <div className='w-[85%] pt-[60px] flex justify-center  top-0 mx-auto'>
-      <CommunityCase />
-      <Feeds />
-      <div className=' hidden lg:flex flex-col h-[520px] justify-between sticky top-[60px]'>
-        <NotificationCase />
-        <LeaderboardCase />
+    <div className='min-h-screen bg-slate-50 relative overflow-hidden'>
+      <div className="absolute top-[0%] left-[-10%] w-[40%] h-[40%] bg-indigo-200/40 rounded-full blur-3xl opacity-50 pointer-events-none z-0"></div>
+      <div className="absolute top-[30%] right-[-10%] w-[30%] h-[30%] bg-pink-200/40 rounded-full blur-3xl opacity-50 pointer-events-none z-0"></div>
+      
+      <div className='w-full max-w-7xl mx-auto pt-[85px] px-4 pb-20 lg:pb-8 flex justify-center gap-6 relative z-10'>
+        <CommunityCase />
+        <Feeds />
+        <div className='hidden lg:flex flex-col gap-6 sticky top-[85px] h-fit'>
+          <NotificationCase />
+          <LeaderboardCase />
+        </div>
       </div>
     </div>
   )

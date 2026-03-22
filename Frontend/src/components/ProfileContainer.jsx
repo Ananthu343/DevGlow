@@ -115,105 +115,117 @@ const ProfileContainer = ({ userId }) => {
 
     return (
         <>
-            <div className='flex'>
-                <img className='md:rounded-t-2xl w-full md:h-[200px]' src={user.banner_url ? user.banner_url : "https://pulsegp.com/wp-content/themes/leahy/assets/images/default-banner.png"} alt="user_banner" />
-                <div className='w-full md:w-[85%] h-auto absolute flex justify-end pt-3 pr-3'>
-                    <form onSubmit={setBanner}>
-                        <img
-                            className='w-5 rounded-full cursor-pointer'
-                            src="editPen.png"
-                            alt=""
-                            onClick={triggerFileInputClick}
-                        />
-                        <input
-                            type="file"
-                            id='fileUpload'
-                            ref={fileInputRef}
-                            style={{ display: 'none' }}
-                            onInput={handleFileChange}
-                        />
-                    </form>
-                </div>
+            <div className='relative w-full h-[150px] md:h-[250px] bg-slate-100 overflow-hidden group rounded-t-3xl'>
+                <img className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-105' src={user.banner_url || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop"} alt="user_banner" />
+                {userId === userInfo?.devGlowAccess._id && (
+                    <div className='absolute top-4 right-4'>
+                        <form onSubmit={setBanner}>
+                            <label className='cursor-pointer bg-white/50 hover:bg-white backdrop-blur-md p-2 rounded-full shadow-sm transition-all flex items-center justify-center h-10 w-10'>
+                                <img
+                                    className='w-5 opacity-80'
+                                    src="/editPen.png"
+                                    alt="Edit Banner"
+                                    onClick={triggerFileInputClick}
+                                />
+                                <input
+                                    type="file"
+                                    id='fileUpload'
+                                    ref={fileInputRef}
+                                    style={{ display: 'none' }}
+                                    onInput={handleFileChange}
+                                />
+                            </label>
+                        </form>
+                    </div>
+                )}
             </div>
-            <div className='hidden lg:flex w-full p-3 h-auto  justify-around'>
-                <div className='border-2 border-[#720058] w-[100px] h-[100px] md:w-[150px] md:h-[150px] rounded-full mt-[-50px] ml-[40%] md:ml-[5%] overflow-hidden object-cover'>
-                    <img src={user?.profile_url ? user.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profile pic" />
-                </div>
-                <div className='flex'>
-                    <div className='flex-col justify-between w-[40%]'>
-                        <h2 className='text-xl font-semibold'>{user?.username ?? "Unknown"}</h2>
-                        <p className='text-xs text-[#979797] mb-2'>{user?.gender ?? "He/She"}</p>
-                        <div className='flex items-center'>
-                            <p className='text-xs text-[#979797]'>{badge?.badge_name ?? "Badge not earned!"}</p>
-
-                        </div>
-                        <div className='flex items-center mt-2'>
-                            <p className='text-sm font-medium'>{totalStars ?? "0"}</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="yellow" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="size-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
-                            </svg>
-
-                        </div>
+            
+            <div className='hidden lg:flex w-full px-8 pb-8 pt-4 justify-between relative bg-white'>
+                <div className='flex gap-6'>
+                    <div className='w-[150px] h-[150px] rounded-full border-4 border-white shadow-md relative -mt-[75px] overflow-hidden bg-slate-100 flex-shrink-0'>
+                        <img className="w-full h-full object-cover" src={user?.profile_url || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profile pic" />
                     </div>
-                    <div className='flex flex-col h-full pt-5 pl-5 w-[180px] ml-[100px] lg:ml-[0px] items-center justify-around'>
-                        <div className='flex w-full justify-between'>
-                            <p className='text-xs font-bold text-[#004272]'>{user?.followers?.length ?? "0"} Followers</p>
-                            <p className='text-xs font-bold text-[#004272]'>{user?.following?.length ?? "0"} Following</p>
+                    
+                    <div className='flex flex-col pt-2'>
+                        <h2 className='text-2xl font-bold text-slate-800'>{user?.username ?? "Unknown"} <span className='text-sm font-normal text-slate-500 ml-2'>{user?.gender ?? "No gender specified"}</span></h2>
+                        <div className='flex items-center gap-2 mt-1'>
+                            <p className='text-sm font-medium text-slate-600 bg-slate-100 px-3 py-1 rounded-full'>{badge?.badge_name ?? "Badge not earned!"}</p>
+                            <div className='flex text-amber-500 items-center bg-amber-50 px-3 py-1 rounded-full'>
+                                <span className='text-sm font-semibold mr-1'>{totalStars ?? "0"}</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-4 h-4"><path d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" /></svg>
+                            </div>
                         </div>
-                        <div className='ml-2 border-2 border-[#720058] w-[20px] h-[20px] md:w-[80px] md:h-[80px] rounded-full overflow-hidden'>
-                            <img src={badge?.badge_url ? badge?.badge_url : "https://img.freepik.com/free-vector/shield_24908-54457.jpg?size=626&ext=jpg&ga=GA1.1.1141335507.1717804800&semt=ais_user"} alt="profile pic" />
+                        <p className='font-normal text-slate-600 mt-4 max-w-md'>{user?.about ?? "A mystery developer yet to set their bio!"}</p>
+                        <div className="mt-3 w-64 max-w-full">
+                           <ProgressBar bgcolor="#fbbf24" progress={totalStars} height={6} />
                         </div>
                     </div>
                 </div>
-                <div className=' overflow-wrap-break-word flex flex-col items-center mt-5 w-[50%]'>
-                    <ProgressBar bgcolor="gold" progress={totalStars} height={5} />
-                    <p className='font-semibold text-sm mt-4'>{user?.about ?? "Set profile now!"}</p>
+
+                <div className='flex gap-8 items-start pt-4'>
+                    <div className='flex flex-col items-center'>
+                        <div className='flex gap-6 mb-4'>
+                            <div className='text-center'>
+                                <p className='text-xl font-bold text-slate-800'>{user?.followers?.length ?? "0"}</p>
+                                <p className='text-xs font-semibold text-slate-400 uppercase tracking-wider'>Followers</p>
+                            </div>
+                            <div className='text-center'>
+                                <p className='text-xl font-bold text-slate-800'>{user?.following?.length ?? "0"}</p>
+                                <p className='text-xs font-semibold text-slate-400 uppercase tracking-wider'>Following</p>
+                            </div>
+                        </div>
+                        <div className='w-16 h-16 rounded-full overflow-hidden shadow-sm border border-slate-100'>
+                            <img className="w-full h-full object-cover" src={badge?.badge_url || "https://img.freepik.com/free-vector/shield_24908-54457.jpg?size=626&ext=jpg"} alt="badge" />
+                        </div>
+                    </div>
+
+                    <div className='pt-1'>
+                        {userId === userInfo?.devGlowAccess._id ? (
+                            <button onClick={() => setModal(true)} className='px-6 py-2 bg-indigo-50 text-indigo-700 font-semibold rounded-xl hover:bg-indigo-100 transition-colors shadow-sm'>Edit Profile</button>
+                        ) : (
+                            <FollowToggle userData={user} />
+                        )}
+                    </div>
                 </div>
-                {
-                    userId === userInfo?.devGlowAccess._id ?
-                        <div className='flex-col'>
-                            <p className='text-xs text-[#979797] mb-1'>Settings</p>
-                            <p onClick={() => setModal(true)} className='text-xs font-bold #004272] cursor-pointer'>Edit profile</p>
-                        </div> :
-                        <FollowToggle userData={user} />
-                }
             </div>
             {/* Mobile screen  */}
-            <div className='flex lg:hidden h-auto w-full'>
-                <div className='w-[33.3%] h-auto flex justify-center items-center'>
-                    <div className='ml-2 border-2 border-[#720058] w-[50px] h-[50px] rounded-full overflow-hidden'>
-                        <img src={badge?.badge_url ? badge?.badge_url : "https://img.freepik.com/free-vector/shield_24908-54457.jpg?size=626&ext=jpg&ga=GA1.1.1141335507.1717804800&semt=ais_user"} alt="profile pic" />
+            <div className='flex flex-col lg:hidden w-full bg-white relative'>
+                <div className='flex items-end justify-between px-4 pb-4'>
+                    <div className='w-[100px] h-[100px] rounded-full border-4 border-white shadow-md relative -mt-[50px] overflow-hidden bg-slate-100 flex-shrink-0'>
+                        <img className="w-full h-full object-cover" src={user?.profile_url || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profile pic" />
+                    </div>
+                    <div className='flex items-center gap-4 mb-2'>
+                        <div className='w-12 h-12 rounded-full overflow-hidden shadow-sm border border-slate-100'>
+                            <img className="w-full h-full object-cover" src={badge?.badge_url || "https://img.freepik.com/free-vector/shield_24908-54457.jpg?size=626&ext=jpg"} alt="badge" />
+                        </div>
+                        {userInfo?.devGlowAccess._id !== user._id ? <FollowToggle userData={user} /> : <button onClick={() => setModal(true)} className='px-4 py-2 bg-indigo-50 text-indigo-700 font-semibold rounded-xl text-sm shadow-sm'>Edit Profile</button>}
                     </div>
                 </div>
-                <div className='w-[33.3%] h-[100px] bg-white flex flex-col justify-center items-center'>
-                    <div className='mt-[-110px] border-2 border-[#720058] w-[100px] h-[100px] md:w-[150px] md:h-[150px] rounded-full mt-[-50px]  overflow-hidden'>
-                        <img src={user?.profile_url ? user.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profile pic" />
-                    </div>
-                    <div className='flex justify-center items-center'>
-                        <h2 className='text-sm  md:text-xl font-semibold'>{user?.username ?? "Unknown"}</h2>
-                        <div className='flex items-center justify-center ml-2'>
-                            <p className='text-sm font-medium'>{totalStars ?? "0"}</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="yellow" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="size-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
-                            </svg>
+                
+                <div className='px-4 pb-4'>
+                    <h2 className='text-xl font-bold text-slate-800'>{user?.username ?? "Unknown"}</h2>
+                    <p className='text-sm text-slate-500 bg-slate-100 inline-block px-2 py-0.5 rounded-md mt-1 mb-2'>{badge?.badge_name ?? "Badge not earned!"}</p>
+                    <p className='font-normal text-slate-600 text-sm mb-3'>{user?.about ?? "Set profile now!"}</p>
+                    
+                    <div className='flex items-center gap-4 text-sm font-semibold text-slate-700'>
+                        <div><span className='text-slate-800'>{user?.followers?.length ?? "0"}</span> <span className='text-slate-500 font-normal'>Followers</span></div>
+                        <div><span className='text-slate-800'>{user?.following?.length ?? "0"}</span> <span className='text-slate-500 font-normal'>Following</span></div>
+                        <div className='flex items-center text-amber-500 bg-amber-50 px-2 py-0.5 rounded-full'>
+                            <span className='mr-1'>{totalStars ?? "0"}</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-4 h-4"><path d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" /></svg>
                         </div>
                     </div>
-                    <p className='text-xs text-[#979797]'>{badge?.badge_name ?? "Badge not earned!"}</p>
-                </div>
-                <div className='w-[33.3%] h-auto flex justify-center items-center'>
-                    {userInfo?.devGlowAccess._id !== user._id ? <FollowToggle userData={user} /> : <button className='p-2 bg-[#004272] hover:bg-[#004260] rounded w-15 h-10 text-white text-xs font-semibold'>Edit profile</button>}
+                    <div className="mt-4 w-full">
+                       <ProgressBar bgcolor="#fbbf24" progress={totalStars} height={6} />
+                    </div>
                 </div>
             </div>
-            <div className='flex flex-col lg:hidden h-auto w-full p-3 justify-center items-center border-t-2'>
-                <p className='font-semibold text-sm mt-4'>{user?.about ?? "Set profile now!"}</p>
-                <ProgressBar bgcolor="gold" progress={totalStars} height={5} />
-            </div>
-            <div className='h-auto w-full p-4'>
-                <div className='w-full flex mt-2 mb-2  '>
-                    <button onClick={() => menu("openPosts")} className={myPostsMenu ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>{userId === userInfo?.devGlowAccess._id ? "My posts" : "Posts"}</button>
-                    {userId === userInfo?.devGlowAccess._id ? <button onClick={() => menu("openSavedPost")} className={savedPostsMenu ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>Saved posts</button> : null}
-                    <button onClick={() => menu("openFollowers")} className={followers ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>Followers</button>
-                    <button onClick={() => menu("openFollowing")} className={following ? `shadow-lg border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#004272] bg-white bg-white` : ` border mr-2 pl-3 pr-3 pt-2 pb-2 text-[12px] font-semibold text-[#720058] bg-white`}>Following</button>
+            <div className='h-auto w-full px-4 rounded-b-3xl bg-slate-50 border-t border-slate-100'>
+                <div className='w-full flex mt-4 mb-2 gap-2 overflow-x-auto scroller-hidden'>
+                    <button onClick={() => menu("openPosts")} className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap ${myPostsMenu ? 'bg-indigo-600 text-white shadow-soft' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'}`}>{userId === userInfo?.devGlowAccess._id ? "My posts" : "Posts"}</button>
+                    {userId === userInfo?.devGlowAccess._id && <button onClick={() => menu("openSavedPost")} className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap ${savedPostsMenu ? 'bg-indigo-600 text-white shadow-soft' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'}`}>Saved posts</button>}
+                    <button onClick={() => menu("openFollowers")} className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap ${followers ? 'bg-indigo-600 text-white shadow-soft' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'}`}>Followers</button>
+                    <button onClick={() => menu("openFollowing")} className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap ${following ? 'bg-indigo-600 text-white shadow-soft' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'}`}>Following</button>
                 </div>
                 <div className='h-[1px] w-full border border-b'></div>
                 <div className='w-full flex justify-center pt-2 bg-custom-bg'>

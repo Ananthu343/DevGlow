@@ -48,8 +48,8 @@ const AddNewUser = ({ setModal }) => {
     };
 
     return (
-        <div className='fixed inset-0 flex items-center justify-center z-50'>
-            <div className='absolute w-screen h-full bg-black/60 flex justify-center items-center z-[100] top-0'>
+        <div className='fixed inset-0 flex items-center justify-center z-[200]'>
+            <div className='fixed inset-0 w-full h-screen bg-black/60 flex justify-center items-center z-[200]'>
                 <div className='bg-white rounded-[10px] w-[400px] h-auto p-3 flex flex-col justify-center text-[#720058] text-sm'>
                     <form onSubmit={handleSubmit}>
                         <div className='flex justify-between items-center mb-3'>

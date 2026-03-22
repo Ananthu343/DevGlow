@@ -24,23 +24,24 @@ const AdminHome = () => {
   };
 
   return (
-    <div className='w-full top-0 flex justify-center pt-[55px] mb-2'>
-      <div className='h-auto w-full md:w-[85%] lg:rounded-2xl shadow-lg flex justify-between'>
-        <div className='lg:flex justify-between w-full'>
-          <div className='hidden h-[600px] border-r lg:flex w-[30%] bg-white p-3 flex-col rounded-l text-sm font-semibold items-center'>
-            <h1 className='text-[#004272] font-bold mb-4 underline'>Admin Panel</h1>
+    <div className="w-full max-w-7xl mx-auto pt-[85px] px-4 flex justify-center mb-8">
+      <div className="w-full bg-white/80 backdrop-blur-xl rounded-3xl shadow-soft border border-slate-100 overflow-hidden flex flex-col lg:flex-row min-h-[700px]">
+          <div className='hidden lg:flex w-[280px] bg-slate-50 p-6 flex-col border-r border-slate-200 flex-shrink-0'>
+            <h1 className='text-2xl text-slate-800 font-bold mb-8 tracking-tight'>Admin Panel</h1>
+            <div className='flex flex-col gap-3'>
             {menus.map((menu) => (
               <div
                 key={menu}
                 onClick={() => handleMenu(menu)}
-                className={`w-full h-[50px] shadow flex justify-center items-center cursor-pointer transition duration-300 ease-in-out transform hover:scale-105 ${selectedMenu === menu ? 'bg-gray-200 text-[#720058]' : 'text-gray-500'
+                className={`w-full px-5 py-3.5 rounded-2xl flex items-center cursor-pointer transition-all font-semibold shadow-sm ${selectedMenu === menu ? 'bg-indigo-600 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:border-slate-300'
                   }`}
               >
-                {menu.toUpperCase()}
+                {menu.charAt(0).toUpperCase() + menu.slice(1)}
               </div>
             ))}
+            </div>
           </div>
-          <div className='w-full bg-white h-[400px] lg:h-auto flex justify-center items-center p-2'>
+          <div className='w-full bg-transparent flex-grow p-6 lg:p-10 overflow-y-auto'>
             {selectedMenu === 'dashboard' && <Dashboard />}
             {selectedMenu === 'user manage' && <UserManage />}
             {selectedMenu === 'community manage' && <CommunityManage />}
@@ -49,7 +50,6 @@ const AdminHome = () => {
               {selectedMenu === 'content manage' && <ContentManage />}
             </Suspense>
           </div>
-        </div>
       </div>
     </div>
   );

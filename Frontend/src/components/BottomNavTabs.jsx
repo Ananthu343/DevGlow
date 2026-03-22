@@ -52,16 +52,16 @@ const BottomNavTabs = () => {
   ];
 
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200">
-      <div className="flex justify-around items-center">
+    <div className="lg:hidden fixed bottom-0 left-0 z-[100] w-full h-16 bg-white/85 backdrop-blur-md border-t border-slate-200 pb-safe">
+      <div className="flex justify-around items-center h-full">
         {icons.map((icon, index) => (
           <button
             key={index}
             type="button"
-            className={`p-2 rounded-md ${index === active ? 'border-b shadow-lg border-[#720058]' : ''}`}
+            className={`p-2 transition-all duration-200 flex flex-col items-center justify-center ${index === active ? 'border-t-2 border-slate-900 -mt-[2px]' : 'opacity-60 hover:opacity-100'}`}
             onClick={() => handleNavigate(icon.name, index)}
           >
-            <img className='w-6' src={icon.src} alt={icon.alt} />
+            <img className={`w-6 ${index === active ? 'scale-110' : ''}`} src={icon.src} alt={icon.alt} />
           </button>
         ))}
       </div>

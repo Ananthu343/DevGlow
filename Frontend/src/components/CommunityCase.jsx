@@ -13,13 +13,13 @@ const CommunityCase = () => {
   }
 
   return (
-    <div className='hidden lg:flex flex-col bg-white p-3 rounded w-[280px] h-[250px] text-sm text-[#720058] shadow-lg sticky top-[60px] '>
-      <p className="font-bold mb-2">Communities (Recommended)</p>
-      <div className='h-[0.5px] border border-b w-full'></div>
+    <div className='hidden lg:flex flex-col bg-white p-5 rounded-2xl w-[280px] xl:w-[300px] max-h-[400px] text-sm text-slate-800 shadow-soft border border-slate-100 sticky top-[85px]'>
+      <p className="font-bold text-slate-900 mb-2">Communities</p>
+      <hr className='border-slate-100 w-full mb-2'/>
       <div className={`mt-4 ${communities.length > 3 ? "custom-scrollbar h-32 overflow-y-scroll" : ""} h-full`}>
         {communities.length > 0 ? (
           communities.map((community) => (
-            <div onClick={() => handleOverview(community)} key={community._id} className="flex items-center justify-between mb-4 last:mb-0 hover:bg-gray-100 hover:cursor-pointer border-b">
+            <div onClick={() => handleOverview(community)} key={community._id} className="flex items-center justify-between mb-3 p-2 rounded-xl hover:bg-slate-50 hover:cursor-pointer transition-colors">
               <div className="flex items-center">
                 <img src={community.profile_url ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL0sjQoYo1rZf1oYqSaRE9Q8Itv7fbij4aXRgoeAQFhw&s"} alt="Community Profile" className="w-10 h-10 object-cover rounded-full mr-4" />
                 <div className='flex flex-col'>

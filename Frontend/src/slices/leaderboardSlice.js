@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { createAbortSignalWithTimeout, handleError } from "../utils/axiosController";
 import axios from "axios";
 
-const users_url = "http://localhost:3001/api/users";
+const users_url = `${process.env.REACT_APP_BACKEND_URL}/api/users`;
 
 const initialState = {
     rankings: [],

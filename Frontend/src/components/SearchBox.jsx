@@ -55,42 +55,45 @@ const SearchBox = ({ setSearchBox, searchTerm }) => {
     }
 
     return (
-        <div onClick={() => setSearchBox(false)} className='fixed w-full h-screen bg-black/50 pt-[55px] pl-[80px] block md:pl-[180px] lg:pl-[270px] z-10'>
-            <div onClick={stopPropagation} className='w-[250px] h-auto bg-white rounded flex flex-col items-center text-sm text-[#979797]'>
-                {filteredUsers.length > 0 ? <h1>Users</h1> : null}
-                <div className='border-t w-full pl-4'>
+        <div onClick={() => setSearchBox(false)} className='fixed inset-0 w-full h-screen bg-transparent z-[90] flex justify-center lg:justify-start lg:pl-[300px] pt-[70px]'>
+            <div onClick={stopPropagation} className='w-[90%] md:w-[350px] max-h-[70vh] overflow-y-auto bg-white/95 backdrop-blur-xl rounded-2xl shadow-glass border border-slate-200 flex flex-col text-sm text-slate-700 animate-fade-in'>
+                
+                {filteredUsers.length > 0 && <h1 className='text-xs font-bold uppercase tracking-wider text-slate-400 px-4 pt-4 pb-2'>Users</h1>}
+                <div className='w-full'>
                     {filteredUsers.map((user, index) => (
-                        <div onClick={() => navigate(`/userProfile/${user?._id}`)} className='flex items-center border-b p-1 cursor-pointer' key={index}>
-                            <div className='border border-[#720058] rounded-full overflow-hidden mr-2'>
-                                <img className='w-[30px] h-[30px] object-cover' src={user?.profile_url ? user?.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
+                        <div onClick={() => navigate(`/userProfile/${user?._id}`)} className='flex items-center p-3 hover:bg-slate-50 cursor-pointer transition-colors border-b border-slate-100 last:border-0' key={index}>
+                            <div className='rounded-full overflow-hidden mr-3 shadow-sm border border-slate-100'>
+                                <img className='w-10 h-10 object-cover' src={user?.profile_url ? user?.profile_url : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSinUiRqVB94sfZZbtNZgPJswUTs4R7YDskvXfVjUSejKfQqAoMaedQBNfybdIdduiix4&usqp=CAU"} alt="profilepic" />
                             </div>
-                            <p className='text-black'>{user.username}</p>
+                            <p className='font-semibold text-slate-800'>{user.username}</p>
                         </div>
                     ))}
                 </div>
-                {filteredCommunities.length > 0 ? <h1>Communities</h1> : null}
-                <div className='border-t w-full pl-4'>
+                
+                {filteredCommunities.length > 0 && <h1 className='text-xs font-bold uppercase tracking-wider text-slate-400 px-4 pt-4 pb-2 border-t border-slate-100 mt-2'>Communities</h1>}
+                <div className='w-full'>
                     {filteredCommunities.length > 0 ? (
                         filteredCommunities.map((community) => (
-                            <div onClick={() => handleOverview(community)} key={community._id} className="flex items-center justify-between mb-4 last:mb-0 hover:bg-gray-100 hover:cursor-pointer border-b">
+                            <div onClick={() => handleOverview(community)} key={community._id} className="flex items-center justify-between p-3 hover:bg-slate-50 cursor-pointer transition-colors border-b border-slate-100 last:border-0">
                                 <div className="flex items-center">
-                                    <img src={community.profile_url ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL0sjQoYo1rZf1oYqSaRE9Q8Itv7fbij4aXRgoeAQFhw&s"} alt="Community Profile" className="w-10 h-10 object-cover rounded-full mr-4" />
+                                    <img src={community.profile_url ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL0sjQoYo1rZf1oYqSaRE9Q8Itv7fbij4aXRgoeAQFhw&s"} alt="Community Profile" className="w-10 h-10 object-cover rounded-xl mr-3 shadow-sm border border-slate-100" />
                                     <div className='flex flex-col'>
-                                        <span className="font-semibold hover:underline">{community.name ?? "No_name"}</span>
-                                        <small className="text-gray-500">Members: {community.members.length}</small>
+                                        <span className="font-semibold text-slate-800">{community.name ?? "No_name"}</span>
+                                        <small className="text-slate-500 font-medium">{community.members.length} Members</small>
                                     </div>
                                 </div>
                                 <div className="text-right">
-                                    <span className="text-xs text-gray-500">Public</span>
+                                    <span className="text-xs font-semibold px-2 py-1 bg-slate-100 text-slate-600 rounded-md">Public</span>
                                 </div>
                             </div>
                         ))
                     ) : (
-                        <p className="text-center text-gray-500">No communities found.</p>
+                        <p className="text-center text-slate-500 py-4">No communities found.</p>
                     )}
                 </div>
-                <div>
-                    <p onClick={handleSearchPage} className='text-[11px] text-[#004272] hover:underline cursor-pointer'>See all</p>
+                
+                <div className='p-3 bg-slate-50 border-t border-slate-100 mt-auto rounded-b-2xl flex justify-center'>
+                    <p onClick={handleSearchPage} className='text-sm font-semibold text-indigo-600 hover:text-indigo-700 cursor-pointer text-center w-full py-1 hover:bg-indigo-50 rounded-lg transition-colors'>See all results</p>
                 </div>
             </div>
             {modal && <CommunityOverview setModal={setModal} community={community} />}

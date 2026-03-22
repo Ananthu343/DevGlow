@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { createAbortSignalWithTimeout, handleError } from '../utils/axiosController'
 
-const users_url = "http://localhost:3001/api/users"
+const users_url = `${process.env.REACT_APP_BACKEND_URL}/api/users`
 
 
 export const verifyEmail = createAsyncThunk("user/verify", async (data) => {

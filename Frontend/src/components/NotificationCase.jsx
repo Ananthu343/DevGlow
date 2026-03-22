@@ -24,22 +24,21 @@ const NotificationCase = () => {
   }, [debouncedFetchNotifications, socket])
 
   return (
-    <div className='hidden lg:flex flex-col bg-white p-3 rounded w-[280px] h-[250px] text-sm  shadow-lg sticky top-[60px]'>
-      <p className="font-bold mb-2 text-[#720058]">Notification</p>
-      <div className='h-[0.5px] border border-b w-full'></div>
+    <div className='hidden lg:flex flex-col bg-white p-5 rounded-2xl w-[280px] max-h-[350px] text-sm shadow-soft border border-slate-100 relative'>
+      <p className="font-bold text-slate-900 mb-2">Notifications</p>
+      <hr className='border-slate-100 w-full mb-2'/>
       <div className="mt-4 custom-scrollbar overflow-y-scroll h-full">
         {notifications.length > 0 ? (
           notifications?.map((notification) => {
             const userData = users?.find(ele => ele._id === notification.sender)
             const message = notification.type === "like" ? "liked your post" : notification.type === "comment" ? "commented on your post" : notification.type === "follow" ? "has followed you" : ""
             return (
-              <div key={notification._id} className="flex flex-col p-1 justify-between mb-4 last:mb-0 hover:bg-gray-100 hover:cursor-pointer border-b ">
-                <div className='flex'>
+              <div key={notification._id} className="flex flex-col p-2 rounded-xl mb-2 hover:bg-slate-50 hover:cursor-pointer transition-colors">
+                <div className='flex items-start'>
                   <p>{userData?.username + " " + message}</p>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#004272" className="size-5 ml-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 ml-2 text-slate-400 mt-1 flex-shrink-0">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5" />
                   </svg>
-
                 </div>
                 <p className='text-[10px] text-[#979797]'>{timeAgo(notification.createdAt)}</p>
               </div>

@@ -10,11 +10,11 @@ const LeaderboardContainer = React.lazy(() => import('../components/LeaderboardC
 const Leaderboard = () => {
   return (
     <>
-      <div className='w-full lg:w-[85%]  pt-[60px] flex justify-center  top-0 mx-auto'>
+      <div className='w-full max-w-7xl mx-auto pt-[85px] px-4 pb-20 lg:pb-8 flex justify-center gap-6'>
         <Suspense fallback={<Loader />}>
           <LeaderboardContainer />
         </Suspense>
-        <div className=' hidden lg:flex flex-col h-[520px] justify-between sticky top-[60px]'>
+        <div className='hidden lg:flex flex-col gap-6 sticky top-[85px] h-fit'>
           <NotificationCase />
           <SuggestionsCase />
         </div>
