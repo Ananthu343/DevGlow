@@ -1,10 +1,7 @@
 import UserRepository from "../../repositories/userRepository.js";
 import NotificationRepository from "../../repositories/notificationRepository.js";
 import { getTokenData } from "../../utils/jwtToken.js";
-import { app } from "../../configs/firebase.js";
-import { getDownloadURL, getStorage, ref, uploadBytes, deleteObject } from "firebase/storage"
-
-const storage = getStorage(app)
+import { uploadToCloudinary } from "../../configs/cloudinary.js";
 
 const userRepository = new UserRepository()
 const notificationRepository = new NotificationRepository()
@@ -73,11 +70,7 @@ export const profileController = {
             const user = await userRepository.findById(userId)
             let fileUrl = undefined;
             if (req.file) {
-                const file = req.file;
-                const filePath = `uploads/${file.originalname}`;
-                const storageRef = ref(storage, filePath);
-                await uploadBytes(storageRef, file.buffer);
-                fileUrl = await getDownloadURL(storageRef);
+                fileUrl = await uploadToCloudinary(req.file.buffer);
             }
             let updatedProfile;
             if (fileUrl == undefined || fileUrl === user.profile_url) {
@@ -112,11 +105,7 @@ export const profileController = {
             const userId = getTokenData(req)
             let fileUrl = undefined;
             if (req.file) {
-                const file = req.file;
-                const filePath = `uploads/${file.originalname}`;
-                const storageRef = ref(storage, filePath);
-                await uploadBytes(storageRef, file.buffer);
-                fileUrl = await getDownloadURL(storageRef);
+                fileUrl = await uploadToCloudinary(req.file.buffer);
                 const updatedUser = await userRepository.updateUser(userId, { banner_url: fileUrl });
                 res.status(200).send(updatedUser)
             } else {

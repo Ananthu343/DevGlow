@@ -1,9 +1,7 @@
 import BadgeRepository from "../../repositories/badgeRepository.js"
-import { app } from "../../configs/firebase.js";
-import { getDownloadURL, getStorage, ref, uploadBytes, deleteObject } from "firebase/storage"
+import { uploadToCloudinary, deleteFromCloudinary } from "../../configs/cloudinary.js";
 
 const badgeRepository = new BadgeRepository()
-const storage = getStorage(app)
 
 export const badgeController = {
     getBadges: async (req, res) => {
@@ -20,11 +18,7 @@ export const badgeController = {
         try {
             let fileUrl = undefined;
             if (req.file) {
-                const file = req.file;
-                const filePath = `uploads/${file.originalname}`;
-                const storageRef = ref(storage, filePath);
-                await uploadBytes(storageRef, file.buffer);
-                fileUrl = await getDownloadURL(storageRef);
+                fileUrl = await uploadToCloudinary(req.file.buffer);
             }
             if (!req.body.name) {
                 return res.status(401).send({ error: 'Error creating badge' });
@@ -45,11 +39,7 @@ export const badgeController = {
         try {
             let fileUrl = undefined;
             if (req.file) {
-                const file = req.file;
-                const filePath = `uploads/${file.originalname}`;
-                const storageRef = ref(storage, filePath);
-                await uploadBytes(storageRef, file.buffer);
-                fileUrl = await getDownloadURL(storageRef);
+                fileUrl = await uploadToCloudinary(req.file.buffer);
             }
             let dataToUpdate;
             const badgeId = req.body.id
@@ -57,8 +47,7 @@ export const badgeController = {
                 const badgeData = await badgeRepository.findById(badgeId)
                 const mediaUrl = badgeData.badge_url
                 if (mediaUrl) {
-                    const mediaRef = ref(storage, mediaUrl);
-                    await deleteObject(mediaRef);
+                    await deleteFromCloudinary(mediaUrl);
                 }
                 dataToUpdate = {
                     badge_name: req.body.name,
@@ -84,8 +73,7 @@ export const badgeController = {
             const badgeData = await badgeRepository.findById(badgeId)
             const mediaUrl = badgeData.badge_url
             if (mediaUrl) {
-                const mediaRef = ref(storage, mediaUrl);
-                await deleteObject(mediaRef);
+                await deleteFromCloudinary(mediaUrl);
             }
             await badgeRepository.deleteBadge(badgeId)
             res.status(200).send("community deleted successfully");

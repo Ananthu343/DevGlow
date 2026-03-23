@@ -2,13 +2,12 @@ import PostRepository from "../../repositories/postRepository.js";
 import UserRepository from "../../repositories/userRepository.js";
 import CommentRepository from "../../repositories/commentRepository.js";
 import { getTokenData } from "../../utils/jwtToken.js";
-import { app } from "../../configs/firebase.js";
-import { getDownloadURL, getStorage, ref, uploadBytes, deleteObject } from "firebase/storage"
+import { uploadToCloudinary, deleteFromCloudinary } from "../../configs/cloudinary.js";
 import NotificationRepository from "../../repositories/notificationRepository.js";
 import BadgeRepository from "../../repositories/badgeRepository.js";
 
 
-const storage = getStorage(app)
+
 
 const postRepository = new PostRepository()
 const userRepository = new UserRepository()
@@ -76,11 +75,7 @@ export const postController = {
             let fileUrl = undefined;
 
             if (req.file) {
-                const file = req.file;
-                const filePath = `uploads/${file.originalname + Date.now()}`;
-                const storageRef = ref(storage, filePath);
-                await uploadBytes(storageRef, file.buffer);
-                fileUrl = await getDownloadURL(storageRef);
+                fileUrl = await uploadToCloudinary(req.file.buffer);
             }
             if (fileUrl == undefined && !req.body.description) {
                 return res.status(401).send({ error: 'Error submitting post' });
@@ -106,11 +101,7 @@ export const postController = {
             const post = await postRepository.findById(postId)
             let fileUrl = undefined;
             if (req.file) {
-                const file = req.file;
-                const filePath = `uploads/${file.originalname}`;
-                const storageRef = ref(storage, filePath);
-                await uploadBytes(storageRef, file.buffer);
-                fileUrl = await getDownloadURL(storageRef);
+                fileUrl = await uploadToCloudinary(req.file.buffer);
             }
             let updatedPost;
             if (fileUrl == undefined || fileUrl === post.media) {
@@ -139,8 +130,7 @@ export const postController = {
             const postData = await postRepository.findById(postId)
             const mediaUrl = postData.media
             if (mediaUrl) {
-                const mediaRef = ref(storage, mediaUrl);
-                await deleteObject(mediaRef);
+                await deleteFromCloudinary(mediaUrl);
             }
             await postRepository.deletePost(postId)
             res.status(200).send('Post deleted successfully');

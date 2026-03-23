@@ -1,7 +1,6 @@
 import CommunityRepository from "../../repositories/communityRepository.js";
 import { getTokenData } from "../../utils/jwtToken.js";
-import { app } from "../../configs/firebase.js";
-import { getDownloadURL, getStorage, ref, uploadBytes, deleteObject } from "firebase/storage"
+import { uploadToCloudinary, deleteFromCloudinary } from "../../configs/cloudinary.js";
 import RoomRepository from "../../repositories/roomRepository.js";
 import MessageRepository from "../../repositories/messageRepository.js";
 import UserRepository from "../../repositories/userRepository.js";
@@ -10,7 +9,6 @@ const communityRepository = new CommunityRepository()
 const roomRepository = new RoomRepository()
 const messageRepository = new MessageRepository()
 const userRepository = new UserRepository()
-const storage = getStorage(app)
 
 export const communityController = {
     getCommunities: async (req, res) => {
@@ -26,11 +24,7 @@ export const communityController = {
         try {
             let fileUrl = undefined;
             if (req.file) {
-                const file = req.file;
-                const filePath = `uploads/${file.originalname}`;
-                const storageRef = ref(storage, filePath);
-                await uploadBytes(storageRef, file.buffer);
-                fileUrl = await getDownloadURL(storageRef);
+                fileUrl = await uploadToCloudinary(req.file.buffer);
             }
             if (!req.body.name) {
                 return res.status(401).send({ error: 'Error creating community' });
@@ -80,11 +74,7 @@ export const communityController = {
         try {
             let fileUrl = undefined;
             if (req.file) {
-                const file = req.file;
-                const filePath = `uploads/${file.originalname}`;
-                const storageRef = ref(storage, filePath);
-                await uploadBytes(storageRef, file.buffer);
-                fileUrl = await getDownloadURL(storageRef);
+                fileUrl = await uploadToCloudinary(req.file.buffer);
             }
             let dataToUpdate;
             const communityId = req.body.id
@@ -92,8 +82,7 @@ export const communityController = {
                 const communityData = await communityRepository.findById(communityId)
                 const mediaUrl = communityData.profile_url
                 if (mediaUrl) {
-                    const mediaRef = ref(storage, mediaUrl);
-                    await deleteObject(mediaRef);
+                    await deleteFromCloudinary(mediaUrl);
                 }
                 dataToUpdate = {
                     name: req.body.name,
@@ -127,8 +116,7 @@ export const communityController = {
                 await communityRepository.deleteCommunity(communityData._id)
                 const mediaUrl = communityData.profile_url
                 if (mediaUrl) {
-                    const mediaRef = ref(storage, mediaUrl);
-                    await deleteObject(mediaRef);
+                    await deleteFromCloudinary(mediaUrl);
                 }
                 await roomRepository.deleteRoomBycommunity(communityId)
                 res.status(200).send("community deleted successfully");
