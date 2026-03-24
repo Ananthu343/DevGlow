@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 body {
-    @apply bg-gradient-to-br from-indigo-50 via-slate-50 to-purple-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col;
+    @apply bg-gradient-to-br from-indigo-50 via-slate-50 to-purple-50 text-slate-800 font-sans antialiased min-h-screen overflow-x-hidden;
     background-attachment: fixed;
 }
 #root {
-    @apply flex flex-col min-h-screen;
+    @apply min-h-screen;
 }
 
 /* Line Style's */

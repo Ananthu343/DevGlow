@@ -13,7 +13,7 @@ const CommunityCase = () => {
   }
 
   return (
-    <div className='hidden lg:flex flex-col bg-white p-5 rounded-2xl w-[280px] xl:w-[300px] max-h-[400px] text-sm text-slate-800 shadow-soft border border-slate-100 sticky top-[85px]'>
+    <div className='hidden lg:flex flex-col bg-white p-5 rounded-2xl w-[280px] xl:w-[300px] max-h-[400px] text-sm text-slate-800 shadow-soft border border-slate-100'>
       <p className="font-bold text-slate-900 mb-2">Communities</p>
       <hr className='border-slate-100 w-full mb-2'/>
       <div className={`mt-4 ${communities.length > 3 ? "custom-scrollbar h-32 overflow-y-scroll" : ""} h-full`}>
